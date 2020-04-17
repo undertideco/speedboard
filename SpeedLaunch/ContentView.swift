@@ -11,7 +11,6 @@ import SwiftUI
 struct ContentView: View {
     @State var isShowingConfiguratorPopupCard = false
     
-    
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             HStack {
@@ -22,26 +21,7 @@ struct ContentView: View {
             }
             Spacer()
             VStack(alignment: .center, spacing: 16) {
-                HStack(alignment: .center, spacing: 16) {
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                }
-                HStack(alignment: .center, spacing: 16) {
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                }
-                HStack(alignment: .center, spacing: 16) {
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                }
-                HStack(alignment: .center, spacing: 16) {
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                    LaunchCell(handleCellPressed: self.handleCellPressed).frame(width: 100, height: 100)
-                }
+                generate(row: 4, col: 3)
             }.animation(.easeInOut)
             
             Spacer()
@@ -55,9 +35,31 @@ struct ContentView: View {
         }
     }
     
+    func generate(row: Int, col: Int) -> some View {
+        ForEach(0...row - 1, id: \.self) { _ in
+            HStack(alignment: .center, spacing: 16) {
+                self.generateRow(with: col)
+            }
+        }
+    }
+     
+    func generateRow(with count: Int) -> some View {
+        HStack(alignment: .center, spacing: 16) {
+            ForEach(0...count - 1, id: \.self) {_ in
+                LaunchCell().frame(width: 100, height: 100)
+            }
+        }
+    }
+    
     func handleCellPressed() {
 //        guard self.isShowingConfiguratorPopupCard == false else { return }
         self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
+    }
+}
+
+struct TestView: View {
+    var body: some View {
+        Circle()
     }
 }
 
