@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ConfigurationCardView: View {
+    var handleCardDismiss: (() -> Void)?
+    
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .center) {
@@ -18,8 +20,12 @@ struct ConfigurationCardView: View {
                 Text("Choose An Action")
                     .font(.system(.headline))
                 Spacer()
-                Image("down_chevron_glyph")
-                    .frame(width: 18, height: 10, alignment: .trailing)
+                Button(action: {
+                    self.handleCardDismiss?()
+                }) {
+                    Image("down_chevron_glyph")
+                        .frame(width: 18, height: 10, alignment: .trailing)
+                }.padding([.vertical], 8)
             }
             .frame(minHeight: 50)
             .padding([.horizontal], 16)
@@ -38,5 +44,11 @@ struct ConfigurationCardView: View {
         .background(Color(red: 0.75, green: 0.89, blue: 0.95))
         .cornerRadius(20)
         .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct ConfigurationCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        ConfigurationCardView()
     }
 }
