@@ -27,7 +27,9 @@ struct ContentView: View {
             Spacer()
             
             if isShowingConfiguratorPopupCard {
-                ConfigurationCardView()
+                ConfigurationCardView(handleCardDismiss: {
+                    self.isShowingConfiguratorPopupCard = false
+                })
                     .transition(.move(edge: .bottom))
                     .animation(.easeInOut)
             }
@@ -46,13 +48,14 @@ struct ContentView: View {
     func generateRow(with count: Int) -> some View {
         HStack(alignment: .center, spacing: 16) {
             ForEach(0...count - 1, id: \.self) {_ in
-                LaunchCell().frame(width: 100, height: 100)
+                LaunchCell(handleCellPressed: self.handleCellPressed)
+                    .frame(width: 100, height: 100)
             }
         }
     }
     
     func handleCellPressed() {
-//        guard self.isShowingConfiguratorPopupCard == false else { return }
+        guard self.isShowingConfiguratorPopupCard == false else { return }
         self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
     }
 }
