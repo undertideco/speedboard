@@ -33,7 +33,10 @@ struct ContentView: View {
                     .transition(.move(edge: .bottom))
                     .animation(.easeInOut)
             }
-            
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            self.isShowingConfiguratorPopupCard = false
         }
     }
     
