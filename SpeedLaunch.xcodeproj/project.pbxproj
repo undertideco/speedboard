@@ -17,6 +17,7 @@
 		286376F424496606005AFB9D /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F324496606005AFB9D /* ActionView.swift */; };
 		286376F624496626005AFB9D /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F524496626005AFB9D /* LaunchCell.swift */; };
 		286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F72449663E005AFB9D /* ConfigurationCardView.swift */; };
+		286376FA24496F72005AFB9D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F924496F72005AFB9D /* Action.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		286376F324496606005AFB9D /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		286376F524496626005AFB9D /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
 		286376F72449663E005AFB9D /* ConfigurationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationCardView.swift; sourceTree = "<group>"; };
+		286376F924496F72005AFB9D /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				286376F1244965F0005AFB9D /* ActionType.swift */,
 				286376F524496626005AFB9D /* LaunchCell.swift */,
 				286376F72449663E005AFB9D /* ConfigurationCardView.swift */,
+				286376F924496F72005AFB9D /* Action.swift */,
 				2840C64D24490FA600DB6BAA /* Assets.xcassets */,
 				2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */,
 				2840C65524490FA600DB6BAA /* Info.plist */,
@@ -163,6 +166,7 @@
 				286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
+				286376FA24496F72005AFB9D /* Action.swift in Sources */,
 				2840C64C24490FA500DB6BAA /* ContentView.swift in Sources */,
 				286376F2244965F0005AFB9D /* ActionType.swift in Sources */,
 			);
