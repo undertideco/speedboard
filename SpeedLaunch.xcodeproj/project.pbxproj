@@ -18,6 +18,8 @@
 		286376F624496626005AFB9D /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F524496626005AFB9D /* LaunchCell.swift */; };
 		286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F72449663E005AFB9D /* ConfigurationCardView.swift */; };
 		286376FA24496F72005AFB9D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F924496F72005AFB9D /* Action.swift */; };
+		287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */; };
+		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		286376F524496626005AFB9D /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
 		286376F72449663E005AFB9D /* ConfigurationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationCardView.swift; sourceTree = "<group>"; };
 		286376F924496F72005AFB9D /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPickerViewController.swift; sourceTree = "<group>"; };
+		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 				2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */,
 				2840C65524490FA600DB6BAA /* Info.plist */,
 				2840C64F24490FA600DB6BAA /* Preview Content */,
+				287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */,
+				287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */,
 			);
 			path = SpeedLaunch;
 			sourceTree = "<group>";
@@ -165,7 +171,9 @@
 				2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */,
 				286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
+				287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
+				287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */,
 				286376FA24496F72005AFB9D /* Action.swift in Sources */,
 				2840C64C24490FA500DB6BAA /* ContentView.swift in Sources */,
 				286376F2244965F0005AFB9D /* ActionType.swift in Sources */,
