@@ -20,11 +20,11 @@ struct ConfigurationView: View {
                 Button(action: {
                     self.isShowingContactSelector = true
                 }) { Text("Select a Contact") }
-                
             }.navigationBarTitle(Text("Configure Action"))
         }.sheet(isPresented: $isShowingContactSelector) {
             EmbeddedContactPicker(didSelectContact: { contact in
                 self.selectedContact = contact
+                self.isShowingContactSelector = false
             }) {
                 self.isShowingContactSelector = false
             }
