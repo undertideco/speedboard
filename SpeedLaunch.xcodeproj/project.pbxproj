@@ -18,6 +18,7 @@
 		286376F624496626005AFB9D /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F524496626005AFB9D /* LaunchCell.swift */; };
 		286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F72449663E005AFB9D /* ConfigurationCardView.swift */; };
 		286376FA24496F72005AFB9D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F924496F72005AFB9D /* Action.swift */; };
+		287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD884244E4D9100DA4F46 /* ConfigurationView.swift */; };
 		287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */; };
 		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 		286376F524496626005AFB9D /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
 		286376F72449663E005AFB9D /* ConfigurationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationCardView.swift; sourceTree = "<group>"; };
 		286376F924496F72005AFB9D /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		287AD884244E4D9100DA4F46 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPickerViewController.swift; sourceTree = "<group>"; };
 		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +75,7 @@
 				2840C64724490FA500DB6BAA /* AppDelegate.swift */,
 				2840C64924490FA500DB6BAA /* SceneDelegate.swift */,
 				2840C64B24490FA500DB6BAA /* ContentView.swift */,
+				287AD884244E4D9100DA4F46 /* ConfigurationView.swift */,
 				286376F324496606005AFB9D /* ActionView.swift */,
 				286376F1244965F0005AFB9D /* ActionType.swift */,
 				286376F524496626005AFB9D /* LaunchCell.swift */,
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				286376F424496606005AFB9D /* ActionView.swift in Sources */,
+				287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */,
 				2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */,
 				286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
