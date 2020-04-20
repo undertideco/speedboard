@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ConfigurationCardView: View {
     var handleCardDismiss: (() -> Void)?
+    var handleCardActionSelected: ((ActionType) -> Void)?
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -32,10 +33,19 @@ struct ConfigurationCardView: View {
             HStack(alignment: .center, spacing: 52) {
                 ActionView(type: .gallery)
                     .frame(maxWidth: 70, maxHeight: 70)
+                    .onTapGesture {
+                        self.handleCardActionSelected?(.gallery)
+                    }
                 ActionView(type: .message)
                     .frame(maxWidth: 70, maxHeight: 70)
+                    .onTapGesture {
+                        self.handleCardActionSelected?(.message)
+                    }
                 ActionView(type: .call)
                     .frame(maxWidth: 70, maxHeight: 70)
+                    .onTapGesture {
+                        self.handleCardActionSelected?(.call)
+                    }
             }
             .frame(maxWidth: .infinity)
             .padding()

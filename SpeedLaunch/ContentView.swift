@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var isShowingConfiguratorPopupCard = false
+    @State var isShowingConfigurationScreen = false
     
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
@@ -29,6 +30,9 @@ struct ContentView: View {
             if isShowingConfiguratorPopupCard {
                 ConfigurationCardView(handleCardDismiss: {
                     self.isShowingConfiguratorPopupCard = false
+                }, handleCardActionSelected: { actionType in
+                    self.isShowingConfiguratorPopupCard = false
+                    self.isShowingConfigurationScreen = true
                 })
                     .transition(.move(edge: .bottom))
                     .animation(.easeInOut)
@@ -37,6 +41,9 @@ struct ContentView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             self.isShowingConfiguratorPopupCard = false
+        }
+        .sheet(isPresented: $isShowingConfigurationScreen) {
+            ConfigurationView()
         }
     }
     
