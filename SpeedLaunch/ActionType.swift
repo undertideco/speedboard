@@ -8,6 +8,17 @@
 
 import Foundation
 
-enum ActionType {
+enum ActionType: CaseIterable {
     case gallery, message, call
+    
+    func stringValue() -> String {
+        switch self {
+        case .gallery:
+            return "gallery"
+        case .message:
+            return "message"
+        case .call:
+            return "call"
+        }
+    }
 }
