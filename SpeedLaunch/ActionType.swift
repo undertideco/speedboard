@@ -8,17 +8,6 @@
 
 import Foundation
 
-enum ActionType: CaseIterable, Codable {
+enum ActionType: String, CaseIterable, Codable {
     case gallery, message, call
-    
-    func stringValue() -> String {
-        switch self {
-        case .gallery:
-            return "gallery"
-        case .message:
-            return "message"
-        case .call:
-            return "call"
-        }
-    }
 }

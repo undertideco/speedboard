@@ -24,7 +24,7 @@ struct ConfigurationView: View {
                     Image(uiImage: generateAvatarWithUsername(selectedContact!.givenName))
                     Picker(selection: $selectedActionType, label: Text("Action Type")) {
                         ForEach(0 ..< ActionType.allCases.count) {
-                            Text(ActionType.allCases[$0].stringValue().capitalized)
+                            Text(ActionType.allCases[$0].rawValue.capitalized)
                         }
                     }
                     Text("Contact Name: \(selectedContact!.givenName)")
