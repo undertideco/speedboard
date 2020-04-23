@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct Action {
+struct Action: Codable {
     let type: ActionType
     let position: IndexPath
-    let image: Image
+    let image: Data
 }
