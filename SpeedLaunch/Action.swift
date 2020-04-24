@@ -13,4 +13,15 @@ struct Action: Codable {
     let position: IndexPath
     let phoneNumber: String
     let image: Data
+    
+    func generateURLLaunchSchemeString() -> URL {
+        switch type {
+        case .gallery:
+            return URL(string: "photos-redirect://")!
+        case .message:
+            return URL(string: "sms://\(phoneNumber)")!
+        case .call:
+            return URL(string: "tel://\(phoneNumber)")!
+        }
+    }
 }
