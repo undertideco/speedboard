@@ -11,5 +11,6 @@ import SwiftUI
 struct Action: Codable {
     let type: ActionType
     let position: IndexPath
+    let phoneNumber: String
     let image: Data
 }

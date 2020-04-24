@@ -64,8 +64,12 @@ struct ConfigurationView: View {
     
     func saveAction() {
         let imageData = generateAvatarWithUsername(selectedContact!.givenName).pngData()!
-        let action = Action(type: ActionType.allCases[selectedActionType], position: indexPath, image: imageData)
+        let numbers = selectedContact!.phoneNumbers.compactMap { phoneNumber -> String? in
+            return phoneNumber.value.stringValue
+        }
         
+        let action = Action(type: ActionType.allCases[selectedActionType], position: indexPath, phoneNumber: numbers[0], image: imageData)
+        // TODO phone number selection
         ActionStore.shared.save(action)
         isPresented = false
     }
