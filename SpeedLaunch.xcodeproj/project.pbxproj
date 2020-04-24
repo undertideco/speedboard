@@ -18,6 +18,8 @@
 		286376F624496626005AFB9D /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F524496626005AFB9D /* LaunchCell.swift */; };
 		286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F72449663E005AFB9D /* ConfigurationCardView.swift */; };
 		286376FA24496F72005AFB9D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F924496F72005AFB9D /* Action.swift */; };
+		2879EB9724526B5F00992E08 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2879EB9624526B5F00992E08 /* PhoneNumberKit */; };
+		2879EB9924526D0800992E08 /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */; };
 		287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD884244E4D9100DA4F46 /* ConfigurationView.swift */; };
 		287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */; };
 		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
@@ -39,6 +41,7 @@
 		286376F524496626005AFB9D /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
 		286376F72449663E005AFB9D /* ConfigurationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationCardView.swift; sourceTree = "<group>"; };
 		286376F924496F72005AFB9D /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PhoneNumberMetadata.json; sourceTree = "<group>"; };
 		287AD884244E4D9100DA4F46 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPickerViewController.swift; sourceTree = "<group>"; };
 		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28BF0F8424511D3E004C68D8 /* LetterAvatarKit in Frameworks */,
+				2879EB9724526B5F00992E08 /* PhoneNumberKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +96,7 @@
 				287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */,
 				287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */,
 				28BF0F85245120A9004C68D8 /* ActionsStore.swift */,
+				2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */,
 			);
 			path = SpeedLaunch;
 			sourceTree = "<group>";
@@ -122,6 +127,7 @@
 			name = SpeedLaunch;
 			packageProductDependencies = (
 				28BF0F8324511D3E004C68D8 /* LetterAvatarKit */,
+				2879EB9624526B5F00992E08 /* PhoneNumberKit */,
 			);
 			productName = SpeedLaunch;
 			productReference = 2840C64424490FA500DB6BAA /* SpeedLaunch.app */;
@@ -153,6 +159,7 @@
 			mainGroup = 2840C63B24490FA500DB6BAA;
 			packageReferences = (
 				28BF0F8224511D3E004C68D8 /* XCRemoteSwiftPackageReference "LetterAvatarKit" */,
+				2879EB9524526B5F00992E08 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 			);
 			productRefGroup = 2840C64524490FA500DB6BAA /* Products */;
 			projectDirPath = "";
@@ -168,6 +175,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2879EB9924526D0800992E08 /* PhoneNumberMetadata.json in Resources */,
 				2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */,
 				2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */,
 				2840C64E24490FA600DB6BAA /* Assets.xcassets in Resources */,
@@ -390,6 +398,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2879EB9524526B5F00992E08 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 		28BF0F8224511D3E004C68D8 /* XCRemoteSwiftPackageReference "LetterAvatarKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vpeschenkov/LetterAvatarKit.git";
@@ -401,6 +417,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2879EB9624526B5F00992E08 /* PhoneNumberKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2879EB9524526B5F00992E08 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = PhoneNumberKit;
+		};
 		28BF0F8324511D3E004C68D8 /* LetterAvatarKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 28BF0F8224511D3E004C68D8 /* XCRemoteSwiftPackageReference "LetterAvatarKit" */;
