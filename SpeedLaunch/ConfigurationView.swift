@@ -11,6 +11,9 @@ import LetterAvatarKit
 import Contacts
 
 struct ConfigurationView: View {
+    @Binding var isPresented: Bool
+    var indexPath: IndexPath
+    
     @State private var user = ""
     @State private var isShowingContactSelector = false
     @State private var selectedContact: CNContact? = nil
@@ -26,7 +29,7 @@ struct ConfigurationView: View {
                         ForEach(0 ..< ActionType.allCases.count) {
                             Text(ActionType.allCases[$0].rawValue.capitalized)
                         }
-                    }
+                    }.pickerStyle(SegmentedPickerStyle())
                     Text("Contact Name: \(selectedContact!.givenName)")
                 } else {
                     Button(action: {
@@ -39,6 +42,7 @@ struct ConfigurationView: View {
             .navigationBarItems(trailing:
                 Button("Save") {
                     print("Action Saved!")
+                    self.saveAction()
                 }
             )
         }.sheet(isPresented: $isShowingContactSelector) {
@@ -57,10 +61,12 @@ struct ConfigurationView: View {
                     .setUsername(name)
                     .build()!
     }
-}
-
-struct ConfigurationView_Previews: PreviewProvider {
-    static var previews: some View {
-        return ConfigurationView()
+    
+    func saveAction() {
+        let imageData = generateAvatarWithUsername(selectedContact!.givenName).pngData()!
+        let action = Action(type: ActionType.allCases[selectedActionType], position: indexPath, image: imageData)
+        
+        ActionStore.shared.save(action)
+        isPresented = false
     }
 }

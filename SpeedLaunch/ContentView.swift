@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @State var isShowingConfiguratorPopupCard = false
     @State var isShowingConfigurationScreen = false
+    @State var selectedIndexPath: IndexPath? = nil
     
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
@@ -40,32 +41,38 @@ struct ContentView: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
+            self.selectedIndexPath = nil
             self.isShowingConfiguratorPopupCard = false
         }
         .sheet(isPresented: $isShowingConfigurationScreen) {
-            ConfigurationView()
+            ConfigurationView(isPresented: self.$isShowingConfigurationScreen, indexPath: self.selectedIndexPath!)
         }
     }
     
     func generate(row: Int, col: Int) -> some View {
-        ForEach(0...row - 1, id: \.self) { _ in
+        ForEach(0...row - 1, id: \.self) { r in
             HStack(alignment: .center, spacing: 16) {
-                self.generateRow(with: col)
+                self.generateRow(with: col, at: r)
             }
         }
     }
      
-    func generateRow(with count: Int) -> some View {
+    func generateRow(with count: Int, at row: Int) -> some View {
         HStack(alignment: .center, spacing: 16) {
-            ForEach(0...count - 1, id: \.self) {_ in
-                LaunchCell(handleCellPressed: self.handleCellPressed)
+            ForEach(0...count - 1, id: \.self) { s in
+                LaunchCell(section: s, row: row, action: self.action(at: IndexPath(row: row, section: s)),handleCellPressed: self.handleCellPressed)
                     .frame(width: 100, height: 100)
             }
         }
     }
     
-    func handleCellPressed() {
+    func action(at indexPath: IndexPath) -> Action? {
+        return ActionStore.shared.item(at: indexPath)
+    }
+    
+    func handleCellPressed(indexPath: IndexPath) {
         guard self.isShowingConfiguratorPopupCard == false else { return }
+        self.selectedIndexPath = indexPath
         self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
     }
 }

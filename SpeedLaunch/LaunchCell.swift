@@ -9,19 +9,29 @@
 import SwiftUI
 
 struct LaunchCell: View {
-    var handleCellPressed: (() -> Void)?
+    var section: Int
+    var row: Int
+    var action: Action?
+    
+    var handleCellPressed: ((IndexPath) -> Void)?
     
     var body: some View {
         ZStack {
-            Circle().inset(by: 15).foregroundColor(Color.white)
-            Image(systemName: "plus")
-                .font(.system(size: 28, weight: .regular, design: .default))
-                .foregroundColor(Color(red: 0.90, green: 0.75, blue: 0.05))
+            if action != nil {
+                Image(uiImage: UIImage(data: action!.image)!)
+                    .resizable()
+                    .mask(Circle().inset(by: 15))
+            } else {
+                Circle().inset(by: 15).foregroundColor(Color.white)
+                Image(systemName: "plus")
+                    .font(.system(size: 28, weight: .regular, design: .default))
+                    .foregroundColor(Color(red: 0.90, green: 0.75, blue: 0.05))
+            }
         }
         .background(Color(red: 0.90, green: 0.94, blue: 0.94))
         .cornerRadius(20)
         .onTapGesture {
-            self.handleCellPressed?()
+            self.handleCellPressed?(IndexPath(row: self.row, section: self.section))
         }
     }
 }
