@@ -72,8 +72,13 @@ struct ContentView: View {
     
     func handleCellPressed(indexPath: IndexPath) {
         guard self.isShowingConfiguratorPopupCard == false else { return }
-        self.selectedIndexPath = indexPath
-        self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
+        
+        if let action = ActionStore.shared.item(at: indexPath) {
+            UIApplication.shared.open(action.generateURLLaunchSchemeString(), options: [:])
+        } else {
+            self.selectedIndexPath = indexPath
+            self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
+        }
     }
 }
 
