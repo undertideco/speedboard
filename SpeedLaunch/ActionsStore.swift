@@ -30,14 +30,18 @@ final class ActionStore {
     }
     
     func save(_ action: Action) {
+        self.actions[action.position] = action
+        
         if let url = baseURL, let data = try? JSONEncoder().encode(actions) {
             try! data.write(to: url.appendingPathComponent(.storeLocation))
             // error handling ommitted
+            print(url.appendingPathComponent(.storeLocation))
         }
+        
         NotificationCenter.default.post(name: ActionStore.changedNotification, object: action, userInfo: nil)
     }
     
-    func item(atIndexPath indexPath: IndexPath) -> Action? {
+    func item(at indexPath: IndexPath) -> Action? {
         return self.actions[indexPath]
     }
 }
