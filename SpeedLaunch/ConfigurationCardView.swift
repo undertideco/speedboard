@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ConfigurationCardView: View {
+struct ConfigurationCardView: View {    
     var handleCardDismiss: (() -> Void)?
     var handleCardActionSelected: ((ActionType) -> Void)?
     
@@ -26,6 +26,7 @@ struct ConfigurationCardView: View {
                 }) {
                     Image("down_chevron_glyph")
                         .frame(width: 18, height: 10, alignment: .trailing)
+                        .foregroundColor(.black)
                 }.padding([.vertical], 8)
             }
             .frame(minHeight: 50)
@@ -54,11 +55,5 @@ struct ConfigurationCardView: View {
         .background(Color(red: 0.75, green: 0.89, blue: 0.95))
         .cornerRadius(20)
         .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct ConfigurationCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConfigurationCardView()
     }
 }
