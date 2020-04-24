@@ -34,7 +34,7 @@ struct ConfigurationView: View {
                 } else {
                     Button(action: {
                         self.isShowingContactSelector = true
-                    }) { Text("Select a Contact") }
+                        }) { Text("Select a Contact") }
                 }
                 
             }
@@ -43,7 +43,7 @@ struct ConfigurationView: View {
                 Button("Save") {
                     print("Action Saved!")
                     self.saveAction()
-                }
+                }.disabled(selectedContact == nil)
             )
         }.sheet(isPresented: $isShowingContactSelector) {
             EmbeddedContactPicker(didSelectContact: { contact in
