@@ -9,5 +9,5 @@
 import Foundation
 
 enum ActionType: String, CaseIterable, Codable {
-    case gallery, message, call
+    case message, call
 }

@@ -19,8 +19,6 @@ struct Action: Codable {
         let phoneNumberKit = PhoneNumberKit()
 
         switch type {
-        case .gallery:
-            return URL(string: "photos-redirect://")!
         case .message:
             let parsedNumber = try! phoneNumberKit.parse(phoneNumber)
             var components = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
