@@ -32,11 +32,6 @@ struct ConfigurationCardView: View {
             .frame(minHeight: 50)
             .padding([.horizontal], 16)
             HStack(alignment: .center, spacing: 52) {
-                ActionView(type: .gallery)
-                    .frame(maxWidth: 70, maxHeight: 70)
-                    .onTapGesture {
-                        self.handleCardActionSelected?(.gallery)
-                    }
                 ActionView(type: .message)
                     .frame(maxWidth: 70, maxHeight: 70)
                     .onTapGesture {
