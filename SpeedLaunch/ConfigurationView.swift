@@ -24,7 +24,20 @@ struct ConfigurationView: View {
         NavigationView {
             Form {
                 if selectedContact != nil {
-                    Image(uiImage: generateAvatarWithUsername(selectedContact!.givenName))
+                    HStack(alignment: .center, spacing: 0) {
+                        Spacer()
+                        if selectedContact!.imageData != nil {
+                            Image(uiImage: UIImage(data: selectedContact!.imageData!)!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 75, height: 75)
+                                .mask(Circle())
+                        } else {
+                            Image(uiImage: generateAvatarWithUsername(selectedContact!.givenName))
+                        }
+                        Spacer()
+                    }
+
                     Picker(selection: $selectedActionType, label: Text("Action Type")) {
                         ForEach(0 ..< ActionType.allCases.count) {
                             Text(ActionType.allCases[$0].rawValue.capitalized)
