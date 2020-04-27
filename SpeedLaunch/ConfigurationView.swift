@@ -18,8 +18,8 @@ struct ConfigurationView: View {
     @State private var isShowingContactSelector = false
     @State private var selectedContact: CNContact? = nil
     
-    @State private var selectedActionType = 0
-    
+    @State private var selectedActionType = ActionType.call
+
     var body: some View {
         NavigationView {
             Form {
@@ -27,20 +27,16 @@ struct ConfigurationView: View {
                     HStack(alignment: .center, spacing: 0) {
                         Spacer()
                         if selectedContact!.imageData != nil {
-                            Image(uiImage: UIImage(data: selectedContact!.imageData!)!)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 75, height: 75)
-                                .mask(Circle())
+                            ShortcutImageView(type: $selectedActionType, image: UIImage(data: selectedContact!.imageData!)!)
                         } else {
-                            Image(uiImage: generateAvatarWithUsername(selectedContact!.givenName))
+                            ShortcutImageView(type: $selectedActionType, image: generateAvatarWithUsername(selectedContact!.givenName))
                         }
                         Spacer()
                     }
 
                     Picker(selection: $selectedActionType, label: Text("Action Type")) {
-                        ForEach(0 ..< ActionType.allCases.count) {
-                            Text(ActionType.allCases[$0].rawValue.capitalized)
+                        ForEach(ActionType.allCases, id: \.self) {
+                            Text("\($0.rawValue)".capitalized)
                         }
                     }.pickerStyle(SegmentedPickerStyle())
                     Text("Contact Name: \(selectedContact!.givenName)")
@@ -81,7 +77,7 @@ struct ConfigurationView: View {
             return phoneNumber.value.stringValue
         }
         
-        let action = Action(type: ActionType.allCases[selectedActionType], position: indexPath, phoneNumber: numbers[0], image: imageData)
+        let action = Action(type: selectedActionType, position: indexPath, phoneNumber: numbers[0], image: imageData)
         // TODO phone number selection
         ActionStore.shared.save(action)
         isPresented = false
