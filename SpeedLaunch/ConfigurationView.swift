@@ -27,9 +27,9 @@ struct ConfigurationView: View {
                     HStack(alignment: .center, spacing: 0) {
                         Spacer()
                         if selectedContact!.imageData != nil {
-                            ShortcutImageView(type: $selectedActionType, image: UIImage(data: selectedContact!.imageData!)!)
+                            ShortcutImageView(type: self.selectedActionType, image: UIImage(data: selectedContact!.imageData!)!)
                         } else {
-                            ShortcutImageView(type: $selectedActionType, image: generateAvatarWithUsername(selectedContact!.givenName))
+                            ShortcutImageView(type: self.selectedActionType, image: generateAvatarWithUsername(selectedContact!.givenName))
                         }
                         Spacer()
                     }

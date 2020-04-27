@@ -18,9 +18,8 @@ struct LaunchCell: View {
     var body: some View {
         ZStack {
             if action != nil {
-                Image(uiImage: UIImage(data: action!.image)!)
-                    .resizable()
-                    .mask(Circle().inset(by: 15))
+                Circle().inset(by: 15).foregroundColor(Color.white)
+                ShortcutImageView(type: action!.type, image: UIImage(data: action!.image)!)
             } else {
                 Circle().inset(by: 15).foregroundColor(Color.white)
                 Image(systemName: "plus")

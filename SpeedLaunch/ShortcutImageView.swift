@@ -10,7 +10,7 @@ import SwiftUI
 import ContactsUI
 
 struct ShortcutImageView: View {
-    @Binding var type: ActionType
+    var type: ActionType
     var image: UIImage
     
     var body: some View {
