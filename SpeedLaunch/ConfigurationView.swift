@@ -16,9 +16,11 @@ struct ConfigurationView: View {
     
     @State private var user = ""
     @State private var isShowingContactSelector = false
+    @State private var isShowingNumberSelector = false
     @State private var selectedContact: CNContact? = nil
     
     @State private var selectedActionType = ActionType.call
+    @State private var selectedNumberIndex = 0
 
     var body: some View {
         NavigationView {
@@ -39,7 +41,14 @@ struct ConfigurationView: View {
                             Text("\($0.rawValue)".capitalized)
                         }
                     }.pickerStyle(SegmentedPickerStyle())
-                    Text("Contact Name: \(selectedContact!.givenName)")
+                    
+
+                    Picker(selection: $selectedNumberIndex, label: Text("   ")) {
+                        ForEach(selectedContact!.phoneNumbers, id: \.self) {
+                            Text("\($0.value.stringValue)")
+                        }
+                    }.pickerStyle(WheelPickerStyle())
+                    
                 } else {
                     Button(action: {
                         self.isShowingContactSelector = true
@@ -77,8 +86,7 @@ struct ConfigurationView: View {
             return phoneNumber.value.stringValue
         }
         
-        let action = Action(type: selectedActionType, position: indexPath, phoneNumber: numbers[0], image: imageData)
-        // TODO phone number selection
+        let action = Action(type: selectedActionType, position: indexPath, phoneNumber: numbers[self.selectedNumberIndex], image: imageData)
         ActionStore.shared.save(action)
         isPresented = false
     }
