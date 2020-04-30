@@ -10,17 +10,24 @@ import SwiftUI
 import LetterAvatarKit
 import Contacts
 
+enum ActiveConfigurationSheet {
+    case contacts, photo
+}
+
 struct ConfigurationView: View {
     @Binding var isPresented: Bool
     var indexPath: IndexPath
     
     @State private var user = ""
-    @State private var isShowingContactSelector = false
     @State private var isShowingNumberSelector = false
+    @State private var isShowingSheet = false
+    
+    @State private var selectedContactImage: UIImage?
     @State private var selectedContact: CNContact? = nil
     
     @State private var selectedActionType = ActionType.call
     @State private var selectedNumberIndex = 0
+    @State private var activeSheet: ActiveConfigurationSheet = .contacts
 
     var body: some View {
         NavigationView {
@@ -28,10 +35,9 @@ struct ConfigurationView: View {
                 if selectedContact != nil {
                     HStack(alignment: .center, spacing: 0) {
                         Spacer()
-                        if selectedContact!.imageData != nil {
-                            ShortcutImageView(type: self.selectedActionType, image: UIImage(data: selectedContact!.imageData!)!)
-                        } else {
-                            ShortcutImageView(type: self.selectedActionType, image: generateAvatarWithUsername(selectedContact!.givenName))
+                        ShortcutImageView(type: self.selectedActionType, image: selectedContactImage ?? generateAvatarWithUsername(selectedContact!.givenName)) {
+                            self.isShowingSheet = true
+                            self.activeSheet = .photo
                         }
                         Spacer()
                     }
@@ -51,7 +57,8 @@ struct ConfigurationView: View {
                     
                 } else {
                     Button(action: {
-                        self.isShowingContactSelector = true
+                        self.isShowingSheet = true
+                        self.activeSheet = .contacts
                         }) { Text("Select a Contact") }
                 }
                 
@@ -63,12 +70,16 @@ struct ConfigurationView: View {
                     self.saveAction()
                 }.disabled(selectedContact == nil)
             )
-        }.sheet(isPresented: $isShowingContactSelector) {
-            EmbeddedContactPicker(didSelectContact: { contact in
-                self.selectedContact = contact
-                self.isShowingContactSelector = false
-            }) {
-                self.isShowingContactSelector = false
+        }.sheet(isPresented: $isShowingSheet) {
+            if self.activeSheet == .contacts {
+                EmbeddedContactPicker(didSelectContact: { contact in
+                    self.loadContactAndImages(contact)
+                    self.isShowingSheet = false
+                }) {
+                    self.isShowingSheet = false
+                }
+            } else if self.activeSheet == .photo {
+                ImagePicker(image: self.$selectedContactImage)
             }
         }
     }
@@ -80,8 +91,18 @@ struct ConfigurationView: View {
                     .build()!
     }
     
+    func loadContactAndImages(_ contact: CNContact) {
+        self.selectedContact = contact
+        if let imageData = contact.imageData {
+            selectedContactImage = UIImage(data: imageData)
+        } else {
+            selectedContactImage = generateAvatarWithUsername("\(contact.givenName)")
+        }
+    }
+    
     func saveAction() {
-        let imageData = generateAvatarWithUsername(selectedContact!.givenName).pngData()!
+        let imageData = selectedContactImage?.pngData() ?? generateAvatarWithUsername(selectedContact!.givenName).pngData()!
+        
         let numbers = selectedContact!.phoneNumbers.compactMap { phoneNumber -> String? in
             return phoneNumber.value.stringValue
         }
