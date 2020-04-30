@@ -12,6 +12,7 @@ import ContactsUI
 struct ShortcutImageView: View {
     var type: ActionType
     var image: UIImage
+    var handleTap: (() -> Void)?
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
@@ -20,6 +21,9 @@ struct ShortcutImageView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 75, height: 75)
                 .mask(Circle())
+                .onTapGesture {
+                    self.handleTap?()
+                }
             
             if type == .call {
                 Image("call_glyph")
