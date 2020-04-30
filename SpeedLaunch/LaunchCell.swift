@@ -19,7 +19,9 @@ struct LaunchCell: View {
         ZStack {
             if action != nil {
                 Circle().inset(by: 15).foregroundColor(Color.white)
-                ShortcutImageView(type: action!.type, image: UIImage(data: action!.image)!)
+                ShortcutImageView(type: action!.type, image: UIImage(data: action!.image)!) {
+                    self.handleCellPressed?(IndexPath(row: self.row, section: self.section))
+                }
             } else {
                 Circle().inset(by: 15).foregroundColor(Color.white)
                 Image(systemName: "plus")
