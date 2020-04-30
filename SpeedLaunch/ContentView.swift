@@ -80,6 +80,16 @@ struct ContentView: View {
             self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
         }
     }
+    
+    func flowLayout<Elements>(for elements: Elements, containerSize: CGSize, sizes: [Elements.Element.ID: CGSize]) -> [Elements.Element.ID: CGSize] where Elements: RandomAccessCollection, Elements.Element: Identifiable {
+        var state = FlowLayout(containerSize: containerSize)
+        var result: [Elements.Element.ID: CGSize] = [:]
+        for element in elements {
+            let rect = state.add(element: sizes[element.id] ?? .zero)
+            result[element.id] = CGSize(width: rect.origin.x, height: rect.origin.y)
+        }
+        return result
+    }
 }
 
 struct TestView: View {
