@@ -9,18 +9,16 @@
 import SwiftUI
 
 struct LaunchCell: View {
-    var section: Int
-    var row: Int
     var action: Action?
     
-    var handleCellPressed: ((IndexPath) -> Void)?
+    var handleCellPressed: ((Action?) -> Void)?
     
     var body: some View {
         ZStack {
             if action != nil {
                 Circle().inset(by: 15).foregroundColor(Color.white)
                 ShortcutImageView(type: action!.type, image: UIImage(data: action!.image)!) {
-                    self.handleCellPressed?(IndexPath(row: self.row, section: self.section))
+                    self.handleCellPressed?(self.action)
                 }
             } else {
                 Circle().inset(by: 15).foregroundColor(Color.white)
@@ -32,7 +30,7 @@ struct LaunchCell: View {
         .background(Color(red: 0.90, green: 0.94, blue: 0.94))
         .cornerRadius(20)
         .onTapGesture {
-            self.handleCellPressed?(IndexPath(row: self.row, section: self.section))
+            self.handleCellPressed?(self.action)
         }
     }
 }

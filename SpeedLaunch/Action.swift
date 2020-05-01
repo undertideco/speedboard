@@ -11,7 +11,7 @@ import PhoneNumberKit
 
 struct Action: Codable {
     let type: ActionType
-    let position: IndexPath
+    let position: Int
     let phoneNumber: String
     let image: Data
     
@@ -32,3 +32,8 @@ struct Action: Codable {
         }
     }
 }
+
+extension Action: Identifiable {
+    public var id: Int { self.position }
+}
+

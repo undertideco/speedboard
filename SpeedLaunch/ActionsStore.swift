@@ -14,7 +14,7 @@ final class ActionStore {
     static let shared = ActionStore()
     
     let baseURL: URL?
-    private(set) var actions: [IndexPath: Action]
+    private(set) var actions: [Action]
     
     init() {
         self.baseURL = ActionStore.documentDirectory
@@ -22,15 +22,15 @@ final class ActionStore {
         
         if let u = baseURL,
             let data = try? Data(contentsOf: u.appendingPathComponent(.storeLocation)),
-            let actions = try? JSONDecoder().decode([IndexPath: Action].self, from: data) {
+            let actions = try? JSONDecoder().decode([Action].self, from: data) {
             self.actions = actions
         } else {
-            self.actions = [:]
+            self.actions = []
         }
     }
     
     func save(_ action: Action) {
-        self.actions[action.position] = action
+        self.actions.append(action)
         
         if let url = baseURL, let data = try? JSONEncoder().encode(actions) {
             try! data.write(to: url.appendingPathComponent(.storeLocation))
@@ -41,8 +41,8 @@ final class ActionStore {
         NotificationCenter.default.post(name: ActionStore.changedNotification, object: action, userInfo: nil)
     }
     
-    func item(at indexPath: IndexPath) -> Action? {
-        return self.actions[indexPath]
+    func item(at index: Int) -> Action? {
+        return self.actions[index]
     }
 }
 

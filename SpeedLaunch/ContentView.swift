@@ -11,72 +11,55 @@ import SwiftUI
 struct ContentView: View {
     @State var isShowingConfiguratorPopupCard = false
     @State var isShowingConfigurationScreen = false
-    @State var selectedIndexPath: IndexPath? = nil
+    @State var selectedIndex: Int = 0
     
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            HStack {
+        ZStack(alignment: .bottom) {
+            VStack(alignment: .center, spacing: 8) {
+                HStack {
+                    Spacer()
+                    Image("applogo")
+                        .frame(width: CGFloat(40), height: CGFloat(40))
+                    Spacer()
+                }
                 Spacer()
-                Image("applogo")
-                    .frame(width: CGFloat(40), height: CGFloat(40))
+                
+                CollectionView(data: ActionStore.shared.actions, layout: flowLayout) {
+                    LaunchCell(action: $0) {
+                        self.handleCellPressed($0)
+                    }
+                }
+                
                 Spacer()
             }
-            Spacer()
-            VStack(alignment: .center, spacing: 16) {
-                generate(row: 4, col: 3)
-            }.animation(.easeInOut)
-            
-            Spacer()
+            .contentShape(Rectangle())
+            .onTapGesture {
+                self.isShowingConfiguratorPopupCard = false
+            }
             
             if isShowingConfiguratorPopupCard {
                 ConfigurationCardView(handleCardDismiss: {
                     self.isShowingConfiguratorPopupCard = false
-                }, handleCardActionSelected: { actionType in
+                }) { _ in
                     self.isShowingConfiguratorPopupCard = false
                     self.isShowingConfigurationScreen = true
-                })
-                    .transition(.move(edge: .bottom))
-                    .animation(.easeInOut)
+                }
+                .transition(.move(edge: .bottom))
+                .animation(.easeInOut)
             }
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            self.selectedIndexPath = nil
-            self.isShowingConfiguratorPopupCard = false
         }
         .sheet(isPresented: $isShowingConfigurationScreen) {
-            ConfigurationView(isPresented: self.$isShowingConfigurationScreen, indexPath: self.selectedIndexPath!)
+            ConfigurationView(isPresented: self.$isShowingConfigurationScreen, index: self.selectedIndex)
+            .frame(height: 40)
         }
     }
     
-    func generate(row: Int, col: Int) -> some View {
-        ForEach(0...row - 1, id: \.self) { r in
-            HStack(alignment: .center, spacing: 16) {
-                self.generateRow(with: col, at: r)
-            }
-        }
-    }
-     
-    func generateRow(with count: Int, at row: Int) -> some View {
-        HStack(alignment: .center, spacing: 16) {
-            ForEach(0...count - 1, id: \.self) { s in
-                LaunchCell(section: s, row: row, action: self.action(at: IndexPath(row: row, section: s)),handleCellPressed: self.handleCellPressed)
-                    .frame(width: 100, height: 100)
-            }
-        }
-    }
-    
-    func action(at indexPath: IndexPath) -> Action? {
-        return ActionStore.shared.item(at: indexPath)
-    }
-    
-    func handleCellPressed(indexPath: IndexPath) {
+    func handleCellPressed(_ action: Action?) {
         guard self.isShowingConfiguratorPopupCard == false else { return }
-        
-        if let action = ActionStore.shared.item(at: indexPath) {
+
+        if let action = action {
             UIApplication.shared.open(action.generateURLLaunchSchemeString(), options: [:])
         } else {
-            self.selectedIndexPath = indexPath
             self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
         }
     }

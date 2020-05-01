@@ -16,7 +16,7 @@ enum ActiveConfigurationSheet {
 
 struct ConfigurationView: View {
     @Binding var isPresented: Bool
-    var indexPath: IndexPath
+    var index: Int
     
     @State private var user = ""
     @State private var isShowingNumberSelector = false
@@ -107,7 +107,7 @@ struct ConfigurationView: View {
             return phoneNumber.value.stringValue
         }
         
-        let action = Action(type: selectedActionType, position: indexPath, phoneNumber: numbers[self.selectedNumberIndex], image: imageData)
+        let action = Action(type: selectedActionType, position: index, phoneNumber: numbers[self.selectedNumberIndex], image: imageData)
         ActionStore.shared.save(action)
         isPresented = false
     }
