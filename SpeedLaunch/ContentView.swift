@@ -24,10 +24,8 @@ struct ContentView: View {
                 }
                 Spacer()
                 
-                CollectionView(data: ActionStore.shared.actions, layout: flowLayout) {
-                    LaunchCell(action: $0) {
-                        self.handleCellPressed($0)
-                    }
+                CollectionView(data: ActionStore.shared.actions, layout: flowLayout) { _ in
+                    Text("world")
                 }
                 
                 Spacer()

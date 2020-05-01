@@ -15,6 +15,21 @@ final class ActionStore {
     
     let baseURL: URL?
     private(set) var actions: [Action]
+    var actionsToDisplay: [Action?] {
+        var includedActions: [Action?] = []
+        for i in 0...8 {
+            for action in actions {
+                if action.position == i {
+                    includedActions.append(action)
+                }
+            }
+            if !actions.indices.contains(i) {
+                includedActions.append(nil)
+            }
+        }
+        
+        return includedActions
+    }
     
     init() {
         self.baseURL = ActionStore.documentDirectory

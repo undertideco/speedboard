@@ -11,7 +11,7 @@ import SwiftUI
 struct CollectionView<Elements, Content>: View where Elements: RandomAccessCollection, Content: View, Elements.Element: Identifiable {
     var data: Elements
     var layout: (Elements, CGSize, [Elements.Element.ID: CGSize]) -> [Elements.Element.ID: CGSize]
-    var content: (Elements.Element) -> Content
+    var content: (Elements.Element?) -> Content
     @State private var sizes: [Elements.Element.ID: CGSize] = [:]
     
     private func bodyHelper(containerSize: CGSize, offsets: [Elements.Element.ID: CGSize]) -> some View {
