@@ -13,20 +13,22 @@ struct ContentView: View {
     @State var isShowingConfiguratorPopupCard = false
     @State var isShowingConfigurationScreen = false
     @State var selectedIndex: Int = 0
+    @State var isEditing: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack(alignment: .center, spacing: 8) {
                 HStack {
-                    Spacer()
+                    Button(isEditing ? "Done" : "Edit") {
+                        self.isEditing = !self.isEditing
+                    }
                     Image("applogo")
                         .frame(width: CGFloat(40), height: CGFloat(40))
-                    Spacer()
                 }
                 Spacer()
                 
                 QGrid(ActionStore.shared.actionsToDisplay, columns: 3) { action in
-                    LaunchCell(action: action, handleCellPressed: self.handleCellPressed(_:))
+                    LaunchCell(deletable: self.$isEditing, action: action, handleCellPressed: self.handleCellPressed(_:))
                 }
                 
                 Spacer()
@@ -49,7 +51,6 @@ struct ContentView: View {
         }
         .sheet(isPresented: $isShowingConfigurationScreen) {
             ConfigurationView(isPresented: self.$isShowingConfigurationScreen, index: self.selectedIndex)
-            .frame(height: 40)
         }
     }
     

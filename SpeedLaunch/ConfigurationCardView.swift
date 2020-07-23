@@ -15,7 +15,8 @@ struct ConfigurationCardView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             HStack(alignment: .center) {
-                Image("")
+                Circle()
+                    .foregroundColor(.clear)
                     .frame(width: 18, height: 10, alignment: .trailing)
                 Spacer()
                 Text("Choose An Action")

@@ -17,7 +17,7 @@ final class ActionStore {
     private(set) var actions: [Action]
     var actionsToDisplay: [Action] {
         var includedActions: [Action] = []
-        for i in 0...7 {
+        for i in 0...11 {
             for action in actions {
                 if action.position == i {
                     includedActions.append(action)
