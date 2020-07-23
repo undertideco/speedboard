@@ -15,16 +15,16 @@ final class ActionStore {
     
     let baseURL: URL?
     private(set) var actions: [Action]
-    var actionsToDisplay: [Action?] {
-        var includedActions: [Action?] = []
-        for i in 0...8 {
+    var actionsToDisplay: [Action] {
+        var includedActions: [Action] = []
+        for i in 0...7 {
             for action in actions {
                 if action.position == i {
                     includedActions.append(action)
                 }
             }
             if !actions.indices.contains(i) {
-                includedActions.append(nil)
+                includedActions.append(Action(type: .empty, position: i, phoneNumber: nil, image: nil))
             }
         }
         

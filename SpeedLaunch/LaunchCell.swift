@@ -9,17 +9,21 @@
 import SwiftUI
 
 struct LaunchCell: View {
-    var action: Action?
+    var action: Action
     
     var handleCellPressed: ((Action?) -> Void)?
     
     var body: some View {
         ZStack {
-            if action != nil {
+            if action.type != .empty {
                 Circle().inset(by: 15).foregroundColor(Color.white)
-                ShortcutImageView(type: action!.type, image: UIImage(data: action!.image)!) {
+                
+                // FIXME: not an ideal implementation for images
+                ShortcutImageView(type: action.type, image: UIImage(data: action.image ?? UIImage.imageWithColor(color: .clear).jpegData(compressionQuality: 70)!)!) {
                     self.handleCellPressed?(self.action)
                 }
+                
+                
             } else {
                 Circle().inset(by: 15).foregroundColor(Color.white)
                 Image(systemName: "plus")
@@ -27,6 +31,7 @@ struct LaunchCell: View {
                     .foregroundColor(Color(red: 0.90, green: 0.75, blue: 0.05))
             }
         }
+        .frame(width: 100, height: 100, alignment: .center)
         .background(Color(red: 0.90, green: 0.94, blue: 0.94))
         .cornerRadius(20)
         .onTapGesture {

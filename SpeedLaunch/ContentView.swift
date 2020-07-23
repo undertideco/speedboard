@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import QGrid
 
 struct ContentView: View {
     @State var isShowingConfiguratorPopupCard = false
@@ -24,8 +25,8 @@ struct ContentView: View {
                 }
                 Spacer()
                 
-                CollectionView(data: ActionStore.shared.actions, layout: flowLayout) { _ in
-                    Text("world")
+                QGrid(ActionStore.shared.actionsToDisplay, columns: 3) { action in
+                    LaunchCell(action: action, handleCellPressed: self.handleCellPressed(_:))
                 }
                 
                 Spacer()
@@ -55,21 +56,12 @@ struct ContentView: View {
     func handleCellPressed(_ action: Action?) {
         guard self.isShowingConfiguratorPopupCard == false else { return }
 
-        if let action = action {
-            UIApplication.shared.open(action.generateURLLaunchSchemeString(), options: [:])
+        if let action = action,
+            let urlString = action.generateURLLaunchSchemeString() {
+            UIApplication.shared.open(urlString, options: [:])
         } else {
             self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
         }
-    }
-    
-    func flowLayout<Elements>(for elements: Elements, containerSize: CGSize, sizes: [Elements.Element.ID: CGSize]) -> [Elements.Element.ID: CGSize] where Elements: RandomAccessCollection, Elements.Element: Identifiable {
-        var state = FlowLayout(containerSize: containerSize)
-        var result: [Elements.Element.ID: CGSize] = [:]
-        for element in elements {
-            let rect = state.add(element: sizes[element.id] ?? .zero)
-            result[element.id] = CGSize(width: rect.origin.x, height: rect.origin.y)
-        }
-        return result
     }
 }
 
