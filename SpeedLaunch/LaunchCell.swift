@@ -43,6 +43,9 @@ struct LaunchCell: View {
                     .foregroundColor(.gray)
                     .font(.system(size: 24))
                     .offset(x: -5, y: -5)
+                    .onTapGesture {
+                        ActionStore.shared.delete(at: self.action.position)
+                    }
             }
         }
         

@@ -45,19 +45,26 @@ final class ActionStore {
     }
     
     func save(_ action: Action) {
-        self.actions.append(action)
+        var newActions = actions.filter { $0.position != action.position }
+        newActions.append(action)
         
-        if let url = baseURL, let data = try? JSONEncoder().encode(actions) {
+        if let url = baseURL, let data = try? JSONEncoder().encode(newActions) {
             try! data.write(to: url.appendingPathComponent(.storeLocation))
             // error handling ommitted
             print(url.appendingPathComponent(.storeLocation))
         }
         
+        self.actions = newActions
         NotificationCenter.default.post(name: ActionStore.changedNotification, object: action, userInfo: nil)
     }
     
     func item(at index: Int) -> Action? {
         return self.actions[index]
+    }
+    
+    func delete(at index: Int) {
+        let action = Action(type: .empty, position: index, phoneNumber: nil, image: nil)
+        self.save(action)
     }
 }
 
