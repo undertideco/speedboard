@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280C45B724E628D60098E17A /* SpeedLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45B624E628D60098E17A /* SpeedLaunchTests.swift */; };
+		280C45BE24E628DF0098E17A /* ActionStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45AD24E628620098E17A /* ActionStoreTest.swift */; };
+		281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 281ADE1B24E84B7900421C9B /* ComposableArchitecture */; };
+		281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */; };
+		281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281ADE2024E8540D00421C9B /* StateManagement.swift */; };
 		28388A0924C8F5060008AE7F /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 28388A0824C8F5060008AE7F /* QGrid */; };
 		28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28388A0A24C8F9870008AE7F /* UIImage+Color.swift */; };
 		2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64724490FA500DB6BAA /* AppDelegate.swift */; };
@@ -31,7 +36,23 @@
 		28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C9177A245A49EE007A9AAA /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		280C45B924E628D60098E17A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2840C63C24490FA500DB6BAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2840C64324490FA500DB6BAA;
+			remoteInfo = SpeedLaunch;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		280C45AD24E628620098E17A /* ActionStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStoreTest.swift; sourceTree = "<group>"; };
+		280C45B424E628D60098E17A /* SpeedLaunchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeedLaunchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		280C45B624E628D60098E17A /* SpeedLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedLaunchTests.swift; sourceTree = "<group>"; };
+		280C45B824E628D60098E17A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectoryBacked.swift; sourceTree = "<group>"; };
+		281ADE2024E8540D00421C9B /* StateManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManagement.swift; sourceTree = "<group>"; };
 		28388A0A24C8F9870008AE7F /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		2840C64424490FA500DB6BAA /* SpeedLaunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeedLaunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2840C64724490FA500DB6BAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,12 +77,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		280C45B124E628D60098E17A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2840C64124490FA500DB6BAA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				28388A0924C8F5060008AE7F /* QGrid in Frameworks */,
 				28BF0F8424511D3E004C68D8 /* LetterAvatarKit in Frameworks */,
+				281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */,
 				2879EB9724526B5F00992E08 /* PhoneNumberKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,10 +98,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		280C45B524E628D60098E17A /* SpeedLaunchTests */ = {
+			isa = PBXGroup;
+			children = (
+				280C45AD24E628620098E17A /* ActionStoreTest.swift */,
+				280C45B624E628D60098E17A /* SpeedLaunchTests.swift */,
+				280C45B824E628D60098E17A /* Info.plist */,
+			);
+			path = SpeedLaunchTests;
+			sourceTree = "<group>";
+		};
+		281ADE1D24E853C600421C9B /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */,
+				281ADE2024E8540D00421C9B /* StateManagement.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		2840C63B24490FA500DB6BAA = {
 			isa = PBXGroup;
 			children = (
 				2840C64624490FA500DB6BAA /* SpeedLaunch */,
+				280C45B524E628D60098E17A /* SpeedLaunchTests */,
 				2840C64524490FA500DB6BAA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				2840C64424490FA500DB6BAA /* SpeedLaunch.app */,
+				280C45B424E628D60098E17A /* SpeedLaunchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +138,7 @@
 		2840C64624490FA500DB6BAA /* SpeedLaunch */ = {
 			isa = PBXGroup;
 			children = (
+				281ADE1D24E853C600421C9B /* Storage */,
 				2840C64724490FA500DB6BAA /* AppDelegate.swift */,
 				2840C64924490FA500DB6BAA /* SceneDelegate.swift */,
 				2840C64B24490FA500DB6BAA /* ContentView.swift */,
@@ -131,6 +182,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		280C45B324E628D60098E17A /* SpeedLaunchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 280C45BB24E628D60098E17A /* Build configuration list for PBXNativeTarget "SpeedLaunchTests" */;
+			buildPhases = (
+				280C45B024E628D60098E17A /* Sources */,
+				280C45B124E628D60098E17A /* Frameworks */,
+				280C45B224E628D60098E17A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				280C45BA24E628D60098E17A /* PBXTargetDependency */,
+			);
+			name = SpeedLaunchTests;
+			productName = SpeedLaunchTests;
+			productReference = 280C45B424E628D60098E17A /* SpeedLaunchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2840C64324490FA500DB6BAA /* SpeedLaunch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2840C65824490FA600DB6BAA /* Build configuration list for PBXNativeTarget "SpeedLaunch" */;
@@ -148,6 +217,7 @@
 				28BF0F8324511D3E004C68D8 /* LetterAvatarKit */,
 				2879EB9624526B5F00992E08 /* PhoneNumberKit */,
 				28388A0824C8F5060008AE7F /* QGrid */,
+				281ADE1B24E84B7900421C9B /* ComposableArchitecture */,
 			);
 			productName = SpeedLaunch;
 			productReference = 2840C64424490FA500DB6BAA /* SpeedLaunch.app */;
@@ -159,10 +229,14 @@
 		2840C63C24490FA500DB6BAA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Undertide LLP";
 				TargetAttributes = {
+					280C45B324E628D60098E17A = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 2840C64324490FA500DB6BAA;
+					};
 					2840C64324490FA500DB6BAA = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -181,17 +255,26 @@
 				28BF0F8224511D3E004C68D8 /* XCRemoteSwiftPackageReference "LetterAvatarKit" */,
 				2879EB9524526B5F00992E08 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				28388A0724C8F5060008AE7F /* XCRemoteSwiftPackageReference "QGrid" */,
+				281ADE1A24E84B7900421C9B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 2840C64524490FA500DB6BAA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				2840C64324490FA500DB6BAA /* SpeedLaunch */,
+				280C45B324E628D60098E17A /* SpeedLaunchTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		280C45B224E628D60098E17A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2840C64224490FA500DB6BAA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,6 +289,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		280C45B024E628D60098E17A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				280C45B724E628D60098E17A /* SpeedLaunchTests.swift in Sources */,
+				280C45BE24E628DF0098E17A /* ActionStoreTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2840C64024490FA500DB6BAA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,7 +309,9 @@
 				28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */,
 				28BF0F86245120A9004C68D8 /* ActionsStore.swift in Sources */,
 				286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */,
+				281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
+				281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */,
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
 				287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
@@ -229,6 +323,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		280C45BA24E628D60098E17A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2840C64324490FA500DB6BAA /* SpeedLaunch */;
+			targetProxy = 280C45B924E628D60098E17A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */ = {
@@ -242,6 +344,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		280C45BC24E628D60098E17A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EZ49532236;
+				INFOPLIST_FILE = SpeedLaunchTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.undertide.SpeedLaunchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeedLaunch.app/SpeedLaunch";
+			};
+			name = Debug;
+		};
+		280C45BD24E628D60098E17A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EZ49532236;
+				INFOPLIST_FILE = SpeedLaunchTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.undertide.SpeedLaunchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeedLaunch.app/SpeedLaunch";
+			};
+			name = Release;
+		};
 		2840C65624490FA600DB6BAA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -401,6 +547,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		280C45BB24E628D60098E17A /* Build configuration list for PBXNativeTarget "SpeedLaunchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				280C45BC24E628D60098E17A /* Debug */,
+				280C45BD24E628D60098E17A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2840C63F24490FA500DB6BAA /* Build configuration list for PBXProject "SpeedLaunch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

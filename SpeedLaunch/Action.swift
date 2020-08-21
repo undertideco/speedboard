@@ -9,7 +9,7 @@
 import SwiftUI
 import PhoneNumberKit
 
-struct Action: Codable {
+struct Action: Codable, Equatable {
     let type: ActionType
     let position: Int
     let phoneNumber: String?
@@ -40,4 +40,3 @@ struct Action: Codable {
 extension Action: Identifiable {
     public var id: Int { self.position }
 }
-

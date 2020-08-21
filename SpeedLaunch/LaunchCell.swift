@@ -13,6 +13,7 @@ struct LaunchCell: View {
     var action: Action
     
     var handleCellPressed: ((Action?) -> Void)?
+    var onDelete: ((Action) -> Void)?
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
@@ -44,7 +45,7 @@ struct LaunchCell: View {
                     .font(.system(size: 24))
                     .offset(x: -5, y: -5)
                     .onTapGesture {
-                        ActionStore.shared.delete(at: self.action.position)
+                        self.onDelete?(self.action)
                     }
             }
         }

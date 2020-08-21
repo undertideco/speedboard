@@ -8,49 +8,55 @@
 
 import SwiftUI
 import QGrid
+import ComposableArchitecture
 
 struct ContentView: View {
+    let store: Store<AppState, AppAction>
+    
     @State var isShowingConfiguratorPopupCard = false
     @State var isShowingConfigurationScreen = false
     @State var selectedIndex: Int = 0
     @State var isEditing: Bool = false
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack(alignment: .center, spacing: 8) {
-                HStack {
-                    Button(isEditing ? "Done" : "Edit") {
-                        self.isEditing = !self.isEditing
+        WithViewStore(self.store) { viewStore in
+            ZStack(alignment: .bottom) {
+                VStack(alignment: .center, spacing: 8) {
+                    HStack {
+                        Button(self.isEditing ? "Done" : "Edit") {
+                            self.isEditing = !self.isEditing
+                        }
+                        Image("applogo")
+                            .frame(width: CGFloat(40), height: CGFloat(40))
                     }
-                    Image("applogo")
-                        .frame(width: CGFloat(40), height: CGFloat(40))
+                    Spacer()
+
+                    QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
+                        LaunchCell(deletable: self.$isEditing,
+                                   action: action,
+                                   handleCellPressed: self.handleCellPressed(_:))
+                    }
+
+                    Spacer()
+                    
+                    if isShowingConfiguratorPopupCard {
+                        ConfigurationCardView {
+                            self.isShowingConfiguratorPopupCard = false
+                        } handleCardActionSelected: { _ in
+                            self.isShowingConfiguratorPopupCard = false
+                            self.isShowingConfigurationScreen = true
+                        }
+                        .transition(.move(edge: .bottom))
+                        .animation(.easeInOut)
+                    }
                 }
-                Spacer()
-                
-                QGrid(ActionStore.shared.actionsToDisplay, columns: 3) { action in
-                    LaunchCell(deletable: self.$isEditing, action: action, handleCellPressed: self.handleCellPressed(_:))
-                }
-                
-                Spacer()
+                .contentShape(Rectangle())
             }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                self.isShowingConfiguratorPopupCard = false
+            .sheet(isPresented: $isShowingConfigurationScreen) {
+                ConfigurationView(store: store,
+                                  isPresented: self.$isShowingConfigurationScreen,
+                                  index: self.selectedIndex)
             }
-            
-            if isShowingConfiguratorPopupCard {
-                ConfigurationCardView(handleCardDismiss: {
-                    self.isShowingConfiguratorPopupCard = false
-                }) { _ in
-                    self.isShowingConfiguratorPopupCard = false
-                    self.isShowingConfigurationScreen = true
-                }
-                .transition(.move(edge: .bottom))
-                .animation(.easeInOut)
-            }
-        }
-        .sheet(isPresented: $isShowingConfigurationScreen) {
-            ConfigurationView(isPresented: self.$isShowingConfigurationScreen, index: self.selectedIndex)
         }
     }
     
@@ -74,6 +80,10 @@ struct TestView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isShowingConfiguratorPopupCard: true)
+        ContentView(store:
+                        Store(initialState: AppState(),
+                              reducer: appReducer,
+                              environment: AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
+        )
     }
 }
