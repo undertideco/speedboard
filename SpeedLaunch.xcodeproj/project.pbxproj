@@ -422,6 +422,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		281ADE1A24E84B7900421C9B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
 		28388A0724C8F5060008AE7F /* XCRemoteSwiftPackageReference "QGrid" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Q-Mobile/QGrid.git";
@@ -449,6 +457,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		281ADE1B24E84B7900421C9B /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 281ADE1A24E84B7900421C9B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
 		28388A0824C8F5060008AE7F /* QGrid */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 28388A0724C8F5060008AE7F /* XCRemoteSwiftPackageReference "QGrid" */;
