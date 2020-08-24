@@ -31,7 +31,7 @@ struct Action: Codable, Equatable {
             var components = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
             components.scheme = "tel"
             return components.url!
-        case .empty:
+        default:
             return nil
         }
     }

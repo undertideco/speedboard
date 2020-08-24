@@ -9,5 +9,5 @@
 import Foundation
 
 enum ActionType: String, CaseIterable, Codable {
-    case message, call, empty
+    case message, call, facetime, empty
 }
