@@ -14,7 +14,12 @@ struct AppState: Equatable {
         return lhs.actions?.count == rhs.actions?.count
     }
     
-    @DocDirectoryBacked<[Action]>(location: .storeLocation) var actions
+    @DocDirectoryBacked<[Action]>(location: .storeLocation) private var _actions
+    var actions: [Action]? {
+        didSet {
+            _actions = actions
+        }
+    }
     
     var actionsToDisplay: [Action] {
         if let unwrappedActions = actions {
@@ -24,6 +29,10 @@ struct AppState: Equatable {
         } else {
             return [Action(type: .empty, position: 999, phoneNumber: nil, image: nil)]
         }
+    }
+    
+    init() {
+        actions = _actions
     }
 }
 
@@ -42,7 +51,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         } else {
             state.actions = [action]
         }
-        print("add action")
         return .none
     case .deleteAction(let index):
         print("remove action")
