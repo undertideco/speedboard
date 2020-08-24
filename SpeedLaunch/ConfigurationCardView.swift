@@ -32,24 +32,39 @@ struct ConfigurationCardView: View {
             }
             .frame(minHeight: 50)
             .padding([.horizontal], 16)
-            HStack(alignment: .center, spacing: 52) {
-                ActionView(type: .message)
-                    .frame(maxWidth: 70, maxHeight: 70)
-                    .onTapGesture {
-                        self.handleCardActionSelected?(.message)
-                    }
-                ActionView(type: .call)
-                    .frame(maxWidth: 70, maxHeight: 70)
-                    .onTapGesture {
-                        self.handleCardActionSelected?(.call)
-                    }
+            GeometryReader { geo in
+                HStack(alignment: .center, spacing: 8) {
+                    ActionView(type: .message)
+                        .frame(maxWidth: geo.size.width / 3, maxHeight: 70)
+                        .onTapGesture {
+                            self.handleCardActionSelected?(.message)
+                        }
+                    ActionView(type: .call)
+                        .frame(maxWidth: geo.size.width / 3, maxHeight: 70)
+                        .onTapGesture {
+                            self.handleCardActionSelected?(.call)
+                        }
+                    
+                    ActionView(type: .facetime)
+                        .frame(maxWidth: geo.size.width / 3, maxHeight: 70)
+                        .onTapGesture {
+                            self.handleCardActionSelected?(.call)
+                        }
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.white)
             }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.white)
+            .frame(height: 92)
         }
         .background(Color(red: 0.75, green: 0.89, blue: 0.95))
         .cornerRadius(20)
         .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct ConfigurationCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        ConfigurationCardView()
     }
 }

@@ -32,7 +32,6 @@
 		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
 		28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B1E615245792F4003BB570 /* ShortcutImageView.swift */; };
 		28BF0F8424511D3E004C68D8 /* LetterAvatarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 28BF0F8324511D3E004C68D8 /* LetterAvatarKit */; };
-		28BF0F86245120A9004C68D8 /* ActionsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BF0F85245120A9004C68D8 /* ActionsStore.swift */; };
 		28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C9177A245A49EE007A9AAA /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +71,6 @@
 		287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPickerViewController.swift; sourceTree = "<group>"; };
 		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
 		28B1E615245792F4003BB570 /* ShortcutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutImageView.swift; sourceTree = "<group>"; };
-		28BF0F85245120A9004C68D8 /* ActionsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsStore.swift; sourceTree = "<group>"; };
 		28C9177A245A49EE007A9AAA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,7 +153,6 @@
 				2840C65524490FA600DB6BAA /* Info.plist */,
 				2840C64F24490FA600DB6BAA /* Preview Content */,
 				287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */,
-				28BF0F85245120A9004C68D8 /* ActionsStore.swift */,
 				2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */,
 				28388A0A24C8F9870008AE7F /* UIImage+Color.swift */,
 			);
@@ -307,7 +304,6 @@
 				28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */,
 				2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */,
 				28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */,
-				28BF0F86245120A9004C68D8 /* ActionsStore.swift in Sources */,
 				286376F82449663E005AFB9D /* ConfigurationCardView.swift in Sources */,
 				281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,

@@ -15,6 +15,7 @@ struct AppState: Equatable {
     }
     
     @DocDirectoryBacked<[Action]>(location: .storeLocation) var actions
+    
     var actionsToDisplay: [Action] {
         if let unwrappedActions = actions {
             var actionsToReturn = unwrappedActions
