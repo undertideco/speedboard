@@ -27,9 +27,7 @@ struct AppState: Equatable {
     }
 }
 
-struct AppEnvironment {
-  var mainQueue: AnySchedulerOf<DispatchQueue>
-}
+struct AppEnvironment {}
 
 enum AppAction: Equatable {
     case addAction(Action)
