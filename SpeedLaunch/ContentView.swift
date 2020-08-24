@@ -33,7 +33,12 @@ struct ContentView: View {
                     QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
                         LaunchCell(deletable: self.$isEditing,
                                    action: action,
-                                   handleCellPressed: self.handleCellPressed(_:))
+                                   handleCellPressed: self.handleCellPressed(_:),
+                                   onDelete: { action in
+                                        viewStore.send(
+                                            .deleteAction(viewStore.actionsToDisplay.firstIndex(of: action)!)
+                                        )
+                                   })
                     }
 
                     Spacer()
@@ -82,7 +87,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(store:
                         Store(initialState: AppState(),
                               reducer: appReducer,
-                              environment: AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
+                              environment: AppEnvironment())
         )
     }
 }
