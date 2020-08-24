@@ -15,7 +15,6 @@ struct ContentView: View {
     
     @State var isShowingConfiguratorPopupCard = false
     @State var isShowingConfigurationScreen = false
-    @State var selectedIndex: Int = 0
     @State var isEditing: Bool = false
     
     var body: some View {
@@ -55,7 +54,7 @@ struct ContentView: View {
             .sheet(isPresented: $isShowingConfigurationScreen) {
                 ConfigurationView(store: store,
                                   isPresented: self.$isShowingConfigurationScreen,
-                                  index: self.selectedIndex)
+                                  index: viewStore.actionsToDisplay.count - 1)
             }
         }
     }

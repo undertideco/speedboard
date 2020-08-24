@@ -39,8 +39,8 @@ enum AppAction: Equatable {
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
     switch action {
     case .addAction(let action):
-        if var actions = state.actions {
-            actions.append(action)
+        if let _ = state.actions {
+            state.actions!.append(action)
         } else {
             state.actions = [action]
         }

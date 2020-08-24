@@ -40,11 +40,11 @@ struct ActionView_Preview: PreviewProvider {
     static var previews: some View {
         HStack {
             ActionView(type: .call)
-                .frame(width: 115, height: 72, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 115, height: 72, alignment: .center)
             ActionView(type: .message)
-                .frame(width: 115, height: 72, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 115, height: 72, alignment: .center)
             ActionView(type: .facetime)
-                .frame(width: 115, height: 72, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 115, height: 72, alignment: .center)
         }
 
     }
