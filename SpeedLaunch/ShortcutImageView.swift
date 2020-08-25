@@ -24,16 +24,45 @@ struct ShortcutImageView: View {
                 .onTapGesture {
                     self.handleTap?()
                 }
-            
+                        
             if type == .call {
-                Image("call_glyph")
-                    .foregroundColor(.green)
+                Image(systemName: "phone.fill")
+                    .actionBadged()
             } else if type == .message {
-                Image("message_glyph")
-                    .foregroundColor(.orange)
+                Image(systemName: "message.fill")
+                    .actionBadged()
             } else {
-                Image("gallery_glyph")
+                Image(systemName: "video.fill")
+                    .actionBadged()
             }
         }
+    }
+}
+
+struct ActionBadge: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 12))
+            .foregroundColor(.white)
+            .frame(width: 24, height: 24, alignment: .center)
+            .background(Color.green)
+            .cornerRadius(5.0)
+    }
+}
+
+extension Image {
+    func actionBadged() -> some View {
+        self.modifier(ActionBadge())
+    }
+}
+
+struct ShortcutImageView_Preview: PreviewProvider {
+    static var previews: some View {
+        VStack {
+            ShortcutImageView(type: .call, image: UIImage.imageWithColor(color: .blue))
+            ShortcutImageView(type: .message, image: UIImage.imageWithColor(color: .blue))
+            ShortcutImageView(type: .facetime, image: UIImage.imageWithColor(color: .blue))
+        }
+
     }
 }
