@@ -31,14 +31,22 @@ struct ContentView: View {
                     Spacer()
 
                     QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
-                        LaunchCell(deletable: self.$isEditing,
-                                   action: action,
-                                   handleCellPressed: self.handleCellPressed(_:),
-                                   onDelete: { action in
-                                        viewStore.send(
-                                            .deleteAction(viewStore.actionsToDisplay.firstIndex(of: action)!)
-                                        )
-                                   })
+                        Group {
+                            if action.type == .empty {
+                                EmptyLaunchCell(handlePressed: handleNewCellPressed)
+                                    .frame(width: 100, height: 100, alignment: .center)
+                            } else {
+                                LaunchCell(deletable: self.$isEditing,
+                                           action: action,
+                                           handlePressed: handleCellPressed,
+                                           onDelete: { action in
+                                                viewStore.send(
+                                                    .deleteAction(viewStore.actionsToDisplay.firstIndex(of: action)!)
+                                                )
+                                           })
+                                    .frame(width: 100, height: 100, alignment: .center)
+                            }
+                        }
                     }
 
                     Spacer()
@@ -62,6 +70,12 @@ struct ContentView: View {
                                   index: viewStore.actionsToDisplay.count - 1)
             }
         }
+    }
+    
+    func handleNewCellPressed() {
+        guard self.isShowingConfiguratorPopupCard == false else { return }
+
+        self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
     }
     
     func handleCellPressed(_ action: Action?) {

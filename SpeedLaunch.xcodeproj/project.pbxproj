@@ -31,8 +31,11 @@
 		287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */; };
 		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
 		28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B1E615245792F4003BB570 /* ShortcutImageView.swift */; };
+		28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */; };
+		28B7535D24F5840A0072B949 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535C24F5840A0072B949 /* Colors.swift */; };
 		28BF0F8424511D3E004C68D8 /* LetterAvatarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 28BF0F8324511D3E004C68D8 /* LetterAvatarKit */; };
 		28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C9177A245A49EE007A9AAA /* ImagePicker.swift */; };
+		28D17DC024F59C7A00AE67F0 /* CellLaunchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D17DBF24F59C7A00AE67F0 /* CellLaunchable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +74,10 @@
 		287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPickerViewController.swift; sourceTree = "<group>"; };
 		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
 		28B1E615245792F4003BB570 /* ShortcutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutImageView.swift; sourceTree = "<group>"; };
+		28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLaunchCell.swift; sourceTree = "<group>"; };
+		28B7535C24F5840A0072B949 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		28C9177A245A49EE007A9AAA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		28D17DBF24F59C7A00AE67F0 /* CellLaunchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellLaunchable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +143,8 @@
 			isa = PBXGroup;
 			children = (
 				281ADE1D24E853C600421C9B /* Storage */,
+				28B7535E24F584120072B949 /* Helpers */,
+				28D17DBE24F59B8400AE67F0 /* ActionCells */,
 				2840C64724490FA500DB6BAA /* AppDelegate.swift */,
 				2840C64924490FA500DB6BAA /* SceneDelegate.swift */,
 				2840C64B24490FA500DB6BAA /* ContentView.swift */,
@@ -144,7 +152,6 @@
 				28B1E615245792F4003BB570 /* ShortcutImageView.swift */,
 				286376F324496606005AFB9D /* ActionView.swift */,
 				286376F1244965F0005AFB9D /* ActionType.swift */,
-				286376F524496626005AFB9D /* LaunchCell.swift */,
 				286376F72449663E005AFB9D /* ConfigurationCardView.swift */,
 				286376F924496F72005AFB9D /* Action.swift */,
 				28C9177C245A4DB4007A9AAA /* From UIKit */,
@@ -167,6 +174,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		28B7535E24F584120072B949 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				28B7535C24F5840A0072B949 /* Colors.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		28C9177C245A4DB4007A9AAA /* From UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +189,16 @@
 				287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */,
 			);
 			path = "From UIKit";
+			sourceTree = "<group>";
+		};
+		28D17DBE24F59B8400AE67F0 /* ActionCells */ = {
+			isa = PBXGroup;
+			children = (
+				28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */,
+				286376F524496626005AFB9D /* LaunchCell.swift */,
+				28D17DBF24F59C7A00AE67F0 /* CellLaunchable.swift */,
+			);
+			path = ActionCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				286376F424496606005AFB9D /* ActionView.swift in Sources */,
+				28B7535D24F5840A0072B949 /* Colors.swift in Sources */,
 				287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */,
 				28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */,
 				2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */,
@@ -310,8 +336,10 @@
 				281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */,
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
 				287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */,
+				28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
 				287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */,
+				28D17DC024F59C7A00AE67F0 /* CellLaunchable.swift in Sources */,
 				286376FA24496F72005AFB9D /* Action.swift in Sources */,
 				2840C64C24490FA500DB6BAA /* ContentView.swift in Sources */,
 				286376F2244965F0005AFB9D /* ActionType.swift in Sources */,
