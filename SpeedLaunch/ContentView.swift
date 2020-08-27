@@ -19,17 +19,15 @@ struct ContentView: View {
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
-            ZStack(alignment: .bottom) {
+            ZStack {
                 VStack(alignment: .center, spacing: 8) {
                     HStack {
-                        Button(self.isEditing ? "Done" : "Edit") {
-                            self.isEditing = !self.isEditing
-                        }
-                        Image("applogo")
-                            .frame(width: CGFloat(40), height: CGFloat(40))
+                        Button(action: {}) {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.largeTitle)
+                        }.foregroundColor(.blue)
                     }
-                    Spacer()
-
+                    
                     QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
                         Group {
                             if action.type == .empty {
@@ -48,21 +46,18 @@ struct ContentView: View {
                             }
                         }
                     }
-
-                    Spacer()
-                    
-                    if isShowingConfiguratorPopupCard {
-                        ConfigurationCardView {
-                            self.isShowingConfiguratorPopupCard = false
-                        } handleCardActionSelected: { _ in
-                            self.isShowingConfiguratorPopupCard = false
-                            self.isShowingConfigurationScreen = true
-                        }
-                        .transition(.move(edge: .bottom))
-                        .animation(.easeInOut)
-                    }
                 }
-                .contentShape(Rectangle())
+                if isShowingConfiguratorPopupCard {
+                    ConfigurationCardView {
+                        self.isShowingConfiguratorPopupCard = false
+                    } handleCardActionSelected: { _ in
+                        self.isShowingConfiguratorPopupCard = false
+                        self.isShowingConfigurationScreen = true
+                    }
+                    .frame(height: 100)
+                    .transition(.move(edge: .bottom))
+                    .animation(.easeInOut)
+                }
             }
             .sheet(isPresented: $isShowingConfigurationScreen) {
                 ConfigurationView(store: store,
@@ -87,12 +82,6 @@ struct ContentView: View {
         } else {
             self.isShowingConfiguratorPopupCard = !isShowingConfiguratorPopupCard
         }
-    }
-}
-
-struct TestView: View {
-    var body: some View {
-        Circle()
     }
 }
 
