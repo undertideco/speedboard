@@ -12,11 +12,18 @@ struct EmptyLaunchCell: View, Launchable {
     var handlePressed: ((()) -> Void)?
     
     var body: some View {
-        ZStack {
-            Circle().inset(by: 15).foregroundColor(.lightBlue)
-            Image(systemName: "plus")
-                .font(.system(size: 28, weight: .regular, design: .default))
-                .foregroundColor(.white)
+        VStack {
+            ZStack {
+                Circle()
+                    .foregroundColor(.lightBlue)
+                Image(systemName: "plus")
+                    .font(.system(size: 28, weight: .regular, design: .default))
+                    .foregroundColor(.white)
+            }
+            .frame(width: 62, height: 62, alignment: .center)
+            
+            Text("New action")
+                .font(.system(size: 11))
         }
         .onTapGesture {
             self.handlePressed?(())
