@@ -19,7 +19,7 @@ struct ContentView: View {
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
-            ZStack {
+            ZStack(alignment: .bottom) {
                 VStack(alignment: .center, spacing: 8) {
                     HStack {
                         Button(action: {}) {
@@ -54,7 +54,7 @@ struct ContentView: View {
                         self.isShowingConfiguratorPopupCard = false
                         self.isShowingConfigurationScreen = true
                     }
-                    .frame(height: 100)
+                    .fixedSize(horizontal: false, vertical: true)
                     .transition(.move(edge: .bottom))
                     .animation(.easeInOut)
                 }

@@ -59,7 +59,6 @@ struct ConfigurationCardView: View {
         }
         .background(Color(red: 0.75, green: 0.89, blue: 0.95))
         .cornerRadius(20)
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
