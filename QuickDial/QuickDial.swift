@@ -85,36 +85,15 @@ struct QuickDialEntryView : View {
     
     var body: some View {
         GeometryReader { geo in
-            LazyVGrid(columns: columns) {
+            LazyVGrid(columns: columns, spacing: 8) {
                 ForEach(actions.dropLast(), id: \.id) { action  in
                     LaunchCell(deletable: .constant(false),
                                action: action)
                         .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
                         .widgetURL(action.generateURLLaunchSchemeString())
                 }
-            }.background(Color.clear)
+            }
         }
-    }
-}
-
-extension LaunchCell {
-    func actionResizable(geo: GeometryProxy, rows: Int, cols: Int) -> some View {
-        self.modifier(ActionWidgetResizable(geo: geo, rows: rows, cols: cols))
-    }
-}
-
-struct ActionWidgetResizable: ViewModifier {
-    let geo: GeometryProxy
-    let rows: Int
-    let cols: Int
-    
-    var edgeLength: CGFloat {
-        min(geo.size.width / CGFloat(cols), geo.size.height / CGFloat(rows))
-    }
-    
-    func body(content: Content) -> some View {
-        content
-            .frame(width: edgeLength, height: edgeLength, alignment: .center)
     }
 }
 

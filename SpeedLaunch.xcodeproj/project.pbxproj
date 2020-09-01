@@ -44,6 +44,7 @@
 		2840C64E24490FA600DB6BAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2840C64D24490FA600DB6BAA /* Assets.xcassets */; };
 		2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65024490FA600DB6BAA /* Preview Assets.xcassets */; };
 		2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */; };
+		2848675524FDFA530067490D /* ActionWidgetResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */; };
 		286376F2244965F0005AFB9D /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F1244965F0005AFB9D /* ActionType.swift */; };
 		286376F424496606005AFB9D /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F324496606005AFB9D /* ActionView.swift */; };
 		286376F624496626005AFB9D /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F524496626005AFB9D /* LaunchCell.swift */; };
@@ -121,6 +122,7 @@
 		2840C65024490FA600DB6BAA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2840C65324490FA600DB6BAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2840C65524490FA600DB6BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWidgetResizable.swift; sourceTree = "<group>"; };
 		286376F1244965F0005AFB9D /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		286376F324496606005AFB9D /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		286376F524496626005AFB9D /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				2839639424FDC884001AF3F3 /* QuickDial.intentdefinition */,
 				2839639524FDC886001AF3F3 /* Assets.xcassets */,
 				2839639724FDC886001AF3F3 /* Info.plist */,
+				2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */,
 			);
 			path = QuickDial;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				283963B924FDD05D001AF3F3 /* UIImage+Color.swift in Sources */,
 				283963A124FDCA00001AF3F3 /* Action.swift in Sources */,
 				283963A724FDCA4E001AF3F3 /* DocDirectoryBacked.swift in Sources */,
+				2848675524FDFA530067490D /* ActionWidgetResizable.swift in Sources */,
 				283963B424FDD036001AF3F3 /* EmptyLaunchCell.swift in Sources */,
 				283963B824FDD051001AF3F3 /* Colors.swift in Sources */,
 				2839639324FDC884001AF3F3 /* QuickDial.swift in Sources */,
@@ -587,6 +591,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -611,6 +616,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
