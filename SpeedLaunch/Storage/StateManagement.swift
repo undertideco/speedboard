@@ -66,7 +66,3 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         return .none
     }
 }
-
-fileprivate extension String {
-    static let storeLocation = "actions.json"
-}

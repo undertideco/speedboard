@@ -10,7 +10,7 @@ import Foundation
 
 @propertyWrapper struct DocDirectoryBacked<Value: Codable> {
     let location: String
-    let documentDirectory = try! FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    let documentDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")!
     
     private var dirToSave: URL {
         return documentDirectory.appendingPathComponent("\(location).json")
