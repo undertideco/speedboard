@@ -21,13 +21,13 @@ struct ActionView: View {
             VStack(spacing: 5) {
                 if type == .call {
                     Image(systemName: "phone.fill")
-                    Text("call")
+                    Text("Call")
                 } else if type == .message {
                     Image(systemName: "message.fill")
-                    Text("message")
+                    Text("Message")
                 } else {
                     Image(systemName: "video.fill")
-                    Text("facetime")
+                    Text("Facetime")
                 }
             }.padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
         }
