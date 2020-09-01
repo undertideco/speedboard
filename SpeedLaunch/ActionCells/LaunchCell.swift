@@ -17,18 +17,21 @@ struct LaunchCell: View, Launchable {
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
-            ZStack {
-                Circle().inset(by: 15).foregroundColor(Color.white)
-                // FIXME: not an ideal implementation for images
-                ShortcutImageView(type: action.type, image: UIImage(data: action.image ?? UIImage.imageWithColor(color: .clear).jpegData(compressionQuality: 70)!)!) {
-                   self.handlePressed?(self.action)
+            GeometryReader { geo in
+                ZStack {
+                    Circle().inset(by: 15).foregroundColor(Color.white)
+                    // FIXME: not an ideal implementation for images
+                    ShortcutImageView(type: action.type, image: UIImage(data: action.image ?? UIImage.imageWithColor(color: .clear).jpegData(compressionQuality: 70)!)!) {
+                       self.handlePressed?(self.action)
+                    }.frame(width: geo.size.width * 0.75, height: geo.size.height * 0.75, alignment: .center)
+                }
+                .background(Color.lightBlue)
+                .cornerRadius(20)
+                .onTapGesture {
+                    self.handlePressed?(self.action)
                 }
             }
-            .background(Color.lightBlue)
-            .cornerRadius(20)
-            .onTapGesture {
-                self.handlePressed?(self.action)
-            }
+
         
             if deletable {
                 Image(systemName: "xmark.circle.fill")

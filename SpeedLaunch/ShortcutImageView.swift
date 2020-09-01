@@ -19,11 +19,11 @@ struct ShortcutImageView: View {
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 75, height: 75)
                 .mask(Circle())
                 .onTapGesture {
                     self.handleTap?()
                 }
+            
                         
             if type == .call {
                 Image(systemName: "phone.fill")
@@ -60,8 +60,11 @@ struct ShortcutImageView_Preview: PreviewProvider {
     static var previews: some View {
         VStack {
             ShortcutImageView(type: .call, image: UIImage.imageWithColor(color: .blue))
+                .frame(width: 100, height: 100, alignment: .center)
             ShortcutImageView(type: .message, image: UIImage.imageWithColor(color: .blue))
+                .frame(width: 100, height: 100, alignment: .center)
             ShortcutImageView(type: .facetime, image: UIImage.imageWithColor(color: .blue))
+                .frame(width: 100, height: 100, alignment: .center)
         }
 
     }
