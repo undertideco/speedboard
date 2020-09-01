@@ -47,7 +47,7 @@ struct ConfigurationView: View {
                         }
 
                         Picker(selection: $selectedActionType, label: Text("Action Type")) {
-                            ForEach(ActionType.allCases, id: \.self) {
+                            ForEach(ActionType.allCases.dropLast(), id: \.self) {
                                 Text("\($0.rawValue)".capitalized)
                             }
                         }.pickerStyle(SegmentedPickerStyle())
