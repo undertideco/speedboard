@@ -34,6 +34,14 @@ struct AppState: Equatable {
     init() {
         actions = _actions
     }
+    
+    #if DEBUG
+    init(actionsFromURL: URL) {
+        let data = try! Data(contentsOf: actionsFromURL)
+        let actionToSet = try! JSONDecoder().decode([Action].self, from: data)
+        actions = actionToSet
+    }
+    #endif
 }
 
 struct AppEnvironment {}

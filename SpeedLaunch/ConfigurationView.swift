@@ -119,3 +119,9 @@ struct ConfigurationView: View {
         isPresented = false
     }
 }
+
+struct ConfigurationView_Previews: PreviewProvider {    
+    static var previews: some View {
+        ConfigurationView(store: Store(initialState: AppState(actionsFromURL: URL(fileURLWithPath: Bundle.main.path(forResource: "actions", ofType: "json")!)), reducer: appReducer, environment: AppEnvironment()), isPresented: .constant(false), index: 0)
+    }
+}

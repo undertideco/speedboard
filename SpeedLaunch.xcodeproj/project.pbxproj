@@ -30,6 +30,7 @@
 		287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD884244E4D9100DA4F46 /* ConfigurationView.swift */; };
 		287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */; };
 		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
+		28AC97F124FDC02E003CE354 /* actions.json in Resources */ = {isa = PBXBuildFile; fileRef = 28AC97F024FDC02E003CE354 /* actions.json */; };
 		28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B1E615245792F4003BB570 /* ShortcutImageView.swift */; };
 		28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */; };
 		28B7535D24F5840A0072B949 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535C24F5840A0072B949 /* Colors.swift */; };
@@ -73,6 +74,7 @@
 		287AD884244E4D9100DA4F46 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPickerViewController.swift; sourceTree = "<group>"; };
 		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
+		28AC97F024FDC02E003CE354 /* actions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = actions.json; sourceTree = "<group>"; };
 		28B1E615245792F4003BB570 /* ShortcutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutImageView.swift; sourceTree = "<group>"; };
 		28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLaunchCell.swift; sourceTree = "<group>"; };
 		28B7535C24F5840A0072B949 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				2840C64F24490FA600DB6BAA /* Preview Content */,
 				287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */,
 				2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */,
+				28AC97F024FDC02E003CE354 /* actions.json */,
 				28388A0A24C8F9870008AE7F /* UIImage+Color.swift */,
 			);
 			path = SpeedLaunch;
@@ -301,6 +304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28AC97F124FDC02E003CE354 /* actions.json in Resources */,
 				2879EB9924526D0800992E08 /* PhoneNumberMetadata.json in Resources */,
 				2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */,
 				2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */,
