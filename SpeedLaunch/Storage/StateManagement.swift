@@ -60,12 +60,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         } else {
             state.actions = [action]
         }
-        WidgetCenter.shared.reloadAllTimelines()
+        WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         return .none
     case .deleteAction(let index):
         print("remove action")
         state.actions?.remove(at: index)
-        WidgetCenter.shared.reloadAllTimelines()
+        WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         return .none
     }
 }
