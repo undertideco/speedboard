@@ -61,6 +61,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+                let actionPath = components.path,
+                let params = components.queryItems else {
+                    print("Invalid URL or album path missing")
+                    return
+            }
+        
+        if let urlToLaunch = params.first(where: { $0.name == "url" })?.value {
+            print("urlToLaunch = \(urlToLaunch)")
+            UIApplication.shared.open(URL(string: urlToLaunch)!, options: [:])
+        }
+        
+        print("\(actionPath) - \(params)")
+    }
 }
 

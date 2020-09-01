@@ -87,10 +87,11 @@ struct QuickDialEntryView : View {
         GeometryReader { geo in
             LazyVGrid(columns: columns, spacing: 8) {
                 ForEach(actions.dropLast()) { action  in
-                    LaunchCell(deletable: .constant(false),
-                               action: action)
-                        .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
-                        .widgetURL(action.generateURLLaunchSchemeString())
+                    Link(destination: action.generateURLLaunchSchemeString()!) {
+                        LaunchCell(deletable: .constant(false),
+                                   action: action)
+                            .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
+                    }
                 }
             }
         }
