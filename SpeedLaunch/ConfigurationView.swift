@@ -43,6 +43,7 @@ struct ConfigurationView: View {
                                 self.isShowingSheet = true
                                 self.activeSheet = .photo
                             }
+                            .frame(width: 100, height: 100)
                             Spacer()
                         }
 
@@ -106,7 +107,7 @@ struct ConfigurationView: View {
     }
     
     func saveAction(in viewStore: ViewStore<AppState, AppAction>) {
-        let imageData = selectedContactImage?.pngData() ?? generateAvatarWithUsername(selectedContact!.givenName).pngData()!
+        let imageData = selectedContactImage?.jpegData(compressionQuality: 30) ?? generateAvatarWithUsername(selectedContact!.givenName).pngData()!
         
         let numbers = selectedContact!.phoneNumbers.compactMap { phoneNumber -> String? in
             return phoneNumber.value.stringValue
@@ -117,11 +118,5 @@ struct ConfigurationView: View {
         viewStore.send(.addAction(action))
         
         isPresented = false
-    }
-}
-
-struct ConfigurationView_Previews: PreviewProvider {    
-    static var previews: some View {
-        ConfigurationView(store: Store(initialState: AppState(actionsFromURL: URL(fileURLWithPath: Bundle.main.path(forResource: "actions", ofType: "json")!)), reducer: appReducer, environment: AppEnvironment()), isPresented: .constant(false), index: 0)
     }
 }
