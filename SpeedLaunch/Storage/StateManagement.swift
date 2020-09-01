@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WidgetKit
 import ComposableArchitecture
 
 struct AppState: Equatable {
@@ -59,10 +60,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         } else {
             state.actions = [action]
         }
+        WidgetCenter.shared.reloadAllTimelines()
         return .none
     case .deleteAction(let index):
         print("remove action")
         state.actions?.remove(at: index)
+        WidgetCenter.shared.reloadAllTimelines()
         return .none
     }
 }
