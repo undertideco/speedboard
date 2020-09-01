@@ -21,13 +21,13 @@ struct Action: Codable, Equatable {
         switch type {
         case .message:
             guard let phoneNumber = phoneNumber else { return nil }
-            let parsedNumber = try! phoneNumberKit.parse(phoneNumber)
+            let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
             var components = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
             components.scheme = "sms"
             return components.url!
         case .call:
             guard let phoneNumber = phoneNumber else { return nil }
-            let parsedNumber = try! phoneNumberKit.parse(phoneNumber)
+            let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
             var components = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
             components.scheme = "tel"
             return components.url!
