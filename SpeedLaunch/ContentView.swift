@@ -40,6 +40,7 @@ struct ContentView: View {
                             if action.type == .empty {
                                 EmptyLaunchCell(handlePressed: handleNewCellPressed)
                                     .frame(width: 100, height: 100, alignment: .center)
+                                    .padding(5)
                             } else {
                                 LaunchCell(deletable: self.$isEditing,
                                            action: action,
@@ -50,6 +51,7 @@ struct ContentView: View {
                                                 )
                                            })
                                     .frame(width: 100, height: 100, alignment: .center)
+                                    .padding(5)
                             }
                         }
                     }
