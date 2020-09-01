@@ -21,9 +21,15 @@ struct LaunchCell: View, Launchable {
                 ZStack {
                     Circle().inset(by: 15).foregroundColor(Color.white)
                     // FIXME: not an ideal implementation for images
-                    ShortcutImageView(type: action.type, image: UIImage(data: action.image ?? UIImage.imageWithColor(color: .clear).jpegData(compressionQuality: 70)!)!) {
-                       self.handlePressed?(self.action)
-                    }.frame(width: geo.size.width * 0.75, height: geo.size.height * 0.75, alignment: .center)
+                    if action.imageUrl != nil {
+                        ShortcutImageView(type: action.type, image: UIImage(contentsOfFile: action.imageUrl!.path)!) {
+                            self.handlePressed?(self.action)
+                        }.frame(width: geo.size.width * 0.75, height: geo.size.height * 0.75, alignment: .center)
+                    } else {
+                        ShortcutImageView(type: action.type, image: UIImage.imageWithColor(color: .clear)) {
+                            self.handlePressed?(self.action)
+                        }.frame(width: geo.size.width * 0.75, height: geo.size.height * 0.75, alignment: .center)
+                    }
                 }
                 .background(Color.lightBlue)
                 .cornerRadius(20)

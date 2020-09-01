@@ -13,7 +13,7 @@ struct Action: Codable, Equatable {
     let type: ActionType
     let position: Int
     let phoneNumber: String?
-    let image: Data?
+    let imageUrl: URL?
     
     func generateURLLaunchSchemeString() -> URL? {
         let phoneNumberKit = PhoneNumberKit()
@@ -38,5 +38,5 @@ struct Action: Codable, Equatable {
 }
 
 extension Action: Identifiable {
-    public var id: Int { self.position }
+    public var id: String { "\(self.position) - \(self.phoneNumber ?? "")" }
 }

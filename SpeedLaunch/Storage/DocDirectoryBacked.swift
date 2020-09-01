@@ -13,7 +13,7 @@ import Foundation
     let documentDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")!
     
     private var dirToSave: URL {
-        return documentDirectory.appendingPathComponent("\(location).json")
+        return documentDirectory.appendingPathComponent("\(location)")
     }
     
     var wrappedValue: Value? {

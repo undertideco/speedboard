@@ -25,10 +25,10 @@ struct AppState: Equatable {
     var actionsToDisplay: [Action] {
         if let unwrappedActions = actions {
             var actionsToReturn = unwrappedActions
-            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, image: nil))
+            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil))
             return actionsToReturn
         } else {
-            return [Action(type: .empty, position: 999, phoneNumber: nil, image: nil)]
+            return [Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil)]
         }
     }
     
@@ -48,22 +48,29 @@ struct AppState: Equatable {
 struct AppEnvironment {}
 
 enum AppAction: Equatable {
-    case addAction(Action)
+    case addAction(ActionType, Int, String, Data)
     case deleteAction(Int)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
     switch action {
-    case .addAction(let action):
+    case .addAction(let type, let position, let number, let imageData):
+        let imageURL = URL.urlInDocumentsDirectory(with: "\(position).png")
+        try! imageData.write(to: imageURL)
+        
+        let action = Action(type: type, position: position, phoneNumber: number, imageUrl: imageURL)
+        
         if let _ = state.actions {
             state.actions!.append(action)
         } else {
             state.actions = [action]
         }
+        
         WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         return .none
     case .deleteAction(let index):
         print("remove action")
+        try! FileManager.default.removeItem(at: .urlInDocumentsDirectory(with: "\(index).png"))
         state.actions?.remove(at: index)
         WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         return .none

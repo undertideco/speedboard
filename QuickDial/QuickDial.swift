@@ -86,7 +86,7 @@ struct QuickDialEntryView : View {
     var body: some View {
         GeometryReader { geo in
             LazyVGrid(columns: columns, spacing: 8) {
-                ForEach(actions.dropLast(), id: \.id) { action  in
+                ForEach(actions.dropLast()) { action  in
                     LaunchCell(deletable: .constant(false),
                                action: action)
                         .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)

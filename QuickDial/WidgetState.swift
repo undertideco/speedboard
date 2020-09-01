@@ -24,10 +24,10 @@ struct WidgetState: Equatable {
     var actionsToDisplay: [Action] {
         if let unwrappedActions = _actions {
             var actionsToReturn = unwrappedActions
-            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, image: nil))
+            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil))
             return actionsToReturn
         } else {
-            return [Action(type: .empty, position: 999, phoneNumber: nil, image: nil)]
+            return [Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil)]
         }
     }
 }

@@ -113,9 +113,7 @@ struct ConfigurationView: View {
             return phoneNumber.value.stringValue
         }
         
-        let action = Action(type: selectedActionType, position: index, phoneNumber: numbers[self.selectedNumberIndex], image: imageData)
-
-        viewStore.send(.addAction(action))
+        viewStore.send(.addAction(selectedActionType, index, numbers[self.selectedNumberIndex], imageData))
         
         isPresented = false
     }
