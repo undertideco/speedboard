@@ -19,6 +19,7 @@ enum ActiveConfigurationSheet {
 struct ConfigurationView: View {
     var store: Store<AppState, AppAction>
     @Binding var isPresented: Bool
+    @Binding var selectedActionType: ActionType
     var index: Int
     
     @State private var user = ""
@@ -28,7 +29,6 @@ struct ConfigurationView: View {
     @State private var selectedContactImage: UIImage?
     @State private var selectedContact: CNContact? = nil
     
-    @State private var selectedActionType = ActionType.call
     @State private var selectedNumberIndex = 0
     @State private var activeSheet: ActiveConfigurationSheet = .contacts
 

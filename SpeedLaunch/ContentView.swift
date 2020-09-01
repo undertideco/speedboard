@@ -13,6 +13,7 @@ import ComposableArchitecture
 struct ContentView: View {
     let store: Store<AppState, AppAction>
     
+    @State var actionTypeToConfigure = ActionType.call
     @State var isShowingConfiguratorPopupCard = false
     @State var isShowingConfigurationScreen = false
     @State var isEditing: Bool = false
@@ -59,7 +60,8 @@ struct ContentView: View {
                 if isShowingConfiguratorPopupCard {
                     ConfigurationCardView {
                         self.isShowingConfiguratorPopupCard = false
-                    } handleCardActionSelected: { _ in
+                    } handleCardActionSelected: { type in
+                        self.actionTypeToConfigure = type
                         self.isShowingConfiguratorPopupCard = false
                         self.isShowingConfigurationScreen = true
                     }
@@ -71,6 +73,7 @@ struct ContentView: View {
             .sheet(isPresented: $isShowingConfigurationScreen) {
                 ConfigurationView(store: store,
                                   isPresented: self.$isShowingConfigurationScreen,
+                                  selectedActionType: self.$actionTypeToConfigure,
                                   index: viewStore.actionsToDisplay.count - 1)
             }
         }
