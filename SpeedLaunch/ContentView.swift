@@ -22,10 +22,17 @@ struct ContentView: View {
             ZStack(alignment: .bottom) {
                 VStack(alignment: .center, spacing: 8) {
                     HStack {
-                        Button(action: {}) {
-                            Image(systemName: "pencil.circle.fill")
-                                .font(.largeTitle)
-                        }.foregroundColor(.blue)
+                        Button(action: {
+                            self.isEditing = !self.isEditing
+                        }) {
+                            if self.isEditing {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.largeTitle)
+                            } else {
+                                Image(systemName: "pencil.circle.fill")
+                                    .font(.largeTitle)
+                            }
+                        }.foregroundColor(self.isEditing ? .green : .blue)
                     }
                     
                     QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
