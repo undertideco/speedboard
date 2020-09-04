@@ -39,6 +39,10 @@
 		283963B824FDD051001AF3F3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535C24F5840A0072B949 /* Colors.swift */; };
 		283963B924FDD05D001AF3F3 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28388A0A24C8F9870008AE7F /* UIImage+Color.swift */; };
 		283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283FE51E2502C0F0003CBB8F /* ConfigurationDataCell.swift */; };
+		283FE5242502E66B003CBB8F /* CNContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283FE5232502E66B003CBB8F /* CNContact.swift */; };
+		283FE5252502E66B003CBB8F /* CNContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283FE5232502E66B003CBB8F /* CNContact.swift */; };
+		283FE5272502E687003CBB8F /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283FE5262502E687003CBB8F /* UIImage.swift */; };
+		283FE5282502E687003CBB8F /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283FE5262502E687003CBB8F /* UIImage.swift */; };
 		2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64724490FA500DB6BAA /* AppDelegate.swift */; };
 		2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64924490FA500DB6BAA /* SceneDelegate.swift */; };
 		2840C64C24490FA500DB6BAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64B24490FA500DB6BAA /* ContentView.swift */; };
@@ -117,6 +121,8 @@
 		283963A824FDCA91001AF3F3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		283963B324FDCD5C001AF3F3 /* SpeedLaunch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpeedLaunch.entitlements; sourceTree = "<group>"; };
 		283FE51E2502C0F0003CBB8F /* ConfigurationDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDataCell.swift; sourceTree = "<group>"; };
+		283FE5232502E66B003CBB8F /* CNContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNContact.swift; sourceTree = "<group>"; };
+		283FE5262502E687003CBB8F /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		2840C64424490FA500DB6BAA /* SpeedLaunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeedLaunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2840C64724490FA500DB6BAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2840C64924490FA500DB6BAA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,7 +240,6 @@
 			children = (
 				28D17DBE24F59B8400AE67F0 /* ActionCells */,
 				28B1E615245792F4003BB570 /* ShortcutImageView.swift */,
-				2840C64B24490FA500DB6BAA /* ContentView.swift */,
 				286376F324496606005AFB9D /* ActionView.swift */,
 			);
 			path = Views;
@@ -282,6 +287,7 @@
 				283FE5202502C530003CBB8F /* Configuration */,
 				283FE5222502E61E003CBB8F /* Model */,
 				283FE5212502E615003CBB8F /* Views */,
+				2840C64B24490FA500DB6BAA /* ContentView.swift */,
 				28C9177C245A4DB4007A9AAA /* From UIKit */,
 				2840C64D24490FA600DB6BAA /* Assets.xcassets */,
 				2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */,
@@ -308,6 +314,8 @@
 				28B7535C24F5840A0072B949 /* Colors.swift */,
 				283963A824FDCA91001AF3F3 /* String.swift */,
 				2865238524FEFADF00B53714 /* URL.swift */,
+				283FE5232502E66B003CBB8F /* CNContact.swift */,
+				283FE5262502E687003CBB8F /* UIImage.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -502,12 +510,14 @@
 				283963B924FDD05D001AF3F3 /* UIImage+Color.swift in Sources */,
 				283963A124FDCA00001AF3F3 /* Action.swift in Sources */,
 				2865238724FEFADF00B53714 /* URL.swift in Sources */,
+				283FE5252502E66B003CBB8F /* CNContact.swift in Sources */,
 				283963A724FDCA4E001AF3F3 /* DocDirectoryBacked.swift in Sources */,
 				2848675524FDFA530067490D /* ActionWidgetResizable.swift in Sources */,
 				283963B424FDD036001AF3F3 /* EmptyLaunchCell.swift in Sources */,
 				283963B824FDD051001AF3F3 /* Colors.swift in Sources */,
 				2839639324FDC884001AF3F3 /* QuickDial.swift in Sources */,
 				283963AA24FDCA9C001AF3F3 /* String.swift in Sources */,
+				283FE5282502E687003CBB8F /* UIImage.swift in Sources */,
 				283963B524FDD039001AF3F3 /* LaunchCell.swift in Sources */,
 				283963A224FDCA12001AF3F3 /* ActionType.swift in Sources */,
 			);
@@ -526,12 +536,14 @@
 				28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */,
 				281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
+				283FE5272502E687003CBB8F /* UIImage.swift in Sources */,
 				281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */,
 				283963A924FDCA91001AF3F3 /* String.swift in Sources */,
 				283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */,
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
 				287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */,
 				28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */,
+				283FE5242502E66B003CBB8F /* CNContact.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
 				287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */,
 				28D17DC024F59C7A00AE67F0 /* CellLaunchable.swift in Sources */,

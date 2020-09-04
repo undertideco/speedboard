@@ -16,18 +16,6 @@ enum ActiveConfigurationSheet {
     case contacts, photo
 }
 
-struct ContactInfo: Hashable {
-    let value: String
-    let label: String
-}
-
-extension CNContact {
-    var contactInformationArr: [ContactInfo] {
-        return phoneNumbers.map{ ContactInfo(value: $0.value.stringValue, label: CNLabeledValue<CNPhoneNumber>.localizedString(forLabel: $0.label ?? "Phone")) } +
-            emailAddresses.map{ ContactInfo(value: String($0.value), label: CNLabeledValue<NSString>.localizedString(forLabel: $0.label ?? "Email")) }
-    }
-}
-
 struct ConfigurationView: View {
     var store: Store<AppState, AppAction>
     let selectedContact: CNContact

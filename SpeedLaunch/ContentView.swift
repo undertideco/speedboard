@@ -12,8 +12,6 @@ import ComposableArchitecture
 import Contacts
 import LetterAvatarKit
 
-extension CNContact: Identifiable {}
-
 enum ActiveConfigSheet {
     case contact, action
 }
@@ -119,14 +117,5 @@ struct ContentView_Previews: PreviewProvider {
                               reducer: appReducer,
                               environment: AppEnvironment())
         )
-    }
-}
-
-extension UIImage {
-    static func generateWithName(_ name: String) -> UIImage {
-        return  LetterAvatarMaker()
-                    .setCircle(true)
-                    .setUsername(name)
-                    .build()!
     }
 }
