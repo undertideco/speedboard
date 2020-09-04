@@ -15,7 +15,7 @@ struct EmptyLaunchCell: View, Launchable {
         VStack {
             ZStack {
                 Circle()
-                    .foregroundColor(.lightBlue)
+                    .foregroundColor(.primary)
                 Image(systemName: "plus")
                     .font(.system(size: 28, weight: .regular, design: .default))
                     .foregroundColor(.white)

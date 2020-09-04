@@ -31,7 +31,7 @@ struct LaunchCell: View, Launchable {
                         }.frame(width: geo.size.width * 0.75, height: geo.size.height * 0.75, alignment: .center)
                     }
                 }
-                .background(Color.lightBlue)
+                .background(Color.primary)
                 .cornerRadius(20)
                 .onTapGesture {
                     self.handlePressed?(self.action)
