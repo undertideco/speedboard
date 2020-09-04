@@ -16,6 +16,18 @@ enum ActiveConfigurationSheet {
     case contacts, photo
 }
 
+struct ContactInfo: Hashable {
+    let value: String
+    let label: String
+}
+
+extension CNContact {
+    var contactInformationArr: [ContactInfo] {
+        return phoneNumbers.map{ ContactInfo(value: $0.value.stringValue, label: CNLabeledValue<CNPhoneNumber>.localizedString(forLabel: $0.label ?? "Phone")) } +
+            emailAddresses.map{ ContactInfo(value: String($0.value), label: CNLabeledValue<NSString>.localizedString(forLabel: $0.label ?? "Email")) }
+    }
+}
+
 struct ConfigurationView: View {
     var store: Store<AppState, AppAction>
     @Binding var isPresented: Bool
@@ -29,7 +41,6 @@ struct ConfigurationView: View {
     @State private var selectedContactImage: UIImage?
     @State private var selectedContact: CNContact? = nil
     
-    @State private var selectedNumberIndex = 0
     @State private var activeSheet: ActiveConfigurationSheet = .contacts
 
     var body: some View {
@@ -37,28 +48,34 @@ struct ConfigurationView: View {
             NavigationView {
                 Form {
                     if selectedContact != nil {
-                        HStack(alignment: .center, spacing: 0) {
-                            Spacer()
+                        VStack(alignment: .center) {
                             ShortcutImageView(type: self.selectedActionType, image: selectedContactImage ?? generateAvatarWithUsername(selectedContact!.givenName)) {
                                 self.isShowingSheet = true
                                 self.activeSheet = .photo
                             }
                             .frame(width: 100, height: 100)
-                            Spacer()
+                            
+                            Text(selectedContact!.givenName)
+                                .font(.system(size: 31))
                         }
 
-                        Picker(selection: $selectedActionType, label: Text("Action Type")) {
-                            ForEach(ActionType.allCases.dropLast(), id: \.self) {
-                                Text("\($0.rawValue)".capitalized)
-                            }
-                        }.pickerStyle(SegmentedPickerStyle())
                         
-
-                        Picker(selection: $selectedNumberIndex, label: Text("   ")) {
-                            ForEach(selectedContact!.phoneNumbers, id: \.self) {
-                                Text("\($0.value.stringValue)")
+                        ForEach(ActionType.allCases.dropLast(), id: \.self) { actionType in
+                            Section {
+                                ForEach(selectedContact!.contactInformationArr, id: \.self) { contact in
+                                    Button(action: {
+                                        let imageData = selectedContactImage?.jpegData(compressionQuality: 30) ?? generateAvatarWithUsername(selectedContact!.givenName).pngData()!
+                                        
+                                        viewStore.send(.addAction(actionType, index, contact.value, imageData))
+                                        
+                                        isPresented = false
+                                    }) {
+                                        ConfigurationDataCell(actionType: actionType, label: contact.label, value: contact.value)
+                                            .frame(height: 72)
+                                    }
+                                }
                             }
-                        }.pickerStyle(WheelPickerStyle())
+                        }
                         
                     } else {
                         Button(action: {
@@ -68,13 +85,7 @@ struct ConfigurationView: View {
                     }
                     
                 }
-                .navigationBarTitle(Text("Configure Action"))
-                .navigationBarItems(trailing:
-                    Button("Save") {
-                        print("Action Saved!")
-                        self.saveAction(in: viewStore)
-                    }.disabled(selectedContact == nil)
-                )
+                .navigationBarTitle(Text("Pick Action"))
             }.sheet(isPresented: $isShowingSheet) {
                 if self.activeSheet == .contacts {
                     EmbeddedContactPicker(didSelectContact: { contact in
@@ -104,17 +115,5 @@ struct ConfigurationView: View {
         } else {
             selectedContactImage = generateAvatarWithUsername("\(contact.givenName)")
         }
-    }
-    
-    func saveAction(in viewStore: ViewStore<AppState, AppAction>) {
-        let imageData = selectedContactImage?.jpegData(compressionQuality: 30) ?? generateAvatarWithUsername(selectedContact!.givenName).pngData()!
-        
-        let numbers = selectedContact!.phoneNumbers.compactMap { phoneNumber -> String? in
-            return phoneNumber.value.stringValue
-        }
-        
-        viewStore.send(.addAction(selectedActionType, index, numbers[self.selectedNumberIndex], imageData))
-        
-        isPresented = false
     }
 }
