@@ -16,7 +16,7 @@ enum ActiveConfigSheet {
     case contact, action
 }
 
-struct ContentView: View {
+struct HomeView: View {
     let store: Store<AppState, AppAction>
     
     @State var isEditing: Bool = false
@@ -112,7 +112,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(store:
+        HomeView(store:
                         Store(initialState: AppState(),
                               reducer: appReducer,
                               environment: AppEnvironment())

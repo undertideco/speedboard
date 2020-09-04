@@ -45,7 +45,7 @@
 		283FE5282502E687003CBB8F /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283FE5262502E687003CBB8F /* UIImage.swift */; };
 		2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64724490FA500DB6BAA /* AppDelegate.swift */; };
 		2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64924490FA500DB6BAA /* SceneDelegate.swift */; };
-		2840C64C24490FA500DB6BAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64B24490FA500DB6BAA /* ContentView.swift */; };
+		2840C64C24490FA500DB6BAA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2840C64B24490FA500DB6BAA /* HomeView.swift */; };
 		2840C64E24490FA600DB6BAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2840C64D24490FA600DB6BAA /* Assets.xcassets */; };
 		2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65024490FA600DB6BAA /* Preview Assets.xcassets */; };
 		2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */; };
@@ -126,7 +126,7 @@
 		2840C64424490FA500DB6BAA /* SpeedLaunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeedLaunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2840C64724490FA500DB6BAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2840C64924490FA500DB6BAA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2840C64B24490FA500DB6BAA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2840C64B24490FA500DB6BAA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2840C64D24490FA600DB6BAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2840C65024490FA600DB6BAA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2840C65324490FA600DB6BAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -287,7 +287,7 @@
 				283FE5202502C530003CBB8F /* Configuration */,
 				283FE5222502E61E003CBB8F /* Model */,
 				283FE5212502E615003CBB8F /* Views */,
-				2840C64B24490FA500DB6BAA /* ContentView.swift */,
+				2840C64B24490FA500DB6BAA /* HomeView.swift */,
 				28C9177C245A4DB4007A9AAA /* From UIKit */,
 				2840C64D24490FA600DB6BAA /* Assets.xcassets */,
 				2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */,
@@ -548,7 +548,7 @@
 				287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */,
 				28D17DC024F59C7A00AE67F0 /* CellLaunchable.swift in Sources */,
 				286376FA24496F72005AFB9D /* Action.swift in Sources */,
-				2840C64C24490FA500DB6BAA /* ContentView.swift in Sources */,
+				2840C64C24490FA500DB6BAA /* HomeView.swift in Sources */,
 				2839639924FDC886001AF3F3 /* QuickDial.intentdefinition in Sources */,
 				286376F2244965F0005AFB9D /* ActionType.swift in Sources */,
 			);
