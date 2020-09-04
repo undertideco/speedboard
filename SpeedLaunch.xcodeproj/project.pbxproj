@@ -229,6 +229,26 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		283FE5212502E615003CBB8F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				28D17DBE24F59B8400AE67F0 /* ActionCells */,
+				28B1E615245792F4003BB570 /* ShortcutImageView.swift */,
+				2840C64B24490FA500DB6BAA /* ContentView.swift */,
+				286376F324496606005AFB9D /* ActionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		283FE5222502E61E003CBB8F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				286376F1244965F0005AFB9D /* ActionType.swift */,
+				286376F924496F72005AFB9D /* Action.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		2840C63B24490FA500DB6BAA = {
 			isa = PBXGroup;
 			children = (
@@ -255,23 +275,18 @@
 			isa = PBXGroup;
 			children = (
 				283963B324FDCD5C001AF3F3 /* SpeedLaunch.entitlements */,
-				281ADE1D24E853C600421C9B /* Storage */,
-				28B7535E24F584120072B949 /* Helpers */,
-				28D17DBE24F59B8400AE67F0 /* ActionCells */,
 				2840C64724490FA500DB6BAA /* AppDelegate.swift */,
 				2840C64924490FA500DB6BAA /* SceneDelegate.swift */,
-				2840C64B24490FA500DB6BAA /* ContentView.swift */,
+				281ADE1D24E853C600421C9B /* Storage */,
+				28B7535E24F584120072B949 /* Helpers */,
 				283FE5202502C530003CBB8F /* Configuration */,
-				28B1E615245792F4003BB570 /* ShortcutImageView.swift */,
-				286376F324496606005AFB9D /* ActionView.swift */,
-				286376F1244965F0005AFB9D /* ActionType.swift */,
-				286376F924496F72005AFB9D /* Action.swift */,
+				283FE5222502E61E003CBB8F /* Model */,
+				283FE5212502E615003CBB8F /* Views */,
 				28C9177C245A4DB4007A9AAA /* From UIKit */,
 				2840C64D24490FA600DB6BAA /* Assets.xcassets */,
 				2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */,
 				2840C65524490FA600DB6BAA /* Info.plist */,
 				2840C64F24490FA600DB6BAA /* Preview Content */,
-				287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */,
 				2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */,
 				28AC97F024FDC02E003CE354 /* actions.json */,
 				28388A0A24C8F9870008AE7F /* UIImage+Color.swift */,
@@ -302,6 +317,7 @@
 			children = (
 				28C9177A245A49EE007A9AAA /* ImagePicker.swift */,
 				287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */,
+				287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */,
 			);
 			path = "From UIKit";
 			sourceTree = "<group>";
