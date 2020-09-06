@@ -8,12 +8,27 @@
 
 import UIKit
 import SwiftUI
+import Combine
 import ComposableArchitecture
+
+struct NavigationCoordinator: EnvironmentKey {
+    static var defaultValue = NavigationCoordinator()
+    
+    let urlToOpen = PassthroughSubject<URL, Never>()
+}
+
+extension EnvironmentValues {
+    var navCoordinator: NavigationCoordinator {
+        get { return self[NavigationCoordinator.self] }
+        set { self[NavigationCoordinator.self] = newValue }
+    }
+}
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    lazy var navCoordinator = NavigationCoordinator()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -23,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = HomeView(
             store: Store(initialState: AppState(), reducer: appReducer, environment: AppEnvironment())
         )
+        .environment(\.navCoordinator, navCoordinator)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -63,6 +79,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
+        navCoordinator.urlToOpen.send(url)
+        
         guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
                 let actionPath = components.path,
                 let params = components.queryItems else {

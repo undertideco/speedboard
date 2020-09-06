@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280A0D0C25059BEA00823A35 /* URLSchemeActions.swift */; };
 		280C45B724E628D60098E17A /* SpeedLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45B624E628D60098E17A /* SpeedLaunchTests.swift */; };
 		280C45BE24E628DF0098E17A /* ActionStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45AD24E628620098E17A /* ActionStoreTest.swift */; };
 		281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 281ADE1B24E84B7900421C9B /* ComposableArchitecture */; };
@@ -102,6 +103,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		280A0D0C25059BEA00823A35 /* URLSchemeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeActions.swift; sourceTree = "<group>"; };
 		280C45AD24E628620098E17A /* ActionStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStoreTest.swift; sourceTree = "<group>"; };
 		280C45B424E628D60098E17A /* SpeedLaunchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeedLaunchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		280C45B624E628D60098E17A /* SpeedLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedLaunchTests.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				2865238524FEFADF00B53714 /* URL.swift */,
 				283FE5232502E66B003CBB8F /* CNContact.swift */,
 				283FE5262502E687003CBB8F /* UIImage.swift */,
+				280A0D0C25059BEA00823A35 /* URLSchemeActions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
 				283FE5272502E687003CBB8F /* UIImage.swift in Sources */,
+				280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */,
 				281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */,
 				283963A924FDCA91001AF3F3 /* String.swift in Sources */,
 				283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */,
