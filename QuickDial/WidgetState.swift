@@ -16,16 +16,6 @@ struct WidgetState: Equatable {
     }
     
     var actions: [Action]?
-    
-    var actionsToDisplay: [Action] {
-        if let unwrappedActions = actions {
-            var actionsToReturn = unwrappedActions
-            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil))
-            return actionsToReturn
-        } else {
-            return [Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil)]
-        }
-    }
 }
 
 enum WidgetAction: Equatable {

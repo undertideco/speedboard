@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-extension LaunchCell {
+extension Launchable {
     func actionResizable(geo: GeometryProxy, rows: Int, cols: Int) -> some View {
         self.modifier(ActionWidgetResizable(geo: geo, rows: rows, cols: cols))
     }

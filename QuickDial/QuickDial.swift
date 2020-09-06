@@ -75,14 +75,29 @@ struct QuickDialEntryView : View {
         }
     }
     
+    var actionsToDisplay: [Action] {
+        if actions.count >= numberOfItems {
+            return actions
+        } else {
+            var actionsToReturn = actions
+            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil))
+            return actionsToReturn
+        }
+    }
+    
     var body: some View {
         GeometryReader { geo in
             LazyVGrid(columns: columns, spacing: 8) {
-                ForEach(actions.dropLast()) { action  in
+                ForEach(actionsToDisplay, id: \.self) { action  in
                     Link(destination: action.generateURLLaunchSchemeString()!) {
-                        LaunchCell(deletable: .constant(false),
-                                   action: action)
-                            .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
+                        if action.type == .empty {
+                            EmptyLaunchCell()
+                                .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
+                        } else {
+                            LaunchCell(deletable: .constant(false),
+                                       action: action)
+                                .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
+                        }
                     }
                 }
             }
@@ -97,7 +112,7 @@ struct QuickDial: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "co.undertide.speedboard", provider: Provider(), content: { entry in
             WithViewStore(entry.actionsStore) { viewStore in
-                QuickDialEntryView(entry: entry, actions: viewStore.actionsToDisplay)
+                QuickDialEntryView(entry: entry, actions: viewStore.actions ?? [])
                     .padding(8)
                     .onAppear {
                         viewStore.send(.initialLoad)
