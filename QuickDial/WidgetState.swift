@@ -35,10 +35,7 @@ enum WidgetAction: Equatable {
 
 struct WidgetEnvironment {
     var fetchActions: () -> Effect<[Action], FileReadError> {
-        let documentDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")!
-        
-        let actionsDir = documentDirectory.appendingPathComponent("actions.json")
-        
+        let actionsDir: URL = .urlInDocumentsDirectory(with: "actions.json")
         
         do {
             let data = try Data(contentsOf: actionsDir)

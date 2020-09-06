@@ -12,10 +12,6 @@ import ComposableArchitecture
 import Contacts
 import LetterAvatarKit
 
-enum ActiveConfigSheet {
-    case contact, action
-}
-
 struct HomeView: View {
     let store: Store<AppState, AppAction>
     
@@ -24,29 +20,37 @@ struct HomeView: View {
     @State private var selectedContactImage: UIImage?
     @State private var selectedContact: CNContact? = nil
     
-    @State private var showSheet: Bool = false
-    @State private var activeSheet: ActiveConfigSheet = .contact
+    @State private var showActionPicker: Bool = false
+    @State private var showContactPicker: Bool = false
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
-                QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
-                    Group {
-                        if action.type == .empty {
-                            EmptyLaunchCell(handlePressed: handleNewCellPressed)
-                                .frame(width: 100, height: 100, alignment: .center)
-                                .padding(5)
-                        } else {
-                            LaunchCell(deletable: self.$isEditing,
-                                       action: action,
-                                       handlePressed: handleCellPressed,
-                                       onDelete: { action in
-                                            viewStore.send(
-                                                .deleteAction(viewStore.actionsToDisplay.firstIndex(of: action)!)
-                                            )
-                                       })
-                                .frame(width: 100, height: 100, alignment: .center)
-                                .padding(5)
+                ZStack {
+                    ContactPicker(showPicker: $showContactPicker) { contact in
+                        self.loadContactAndImages(contact)
+                        self.showContactPicker = false
+                    } onCancel: {
+                        self.showContactPicker = false
+                    }
+                    QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
+                        Group {
+                            if action.type == .empty {
+                                EmptyLaunchCell(handlePressed: handleNewCellPressed)
+                                    .frame(width: 100, height: 100, alignment: .center)
+                                    .padding(5)
+                            } else {
+                                LaunchCell(deletable: self.$isEditing,
+                                           action: action,
+                                           handlePressed: handleCellPressed,
+                                           onDelete: { action in
+                                                viewStore.send(
+                                                    .deleteAction(viewStore.actionsToDisplay.firstIndex(of: action)!)
+                                                )
+                                           })
+                                    .frame(width: 100, height: 100, alignment: .center)
+                                    .padding(5)
+                            }
                         }
                     }
                 }
@@ -64,26 +68,14 @@ struct HomeView: View {
                             }
                         }.foregroundColor(self.isEditing ? .green : .blue)
                 )
-            }.sheet(isPresented: $showSheet) {
-                switch activeSheet {
-                case .contact:
-                    EmbeddedContactPicker(didSelectContact: { contact in
-                        self.loadContactAndImages(contact)
-                        self.activeSheet = .action
-                    }) {
-                        self.activeSheet = .action
-                    }
-                case .action:
-                    if selectedContact !=  nil {
-                        ConfigurationView(store: store,
-                                          selectedContact: selectedContact!,
-                                          index: viewStore.actionsToDisplay.count - 1) {
-                            self.showSheet = false
-                            self.activeSheet = .contact
-                        }
+            }.sheet(isPresented: $showActionPicker) {
+                if selectedContact !=  nil {
+                    ConfigurationView(store: store,
+                                      selectedContact: selectedContact!,
+                                      index: viewStore.actionsToDisplay.count - 1) {
+                        self.showActionPicker = false
                     }
                 }
-                
             }
         }
     }
@@ -98,8 +90,7 @@ struct HomeView: View {
     }
     
     func handleNewCellPressed() {
-        self.activeSheet = .contact
-        self.showSheet = true
+        self.showContactPicker = true
     }
     
     func handleCellPressed(_ action: Action?) {

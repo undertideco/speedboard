@@ -59,7 +59,6 @@
 		2879EB9724526B5F00992E08 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2879EB9624526B5F00992E08 /* PhoneNumberKit */; };
 		2879EB9924526D0800992E08 /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */; };
 		287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD884244E4D9100DA4F46 /* ConfigurationView.swift */; };
-		287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */; };
 		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
 		28AC97F124FDC02E003CE354 /* actions.json in Resources */ = {isa = PBXBuildFile; fileRef = 28AC97F024FDC02E003CE354 /* actions.json */; };
 		28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B1E615245792F4003BB570 /* ShortcutImageView.swift */; };
@@ -139,7 +138,6 @@
 		2865238524FEFADF00B53714 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PhoneNumberMetadata.json; sourceTree = "<group>"; };
 		287AD884244E4D9100DA4F46 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
-		287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPickerViewController.swift; sourceTree = "<group>"; };
 		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
 		28AC97F024FDC02E003CE354 /* actions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = actions.json; sourceTree = "<group>"; };
 		28B1E615245792F4003BB570 /* ShortcutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutImageView.swift; sourceTree = "<group>"; };
@@ -325,7 +323,6 @@
 			children = (
 				28C9177A245A49EE007A9AAA /* ImagePicker.swift */,
 				287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */,
-				287AD886244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift */,
 			);
 			path = "From UIKit";
 			sourceTree = "<group>";
@@ -541,7 +538,6 @@
 				283963A924FDCA91001AF3F3 /* String.swift in Sources */,
 				283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */,
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
-				287AD887244E4FBB00DA4F46 /* EmbeddedContactPickerViewController.swift in Sources */,
 				28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */,
 				283FE5242502E66B003CBB8F /* CNContact.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
