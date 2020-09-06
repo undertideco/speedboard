@@ -8,21 +8,17 @@
 
 import ComposableArchitecture
 import Foundation
+import Combine
 
 struct WidgetState: Equatable {
     static func == (lhs: WidgetState, rhs: WidgetState) -> Bool {
         return lhs.actions?.count == rhs.actions?.count
     }
     
-    @DocDirectoryBacked<[Action]>(location: .storeLocation) private var _actions
-    var actions: [Action]? {
-        didSet {
-            _actions = actions
-        }
-    }
+    var actions: [Action]?
     
     var actionsToDisplay: [Action] {
-        if let unwrappedActions = _actions {
+        if let unwrappedActions = actions {
             var actionsToReturn = unwrappedActions
             actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil))
             return actionsToReturn
@@ -32,11 +28,48 @@ struct WidgetState: Equatable {
     }
 }
 
-struct WidgetAction: Equatable { }
+enum WidgetAction: Equatable {
+    case initialLoad
+    case actionLoadResponse(Result<[Action], FileReadError>)
+}
 
-struct WidgetEnvironment {}
+struct WidgetEnvironment {
+    var fetchActions: () -> Effect<[Action], FileReadError> {
+        let documentDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")!
+        
+        let actionsDir = documentDirectory.appendingPathComponent("actions.json")
+        
+        
+        do {
+            let data = try Data(contentsOf: actionsDir)
+            let actions = try JSONDecoder().decode([Action].self, from: data)
+            return {
+                Effect(value: actions)
+            }
+        } catch {
+            return {
+                Effect(error: FileReadError())
+            }
+        }
+    }
+}
+
+struct FileReadError: Error, Equatable {}
+
 
 let widgetReducer = Reducer<WidgetState, WidgetAction, WidgetEnvironment> { state, action , env in
-    return .none
+    switch action {
+    case .initialLoad:
+        return env.fetchActions()
+            .catchToEffect()
+            .map(WidgetAction.actionLoadResponse)
+            .eraseToEffect()
+    case let .actionLoadResponse(.success(actions)):
+        state.actions = actions
+        return .none
+    case .actionLoadResponse(.failure(_)):
+        state.actions = []
+        return .none
+    }
 }
 
