@@ -19,10 +19,7 @@ struct HomeView: View {
     
     @State var isEditing: Bool = false
     
-    @State private var selectedContactImage: UIImage?
     @State private var selectedContact: CNContact? = nil
-    
-    @State private var showActionPicker: Bool = false
     @State private var showContactPicker: Bool = false
     
     var body: some View {
@@ -30,8 +27,7 @@ struct HomeView: View {
             NavigationView {
                 ZStack {
                     ContactPicker(showPicker: $showContactPicker) { contact in
-                        self.loadContactAndImages(contact)
-                        self.showContactPicker = false
+                        self.selectedContact = contact
                     } onCancel: {
                         self.showContactPicker = false
                     }
@@ -73,27 +69,14 @@ struct HomeView: View {
                             }
                         }.foregroundColor(self.isEditing ? .green : .blue)
                 )
-            }.sheet(isPresented: $showActionPicker) {
-                if selectedContact !=  nil {
-                    ConfigurationView(store: store,
-                                      selectedContact: selectedContact!,
-                                      index: viewStore.actionsToDisplay.count - 1) {
-                        self.showActionPicker = false
-                    }
+            }.sheet(item: $selectedContact) { contact in
+                ConfigurationView(store: store, selectedContact: contact, index: viewStore.actionsToDisplay.count - 1) {
+                    self.selectedContact = nil
                 }
             }
         }
     }
-    
-    func loadContactAndImages(_ contact: CNContact) {
-        self.selectedContact = contact
-        if let imageData = contact.imageData {
-            selectedContactImage = UIImage(data: imageData)
-        } else {
-            selectedContactImage = UIImage.generateWithName("\(contact.givenName)")
-        }
-    }
-    
+
     func handleNewCellPressed() {
         self.showContactPicker = true
     }
