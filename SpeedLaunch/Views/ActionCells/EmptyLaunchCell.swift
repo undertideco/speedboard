@@ -20,7 +20,6 @@ struct EmptyLaunchCell: View, Launchable {
                     .font(.system(size: 28, weight: .regular, design: .default))
                     .foregroundColor(.white)
             }
-            .frame(width: 62, height: 62, alignment: .center)
             
             Text("New action")
                 .font(.system(size: 11))

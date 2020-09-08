@@ -87,7 +87,7 @@ struct QuickDialEntryView : View {
     
     var body: some View {
         GeometryReader { geo in
-            LazyVGrid(columns: columns, spacing: 8) {
+            LazyVGrid(columns: columns) {
                 ForEach(actionsToDisplay, id: \.self) { action  in
                     Link(destination: action.generateURLLaunchSchemeString()!) {
                         if action.type == .empty {
@@ -101,7 +101,7 @@ struct QuickDialEntryView : View {
                     }
                 }
             }
-        }
+        }.padding(4)
     }
 }
 
