@@ -69,6 +69,8 @@
 		28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C9177A245A49EE007A9AAA /* ImagePicker.swift */; };
 		28D17DC024F59C7A00AE67F0 /* CellLaunchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D17DBF24F59C7A00AE67F0 /* CellLaunchable.swift */; };
 		28D90C6C24FDDC2C00A5B04B /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */; };
+		28EB23972509847B00E6C46B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28EB23962509847B00E6C46B /* Colors.xcassets */; };
+		28EB23982509847B00E6C46B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28EB23962509847B00E6C46B /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +150,7 @@
 		28C9177A245A49EE007A9AAA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		28D17DBF24F59C7A00AE67F0 /* CellLaunchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellLaunchable.swift; sourceTree = "<group>"; };
 		28D90C6B24FDD3CB00A5B04B /* QuickDialExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickDialExtension.entitlements; sourceTree = "<group>"; };
+		28EB23962509847B00E6C46B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +260,7 @@
 		2840C63B24490FA500DB6BAA = {
 			isa = PBXGroup;
 			children = (
+				28EB23962509847B00E6C46B /* Colors.xcassets */,
 				28D90C6B24FDD3CB00A5B04B /* QuickDialExtension.entitlements */,
 				2840C64624490FA500DB6BAA /* SpeedLaunch */,
 				280C45B524E628D60098E17A /* SpeedLaunchTests */,
@@ -469,6 +473,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28EB23982509847B00E6C46B /* Colors.xcassets in Resources */,
 				28D90C6C24FDDC2C00A5B04B /* PhoneNumberMetadata.json in Resources */,
 				2839639624FDC886001AF3F3 /* Assets.xcassets in Resources */,
 			);
@@ -481,6 +486,7 @@
 				28AC97F124FDC02E003CE354 /* actions.json in Resources */,
 				2879EB9924526D0800992E08 /* PhoneNumberMetadata.json in Resources */,
 				2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */,
+				28EB23972509847B00E6C46B /* Colors.xcassets in Resources */,
 				2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */,
 				2840C64E24490FA600DB6BAA /* Assets.xcassets in Resources */,
 			);
