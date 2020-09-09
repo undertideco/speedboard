@@ -95,7 +95,7 @@ struct QuickDialEntryView : View {
                                 .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
                         } else {
                             LaunchCell(deletable: .constant(false),
-                                       action: action)
+                                       action: action, style: .small)
                                 .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
                         }
                     }
