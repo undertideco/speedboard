@@ -121,5 +121,6 @@ struct QuickDial: Widget {
         })
         .configurationDisplayName("Quick Actions")
         .description("Dial without opening the app")
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
