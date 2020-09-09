@@ -34,7 +34,7 @@ struct HomeView: View {
                     QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
                         Group {
                             if action.type == .empty {
-                                EmptyLaunchCell(handlePressed: handleNewCellPressed)
+                                EmptyLaunchCell(displayString: "New action", handlePressed: handleNewCellPressed)
                                     .frame(width: 100, height: 100, alignment: .center)
                                     .padding(5)
                             } else {

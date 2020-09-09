@@ -8,7 +8,8 @@
 
 import SwiftUI
 
-struct EmptyLaunchCell: View, Launchable {    
+struct EmptyLaunchCell: View, Launchable {
+    var displayString: String? = nil
     var handlePressed: ((()) -> Void)?
     
     var body: some View {
@@ -19,10 +20,12 @@ struct EmptyLaunchCell: View, Launchable {
                 Image(systemName: "plus")
                     .font(.system(size: 28, weight: .regular, design: .default))
                     .foregroundColor(.white)
-            }
+            }.padding(EdgeInsets(top: 9, leading: 20, bottom: 5, trailing: 20))
             
-            Text("New action")
-                .font(.system(size: 11))
+            if displayString != nil {
+                Text("\(displayString!)")
+                    .font(.system(size: 11))
+            }
         }
         .onTapGesture {
             self.handlePressed?(())
