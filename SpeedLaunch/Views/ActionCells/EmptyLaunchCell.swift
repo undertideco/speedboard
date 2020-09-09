@@ -13,17 +13,20 @@ struct EmptyLaunchCell: View, Launchable {
     var handlePressed: ((()) -> Void)?
     
     var body: some View {
-        VStack {
-            ZStack {
-                Circle()
-                    .foregroundColor(.primary)
-                Image(systemName: "plus")
-                    .font(.system(size: 28, weight: .regular, design: .default))
-                    .foregroundColor(.white)
-            }.padding(EdgeInsets(top: 9, leading: 20, bottom: 5, trailing: 20))
+        VStack(spacing: 0) {
+            GeometryReader { geo in
+                ZStack {
+                    Circle()
+                        .foregroundColor(Color("primary"))
+                    Image(systemName: "plus")
+                        .font(.system(size: geo.size.height * 0.5, weight: .regular, design: .default))
+                        .foregroundColor(.white)
+                }
+            }
             
             if displayString != nil {
                 Text("\(displayString!)")
+                    .foregroundColor(Color("primaryText"))
                     .font(.system(size: 11))
             }
         }
@@ -35,7 +38,7 @@ struct EmptyLaunchCell: View, Launchable {
 
 struct EmptyLaunchCell_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyLaunchCell()
+        EmptyLaunchCell(displayString: "New action")
             .frame(width: 100, height: 100, alignment: .center)
     }
 }

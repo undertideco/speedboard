@@ -35,6 +35,7 @@ struct HomeView: View {
                         Group {
                             if action.type == .empty {
                                 EmptyLaunchCell(displayString: "New action", handlePressed: handleNewCellPressed)
+                                    .padding(EdgeInsets(top: 9, leading: 20, bottom: 0, trailing: 20))
                                     .frame(width: 100, height: 100, alignment: .center)
                                     .padding(5)
                             } else {
