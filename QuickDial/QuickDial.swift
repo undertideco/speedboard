@@ -93,7 +93,6 @@ struct QuickDialEntryView : View {
                         if action.type == .empty {
                             EmptyLaunchCell()
                                 .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
-                                .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                         } else {
                             LaunchCell(deletable: .constant(false),
                                        action: action, style: .small)

@@ -21,7 +21,7 @@ struct EmptyLaunchCell: View, Launchable {
                     Image(systemName: "plus")
                         .font(.system(size: geo.size.height * 0.5, weight: .regular, design: .default))
                         .foregroundColor(.white)
-                }
+                }.padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
             }
             
             if displayString != nil {
