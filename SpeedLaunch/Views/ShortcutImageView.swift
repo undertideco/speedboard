@@ -31,7 +31,7 @@ struct ShortcutImageView: View {
             } else if type == .message {
                 Image(systemName: "message.fill")
                     .actionBadged()
-            } else {
+            } else if type == .facetime {
                 Image(systemName: "video.fill")
                     .actionBadged()
             }

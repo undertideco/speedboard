@@ -48,17 +48,17 @@ struct AppState: Equatable {
 struct AppEnvironment {}
 
 enum AppAction: Equatable {
-    case addAction(ActionType, Int, String, Data)
+    case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Int)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
     switch action {
-    case .addAction(let type, let position, let number, let imageData):
+    case .addAction(let type, let name, let position, let number, let imageData):
         let imageURL = URL.urlInDocumentsDirectory(with: "\(position).png")
         try! imageData.write(to: imageURL)
         
-        let action = Action(type: type, position: position, phoneNumber: number, imageUrl: imageURL)
+        let action = Action(type: type, position: position, phoneNumber: number, imageUrl: imageURL, actionName: name)
         
         if let _ = state.actions {
             state.actions!.append(action)
@@ -73,7 +73,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         return .none
     case .deleteAction(let index):
         print("remove action")
-        try! FileManager.default.removeItem(at: .urlInDocumentsDirectory(with: "\(index).png"))
+        guard let actionImageURL = state.actions?[index].imageUrl else { return .none }
+        try? FileManager.default.removeItem(at: actionImageURL)
         state.actions?.remove(at: index)
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
