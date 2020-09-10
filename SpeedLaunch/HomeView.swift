@@ -83,6 +83,7 @@ struct HomeView: View {
     }
     
     func handleCellPressed(_ action: Action?) {
+        guard !isEditing else { return }
         if let action = action,
             let urlString = action.generateURLLaunchSchemeString() {
             UIApplication.shared.open(urlString, options: [:])
