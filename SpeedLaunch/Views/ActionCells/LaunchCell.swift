@@ -40,7 +40,7 @@ struct LaunchCell: View, Launchable {
                     }
                     
                     if style == .large {
-                        Text("Hello World")
+                        Text(action.actionName ?? "")
                             .font(.system(size: 13))
                     }
                 }

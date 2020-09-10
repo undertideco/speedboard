@@ -14,6 +14,7 @@ struct Action: Codable, Equatable {
     let position: Int
     let phoneNumber: String?
     let imageUrl: URL?
+    var actionName: String? = nil
     
     func generateURLLaunchSchemeString() -> URL? {
         let phoneNumberKit = PhoneNumberKit()
