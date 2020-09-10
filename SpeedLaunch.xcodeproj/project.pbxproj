@@ -13,6 +13,7 @@
 		281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 281ADE1B24E84B7900421C9B /* ComposableArchitecture */; };
 		281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */; };
 		281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281ADE2024E8540D00421C9B /* StateManagement.swift */; };
+		28238B65250AD0BF00E88F7E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2839638D24FDC884001AF3F3 /* WidgetKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		28388A0924C8F5060008AE7F /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 28388A0824C8F5060008AE7F /* QGrid */; };
 		28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28388A0A24C8F9870008AE7F /* UIImage+Color.swift */; };
 		2839638E24FDC884001AF3F3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2839638D24FDC884001AF3F3 /* WidgetKit.framework */; };
@@ -182,6 +183,7 @@
 				28BF0F8424511D3E004C68D8 /* LetterAvatarKit in Frameworks */,
 				281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */,
 				2879EB9724526B5F00992E08 /* PhoneNumberKit in Frameworks */,
+				28238B65250AD0BF00E88F7E /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import WidgetKit
 import ComposableArchitecture
+import WidgetKit
 
 struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
@@ -66,13 +66,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
             state.actions = [action]
         }
         
-        WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
+        }
+        
         return .none
     case .deleteAction(let index):
         print("remove action")
         try! FileManager.default.removeItem(at: .urlInDocumentsDirectory(with: "\(index).png"))
         state.actions?.remove(at: index)
-        WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
+        }
         return .none
     }
 }
