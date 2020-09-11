@@ -101,7 +101,7 @@ struct QuickDialEntryView : View {
                     }
                 }
             }
-        }.padding(4)
+        }
     }
 }
 
@@ -113,7 +113,8 @@ struct QuickDial: Widget {
         StaticConfiguration(kind: "co.undertide.speedboard", provider: Provider(), content: { entry in
             WithViewStore(entry.actionsStore) { viewStore in
                 QuickDialEntryView(entry: entry, actions: viewStore.actions ?? [])
-                    .padding(8)
+                    .padding([.bottom, .leading, .trailing], 16)
+                    .padding([.top], 8)
                     .onAppear {
                         viewStore.send(.initialLoad)
                     }
