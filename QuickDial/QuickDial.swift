@@ -91,7 +91,7 @@ struct QuickDialEntryView : View {
                 ForEach(actionsToDisplay, id: \.self) { action  in
                     Link(destination: action.generateURLLaunchSchemeString()!) {
                         if action.type == .empty {
-                            EmptyLaunchCell()
+                            EmptyLaunchCell(style: .small)
                                 .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)
                         } else {
                             LaunchCell(deletable: .constant(false),
