@@ -13,28 +13,31 @@ import Contacts
 import LetterAvatarKit
 
 struct HomeView: View {
-    @Environment(\.navCoordinator) var navCoordinator
-
     let store: Store<AppState, AppAction>
     
     @State var isEditing: Bool = false
-    
     @State private var selectedContact: CNContact? = nil
-    @State private var showContactPicker: Bool = false
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
                 ZStack {
-                    ContactPicker(showPicker: $showContactPicker) { contact in
+                    ContactPicker(
+                        showPicker: viewStore.binding(
+                            get: \.isContactPickerOpen,
+                            send: AppAction.setPicker
+                        )
+                    ) { contact in
                         self.selectedContact = contact
                     } onCancel: {
-                        self.showContactPicker = false
+                        viewStore.send(.setPicker(false))
                     }
                     QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
                         Group {
                             if action.type == .empty {
-                                EmptyLaunchCell(displayString: "New Action", handlePressed: handleNewCellPressed)
+                                EmptyLaunchCell(displayString: "New Action") {
+                                    viewStore.send(.setPicker(true))
+                                }
                                     .frame(width: 100, height: 100, alignment: .center)
                                     .padding(5)
                             } else {
@@ -52,9 +55,6 @@ struct HomeView: View {
                         }
                     }
                 }
-                .onReceive(navCoordinator.urlToOpen, perform: {
-                    self.handleOpenURL($0)
-                })
                 .navigationBarTitle(Text("Speedboard"), displayMode: .inline)
                 .navigationBarItems(trailing:
                         Button(action: {
@@ -69,16 +69,13 @@ struct HomeView: View {
                             }
                         }.foregroundColor(self.isEditing ? .green : .blue)
                 )
-            }.sheet(item: $selectedContact) { contact in
-                ConfigurationView(store: store, selectedContact: contact, index: viewStore.actionsToDisplay.count - 1) {
-                    self.selectedContact = nil
-                }
             }
+//            .sheet(item: $selectedContact) { contact in
+//                ConfigurationView(store: store, selectedContact: contact, index: viewStore.actionsToDisplay.count - 1) {
+//                    self.selectedContact = nil
+//                }
+//            }
         }
-    }
-
-    func handleNewCellPressed() {
-        self.showContactPicker = true
     }
     
     func handleCellPressed(_ action: Action?) {
@@ -86,29 +83,6 @@ struct HomeView: View {
         if let action = action,
             let urlString = action.generateURLLaunchSchemeString() {
             UIApplication.shared.open(urlString, options: [:])
-        }
-    }
-    
-    func handleOpenURL(_ url: URL) {
-        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
-                let actionPath = components.host,
-                let actionType = URLSchemeActions(rawValue: actionPath) else {
-                    print("No action present")
-                    return
-            }
-        
-        switch actionType {
-        case .new:
-            self.showContactPicker = true
-        case .open:
-            guard let params = components.queryItems else {
-                print("No URL To Open")
-                return
-            }
-            if let urlToLaunch = params.first(where: { $0.name == "url" })?.value {
-                print("urlToLaunch = \(urlToLaunch)")
-                UIApplication.shared.open(URL(string: urlToLaunch)!, options: [:])
-            }
         }
     }
 }

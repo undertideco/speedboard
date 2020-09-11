@@ -11,23 +11,10 @@ import SwiftUI
 import Combine
 import ComposableArchitecture
 
-struct NavigationCoordinator: EnvironmentKey {
-    static var defaultValue = NavigationCoordinator()
-    
-    let urlToOpen = PassthroughSubject<URL, Never>()
-}
-
-extension EnvironmentValues {
-    var navCoordinator: NavigationCoordinator {
-        get { return self[NavigationCoordinator.self] }
-        set { self[NavigationCoordinator.self] = newValue }
-    }
-}
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    lazy var navCoordinator = NavigationCoordinator()
+    let store = Store(initialState: AppState(), reducer: appReducer, environment: AppEnvironment())
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -35,10 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = HomeView(
-            store: Store(initialState: AppState(), reducer: appReducer, environment: AppEnvironment())
-        )
-        .environment(\.navCoordinator, navCoordinator)
+        let contentView = HomeView(store: store)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -79,7 +63,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
-        navCoordinator.urlToOpen.send(url)
+        ViewStore(store).send(.setPicker(true))
         
         guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
                 let actionPath = components.path,

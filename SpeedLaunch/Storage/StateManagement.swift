@@ -12,7 +12,8 @@ import WidgetKit
 
 struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
-        return lhs.actions?.count == rhs.actions?.count
+        return lhs.actions?.count == rhs.actions?.count &&
+            lhs.isContactPickerOpen == rhs.isContactPickerOpen
     }
     
     @DocDirectoryBacked<[Action]>(location: .storeLocation) private var _actions
@@ -21,7 +22,6 @@ struct AppState: Equatable {
             _actions = actions
         }
     }
-    
     var actionsToDisplay: [Action] {
         if let unwrappedActions = actions {
             var actionsToReturn = unwrappedActions
@@ -31,6 +31,8 @@ struct AppState: Equatable {
             return [Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil)]
         }
     }
+    
+    var isContactPickerOpen: Bool = false
     
     init() {
         actions = _actions
@@ -50,6 +52,7 @@ struct AppEnvironment {}
 enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Int)
+    case setPicker(Bool)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
@@ -83,6 +86,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         }
+        return .none
+    case .setPicker(let isPresented):
+        state.isContactPickerOpen = isPresented
         return .none
     }
 }
