@@ -55,10 +55,14 @@ enum AppAction: Equatable {
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
     switch action {
     case .addAction(let type, let name, let position, let number, let imageData):
-        let imageURL = URL.urlInDocumentsDirectory(with: "\(position).png")
+        let imageURL = URL.urlInDocumentsDirectory(with: "\(UUID()).png")
         try! imageData.write(to: imageURL)
         
-        let action = Action(type: type, position: position, phoneNumber: number, imageUrl: imageURL, actionName: name)
+        let action = Action(type: type,
+                            position: position,
+                            phoneNumber: number,
+                            imageUrl: imageURL,
+                            actionName: name)
         
         if let _ = state.actions {
             state.actions!.append(action)
