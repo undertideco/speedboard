@@ -70,11 +70,11 @@ struct HomeView: View {
                         }.foregroundColor(self.isEditing ? .green : .blue)
                 )
             }
-//            .sheet(item: $selectedContact) { contact in
-//                ConfigurationView(store: store, selectedContact: contact, index: viewStore.actionsToDisplay.count - 1) {
-//                    self.selectedContact = nil
-//                }
-//            }
+            .sheet(item: $selectedContact) { contact in
+                ConfigurationView(store: store, selectedContact: contact, index: viewStore.actionsToDisplay.count - 1) {
+                    self.selectedContact = nil
+                }
+            }
         }
     }
     
