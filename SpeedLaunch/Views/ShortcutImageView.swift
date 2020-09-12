@@ -18,7 +18,7 @@ struct ShortcutImageView: View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
             Image(uiImage: image)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .aspectRatio(1, contentMode: .fill)
                 .mask(Circle())
                 .onTapGesture {
                     self.handleTap?()

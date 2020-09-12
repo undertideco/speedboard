@@ -50,7 +50,7 @@ struct ConfigurationView: View {
                         Section {
                             ForEach(selectedContact.contactInformationArr, id: \.self) { contact in
                                 Button(action: {
-                                    let compressedImage = UIImage.resize(image: selectedContactImage, targetSize: CGSize(width: 150, height: 150))
+                                    let compressedImage = UIImage.resize(image: selectedContactImage, targetSize: CGSize(width: 50, height: 50))
                                     let imageData = compressedImage.pngData()!
                                     
                                     viewStore.send(.addAction(actionType, selectedContact.givenName, index, contact.value, imageData))
