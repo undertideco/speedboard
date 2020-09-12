@@ -36,7 +36,7 @@ struct HomeView: View {
                         Group {
                             if action.type == .empty {
                                 EmptyLaunchCell(displayString: "New Action") {
-                                    viewStore.send(.setPicker(true))
+                                    viewStore.send(.setPicker(!viewStore.isContactPickerOpen))
                                 }
                                     .frame(width: 100, height: 100, alignment: .center)
                                     .padding(5)
