@@ -7,17 +7,30 @@
 //
 
 import SwiftUI
+import PhoneNumberKit
 
 struct ConfigurationDataCell: View {
+    let phoneNumberKit = PhoneNumberKit()
     let actionType: ActionType
     let label: String
     let value: String
+    
+    var dataLabel: String {
+        do {
+            let number = try phoneNumberKit.parse(value)
+            let numberString = phoneNumberKit.format(number, toType: .international)
+            return numberString
+        } catch {
+            return value
+        }
+    }
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(label)")
-                Text("\(value)")
+                    .foregroundColor(Color.black)
+                Text("\(dataLabel)")
                     .foregroundColor(Color.primary)
             }
             Spacer()
