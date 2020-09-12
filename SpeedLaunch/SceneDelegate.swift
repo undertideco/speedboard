@@ -63,7 +63,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
-        ViewStore(store).send(.setPicker(true))
+        if url.host == "new" {
+            ViewStore(store).send(.setPicker(true))
+        }
         
         guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
                 let actionPath = components.path,
