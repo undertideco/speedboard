@@ -21,13 +21,13 @@ struct ActionView: View {
             VStack(spacing: 5) {
                 if type == .call {
                     Image(systemName: "phone.fill")
-                    Text("Call")
+                    Text(Strings.call.rawValue)
                 } else if type == .message {
                     Image(systemName: "message.fill")
-                    Text("Message")
+                    Text(Strings.message.rawValue)
                 } else {
                     Image(systemName: "video.fill")
-                    Text("Facetime")
+                    Text(Strings.facetime.rawValue)
                 }
             }.padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
         }
@@ -35,6 +35,15 @@ struct ActionView: View {
         .clipShape(RoundedRectangle(cornerRadius: 7))
     }
 }
+
+extension ActionView {
+    enum Strings: LocalizedStringKey {
+        case call = "Action_Call"
+        case message = "Action_Message"
+        case facetime = "Action_FaceTime"
+    }
+}
+
 
 struct ActionView_Preview: PreviewProvider {
     static var previews: some View {

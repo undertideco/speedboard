@@ -64,8 +64,16 @@ struct ConfigurationView: View {
                     }
                     
                 }
-                .navigationBarTitle(Text("Pick Action"))
+                .navigationBarTitle(Text(Strings.title.rawValue))
             }
         }
+    }
+}
+
+
+// Strings
+extension ConfigurationView {
+    enum Strings: LocalizedStringKey {
+        case title = "Configuration_Title"
     }
 }

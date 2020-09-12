@@ -55,7 +55,10 @@ struct HomeView: View {
                         }
                     }
                 }
-                .navigationBarTitle(Text("Speedboard"), displayMode: .inline)
+                .navigationBarTitle(
+                    Text(Strings.title.rawValue),
+                    displayMode: .inline
+                )
                 .navigationBarItems(trailing:
                         Button(action: {
                             self.isEditing = !self.isEditing
@@ -84,6 +87,12 @@ struct HomeView: View {
             let urlString = action.generateURLLaunchSchemeString() {
             UIApplication.shared.open(urlString, options: [:])
         }
+    }
+}
+
+extension HomeView {
+    enum Strings: LocalizedStringKey {
+        case title = "App_Name"
     }
 }
 
