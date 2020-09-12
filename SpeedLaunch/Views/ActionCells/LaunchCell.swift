@@ -61,13 +61,18 @@ struct LaunchCell: View, Launchable {
 
         
             if deletable {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(.gray)
-                    .font(.system(size: 24))
-                    .offset(x: -5, y: -5)
-                    .onTapGesture {
-                        self.onDelete?(self.action)
-                    }
+                Button(action: {
+                    self.onDelete?(self.action)
+                }, label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                        .font(.system(size: 24))
+                        .offset(x: -5, y: -5)
+                        .onTapGesture {
+                            self.onDelete?(self.action)
+                        }
+                })
+                
             }
         }
     }
