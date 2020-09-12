@@ -20,7 +20,7 @@ struct ConfigurationView: View {
     var store: Store<AppState, AppAction>
     let selectedContact: CNContact
     var selectedContactImage: UIImage {
-        if let imageData = selectedContact.imageData {
+        if let imageData = selectedContact.thumbnailImageData {
             return  UIImage(data: imageData) ?? UIImage.generateWithName("\(selectedContact.givenName)")
         } else {
             return UIImage.generateWithName("\(selectedContact.givenName)")
@@ -53,7 +53,7 @@ struct ConfigurationView: View {
 
                     
                     ForEach(ActionType.allCases.dropLast(), id: \.self) { actionType in
-                        Section(header: Text(actionType.rawValue.capitalized)) {
+                        Section {
                             ForEach(selectedContact.contactInformationArr, id: \.self) { contact in
                                 Button(action: {
                                     let compressedImage = UIImage.resize(image: selectedContactImage, targetSize: CGSize(width: 50, height: 50))
