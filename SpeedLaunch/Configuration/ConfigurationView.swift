@@ -37,17 +37,23 @@ struct ConfigurationView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 Form {
-                    VStack(alignment: .center) {
-                        ShortcutImageView(type: .empty, image: selectedContactImage)
-                            .frame(width: 100, height: 100)
-                        
-                        Text(selectedContact.givenName)
-                            .font(.system(size: 31))
+                    GeometryReader { geo in
+                        VStack(alignment: .center) {
+                            ShortcutImageView(type: .empty, image: selectedContactImage)
+                                .frame(width: 80, height: 80)
+                            
+                            Text(selectedContact.givenName)
+                                .font(.system(size: 31))
+                        }
+                        .frame(width: geo.size.width, alignment: .center)
+                        .fixedSize()
                     }
+                    .listRowBackground(Color(UIColor.secondarySystemBackground))
+                    .frame(height: 130)
 
                     
                     ForEach(ActionType.allCases.dropLast(), id: \.self) { actionType in
-                        Section {
+                        Section(header: Text(actionType.rawValue.capitalized)) {
                             ForEach(selectedContact.contactInformationArr, id: \.self) { contact in
                                 Button(action: {
                                     let compressedImage = UIImage.resize(image: selectedContactImage, targetSize: CGSize(width: 50, height: 50))
@@ -57,14 +63,13 @@ struct ConfigurationView: View {
                                     self.onDismiss?()
                                 }) {
                                     ConfigurationDataCell(actionType: actionType, label: contact.label, value: contact.value)
-                                        .frame(height: 72)
+                                        .frame(height: 50)
                                 }
                             }
                         }
                     }
-                    
                 }
-                .navigationBarTitle(Text(Strings.title.rawValue))
+                .navigationBarTitle(Text(Strings.title.rawValue), displayMode: .inline)
             }
         }
     }
