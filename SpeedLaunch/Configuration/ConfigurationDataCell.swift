@@ -29,7 +29,7 @@ struct ConfigurationDataCell: View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(label)")
-                    .foregroundColor(Color.black)
+                    .foregroundColor(Color("primaryText"))
                 Text("\(dataLabel)")
                     .foregroundColor(Color.primary)
             }

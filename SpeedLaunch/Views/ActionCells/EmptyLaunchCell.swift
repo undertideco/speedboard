@@ -11,7 +11,9 @@ import SwiftUI
 struct EmptyLaunchCell: View, Launchable {
     var style: LaunchableCellStyle = .large
     
+    var localizedString: LocalizedStringKey? = nil
     var displayString: String? = nil
+    
     var handlePressed: ((()) -> Void)?
     
     var scaleFactor: CGFloat {
@@ -23,13 +25,27 @@ struct EmptyLaunchCell: View, Launchable {
         }
     }
     
+    init(localizedString: LocalizedStringKey?,
+         handlePressed: ((()) -> Void)?) {
+        self.localizedString = localizedString
+        self.handlePressed = handlePressed
+    }
+    
+    init(style: LaunchableCellStyle,
+         displayString: String? = nil,
+         handlePressed: ((()) -> Void)? = nil) {
+        self.style = style
+        self.displayString = displayString
+        self.handlePressed = handlePressed
+    }
+    
     var body: some View {
         GeometryReader { geo in
             VStack {
                 PlusView()
                     .scaleEffect(scaleFactor)
-                if displayString != nil {
-                    Text("\(displayString!)")
+                if displayString != nil || localizedString != nil {
+                    Text(localizedString ?? "\(displayString ?? "")")
                         .foregroundColor(Color("primaryText"))
                         .font(.system(size: 11))
                 }

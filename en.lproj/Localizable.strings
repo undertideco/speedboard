@@ -11,3 +11,4 @@
 "Action_Call" = "Call";
 "Action_Message" = "Message";
 "Action_FaceTime" = "FaceTime";
+"LaunchCell_EmptyTitle" = "Add";

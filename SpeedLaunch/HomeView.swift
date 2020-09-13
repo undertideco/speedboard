@@ -35,11 +35,12 @@ struct HomeView: View {
                     QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
                         Group {
                             if action.type == .empty {
-                                EmptyLaunchCell(displayString: "New Action") {
+                                EmptyLaunchCell(localizedString: Strings.emptyCellTitle.rawValue) {
                                     viewStore.send(.setPicker(!viewStore.isContactPickerOpen))
+
                                 }
-                                    .frame(width: 100, height: 100, alignment: .center)
-                                    .padding(5)
+                                .frame(width: 100, height: 100, alignment: .center)
+                                .padding(5)
                             } else {
                                 LaunchCell(deletable: self.$isEditing,
                                            action: action,
@@ -59,7 +60,15 @@ struct HomeView: View {
                     Text(Strings.title.rawValue),
                     displayMode: .inline
                 )
-                .navigationBarItems(trailing:
+                .navigationBarItems(
+                    leading:
+                        Button(action: {
+                            print("Hello")
+                        }, label: {
+                            Image(systemName: "gear")
+                                .font(.system(.title))
+                        }),
+                    trailing:
                         Button(action: {
                             self.isEditing = !self.isEditing
                         }) {
@@ -70,7 +79,8 @@ struct HomeView: View {
                                 Image(systemName: "pencil.circle.fill")
                                     .font(.largeTitle)
                             }
-                        }.foregroundColor(self.isEditing ? .green : .blue)
+                        }.foregroundColor(self.isEditing ? .green : .blue
+                        )
                 )
             }
             .sheet(item: $selectedContact) { contact in
@@ -93,6 +103,7 @@ struct HomeView: View {
 extension HomeView {
     enum Strings: LocalizedStringKey {
         case title = "App_Name"
+        case emptyCellTitle = "LaunchCell_EmptyTitle"
     }
 }
 
