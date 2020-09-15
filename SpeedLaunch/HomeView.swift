@@ -18,6 +18,10 @@ struct HomeView: View {
     @State var isEditing: Bool = false
     @State private var selectedContact: CNContact? = nil
     
+    @State var cardPosition: CardPosition = .dismissed
+    @State var selectedWidgetSize: WidgetSize = .medium
+    @State var selectedActionIndices: [Int] = []
+    
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
@@ -55,19 +59,18 @@ struct HomeView: View {
                             }
                         }
                     }
+                    
+                    SlidingCard(defaultPosition: $cardPosition) {
+                        WidgetConfigurationView(actions: viewStore.actionsToDisplay,
+                                                selectedPicker: $selectedWidgetSize,
+                                                selectedActionIndices: $selectedActionIndices)
+                    }
                 }
                 .navigationBarTitle(
                     Text(Strings.title.rawValue),
                     displayMode: .inline
                 )
                 .navigationBarItems(
-                    leading:
-                        Button(action: {
-                            print("Hello")
-                        }, label: {
-                            Image(systemName: "gear")
-                                .font(.system(.title))
-                        }),
                     trailing:
                         Button(action: {
                             self.isEditing = !self.isEditing

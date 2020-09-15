@@ -13,6 +13,7 @@ struct LaunchCell: View, Launchable {
     @Binding var deletable: Bool
     var action: Action
     var style: LaunchableCellStyle = .large
+    var isChecked: Bool = false
     
     var handlePressed: ((Action?) -> Void)?
     var onDelete: ((Action) -> Void)?
@@ -72,7 +73,16 @@ struct LaunchCell: View, Launchable {
                             self.onDelete?(self.action)
                         }
                 })
-                
+            }
+            
+            if isChecked {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                    .font(.system(size: 24))
+                    .offset(x: -5, y: -5)
+                    .onTapGesture {
+                        self.onDelete?(self.action)
+                    }
             }
         }
     }
