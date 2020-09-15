@@ -53,6 +53,7 @@
 		2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65024490FA600DB6BAA /* Preview Assets.xcassets */; };
 		2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */; };
 		2848675524FDFA530067490D /* ActionWidgetResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */; };
+		284A81B52510744D0057E725 /* WidgetConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284A81B42510744D0057E725 /* WidgetConfigurationView.swift */; };
 		286376F2244965F0005AFB9D /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F1244965F0005AFB9D /* ActionType.swift */; };
 		286376F424496606005AFB9D /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F324496606005AFB9D /* ActionView.swift */; };
 		286376F624496626005AFB9D /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F524496626005AFB9D /* LaunchCell.swift */; };
@@ -63,6 +64,7 @@
 		2879EB9924526D0800992E08 /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */; };
 		287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD884244E4D9100DA4F46 /* ConfigurationView.swift */; };
 		287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */; };
+		2882260925103F9300BD01A4 /* SlidingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882260825103F9300BD01A4 /* SlidingCard.swift */; };
 		28853BA0250D596800C0D0F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28853BA3250D596800C0D0F7 /* Localizable.strings */; };
 		28853BA1250D596800C0D0F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28853BA3250D596800C0D0F7 /* Localizable.strings */; };
 		28AC97F124FDC02E003CE354 /* actions.json in Resources */ = {isa = PBXBuildFile; fileRef = 28AC97F024FDC02E003CE354 /* actions.json */; };
@@ -140,6 +142,7 @@
 		2840C65324490FA600DB6BAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2840C65524490FA600DB6BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWidgetResizable.swift; sourceTree = "<group>"; };
+		284A81B42510744D0057E725 /* WidgetConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConfigurationView.swift; sourceTree = "<group>"; };
 		286376F1244965F0005AFB9D /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		286376F324496606005AFB9D /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		286376F524496626005AFB9D /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
@@ -148,6 +151,7 @@
 		2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PhoneNumberMetadata.json; sourceTree = "<group>"; };
 		287AD884244E4D9100DA4F46 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedContactPicker.swift; sourceTree = "<group>"; };
+		2882260825103F9300BD01A4 /* SlidingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingCard.swift; sourceTree = "<group>"; };
 		28853B94250D58AF00C0D0F7 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		28853B95250D58B700C0D0F7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		28853B96250D58C600C0D0F7 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -260,6 +264,8 @@
 				28D17DBE24F59B8400AE67F0 /* ActionCells */,
 				28B1E615245792F4003BB570 /* ShortcutImageView.swift */,
 				286376F324496606005AFB9D /* ActionView.swift */,
+				2882260825103F9300BD01A4 /* SlidingCard.swift */,
+				284A81B42510744D0057E725 /* WidgetConfigurationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -584,8 +590,10 @@
 				287AD889244E4FF100DA4F46 /* EmbeddedContactPicker.swift in Sources */,
 				28D17DC024F59C7A00AE67F0 /* CellLaunchable.swift in Sources */,
 				286376FA24496F72005AFB9D /* Action.swift in Sources */,
+				2882260925103F9300BD01A4 /* SlidingCard.swift in Sources */,
 				2840C64C24490FA500DB6BAA /* HomeView.swift in Sources */,
 				2839639924FDC886001AF3F3 /* QuickDial.intentdefinition in Sources */,
+				284A81B52510744D0057E725 /* WidgetConfigurationView.swift in Sources */,
 				286376F2244965F0005AFB9D /* ActionType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
