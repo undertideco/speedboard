@@ -9,10 +9,6 @@
 import SwiftUI
 import QGrid
 
-enum WidgetSize: Int {
-    case medium, large
-}
-
 struct WidgetConfigurationView: View {
     var actions: [Action]
     @Binding var selectedPicker: WidgetSize

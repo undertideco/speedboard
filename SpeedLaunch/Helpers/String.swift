@@ -10,5 +10,7 @@ import Foundation
 
 public extension String {
     static let storeLocation = "actions.json"
+    static let mediumWidgetActions = "medWidget.json"
+    static let largeWidgetActions = "lgWidget.json"
 }
 

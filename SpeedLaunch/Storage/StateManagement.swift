@@ -16,6 +16,8 @@ struct AppState: Equatable {
             lhs.isContactPickerOpen == rhs.isContactPickerOpen
     }
     
+    @DocDirectoryBacked<[Int]>(location: .largeWidgetActions) var largeWidgetActions
+    @DocDirectoryBacked<[Int]>(location: .mediumWidgetActions) var mediumWidgetActions
     @DocDirectoryBacked<[Action]>(location: .storeLocation) private var _actions
     var actions: [Action]? {
         didSet {
@@ -53,6 +55,8 @@ enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Int)
     case setPicker(Bool)
+    case addWidgetAction(WidgetSize, Int)
+    case removeWidgetAction(WidgetSize, Int)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
@@ -82,7 +86,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         print("remove action")
         guard let actionImageURL = state.actions?[index].imageUrl else { return .none }
         try? FileManager.default.removeItem(at: actionImageURL)
+        
         state.actions?.remove(at: index)
+        state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != index }
+        state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != index }
+        
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         }
@@ -90,5 +98,22 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
     case .setPicker(let isPresented):
         state.isContactPickerOpen = isPresented
         return .none
+    case .addWidgetAction(let widgetType, let actionIndex):
+        switch widgetType {
+        case .medium:
+            state.mediumWidgetActions!.append(actionIndex)
+        case .large:
+            state.largeWidgetActions!.append(actionIndex)
+        }
+        return .none
+    case .removeWidgetAction(let widgetType, let actionIndex):
+        switch widgetType {
+        case .medium:
+            state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != actionIndex }
+        case .large:
+            state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionIndex }
+        }
+        return .none
     }
+    
 }

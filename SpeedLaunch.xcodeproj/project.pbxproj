@@ -73,6 +73,9 @@
 		28B7535D24F5840A0072B949 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535C24F5840A0072B949 /* Colors.swift */; };
 		28BF0F8424511D3E004C68D8 /* LetterAvatarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 28BF0F8324511D3E004C68D8 /* LetterAvatarKit */; };
 		28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C9177A245A49EE007A9AAA /* ImagePicker.swift */; };
+		28D0E58325143F2D002E1EEC /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D0E58225143F2D002E1EEC /* View.swift */; };
+		28D0E58825144339002E1EEC /* WidgetSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D0E58725144339002E1EEC /* WidgetSize.swift */; };
+		28D0E58925144339002E1EEC /* WidgetSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D0E58725144339002E1EEC /* WidgetSize.swift */; };
 		28D17DC024F59C7A00AE67F0 /* CellLaunchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D17DBF24F59C7A00AE67F0 /* CellLaunchable.swift */; };
 		28D90C6C24FDDC2C00A5B04B /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */; };
 		28EB23972509847B00E6C46B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28EB23962509847B00E6C46B /* Colors.xcassets */; };
@@ -167,6 +170,8 @@
 		28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLaunchCell.swift; sourceTree = "<group>"; };
 		28B7535C24F5840A0072B949 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		28C9177A245A49EE007A9AAA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		28D0E58225143F2D002E1EEC /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		28D0E58725144339002E1EEC /* WidgetSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSize.swift; sourceTree = "<group>"; };
 		28D17DBF24F59C7A00AE67F0 /* CellLaunchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellLaunchable.swift; sourceTree = "<group>"; };
 		28D90C6B24FDD3CB00A5B04B /* QuickDialExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickDialExtension.entitlements; sourceTree = "<group>"; };
 		28EB23962509847B00E6C46B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -345,6 +350,8 @@
 				283FE5262502E687003CBB8F /* UIImage.swift */,
 				280A0D0C25059BEA00823A35 /* URLSchemeActions.swift */,
 				2814F4C5250AE2E3006F41EE /* UIImage+Resize.swift */,
+				28D0E58225143F2D002E1EEC /* View.swift */,
+				28D0E58725144339002E1EEC /* WidgetSize.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -543,6 +550,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28D0E58925144339002E1EEC /* WidgetSize.swift in Sources */,
 				283963A324FDCA1D001AF3F3 /* ActionView.swift in Sources */,
 				283963A624FDCA48001AF3F3 /* WidgetState.swift in Sources */,
 				2839639824FDC886001AF3F3 /* QuickDial.intentdefinition in Sources */,
@@ -573,6 +581,7 @@
 				287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */,
 				2814F4C6250AE2E3006F41EE /* UIImage+Resize.swift in Sources */,
 				2865238624FEFADF00B53714 /* URL.swift in Sources */,
+				28D0E58825144339002E1EEC /* WidgetSize.swift in Sources */,
 				28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */,
 				2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */,
 				28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */,
@@ -580,6 +589,7 @@
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
 				283FE5272502E687003CBB8F /* UIImage.swift in Sources */,
 				280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */,
+				28D0E58325143F2D002E1EEC /* View.swift in Sources */,
 				281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */,
 				283963A924FDCA91001AF3F3 /* String.swift in Sources */,
 				283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */,
