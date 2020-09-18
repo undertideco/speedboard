@@ -13,9 +13,9 @@ struct SlideOverCard<Content: View> : View {
             .onEnded(onDragEnded)
         
         return ZStack(alignment: .top) {
-            ZStack(alignment: .top) {
-                Handle()
-                content().padding([.top, .bottom], 20)
+            VStack(spacing: 8) {
+                Handle().padding(.top, 8)
+                content()
             }
             .mask(RoundedRectangle(cornerRadius: 20, style: .continuous))
 
