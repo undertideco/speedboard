@@ -20,7 +20,8 @@ struct WidgetConfigurationView: View {
     
     var body: some View {
         VStack {
-            Text("Widget Configuration")
+            Text("Select Actions To Enable for Widget")
+                .font(.system(size: 18, weight: .bold, design: .default))
             Picker("Picker Size", selection: $selectedPicker) {
                 Text("Medium").tag(WidgetSize.medium)
                 Text("Large").tag(WidgetSize.large)
