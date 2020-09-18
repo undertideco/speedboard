@@ -1,27 +1,78 @@
-//
-//  SlidingCard.swift
-//  SpeedLaunch
-//
-//  Created by Jurvis Tan on 9/14/20.
-//  Copyright © 2020 Undertide LLP. All rights reserved.
-//
-
 import SwiftUI
 
-enum CardPosition {
-    case dismissed, expanded
+struct SlideOverCard<Content: View> : View {
+    @GestureState private var dragState = DragState.inactive
+    @State var position = CardPosition.top
     
-    func offsetFromTop() -> CGFloat {
-        switch self {
-        case .dismissed:
-            return UIScreen.main.bounds.height - 200
-        case .expanded:
-            return UIScreen.main.bounds.height / 1.8
+    var content: () -> Content
+    var body: some View {
+        let drag = DragGesture()
+            .updating($dragState) { drag, state, transaction in
+                state = .dragging(translation: drag.translation)
+            }
+            .onEnded(onDragEnded)
+        
+        return ZStack(alignment: .top) {
+            ZStack(alignment: .top) {
+                Handle()
+                content().padding([.top, .bottom], 20)
+            }
+            .mask(RoundedRectangle(cornerRadius: 20, style: .continuous))
+
+        }
+        .background(Color(UIColor.systemBackground))
+        .offset(y: self.position.positionFromTop() + self.dragState.translation.height)
+        .animation(self.dragState.isDragging ? nil : .interpolatingSpring(stiffness: 300.0, damping: 30.0, initialVelocity: 10.0))
+        .gesture(drag)
+    }
+    
+    private func onDragEnded(drag: DragGesture.Value) {
+        let verticalDirection = drag.predictedEndLocation.y - drag.location.y
+        let cardTopEdgeLocation = self.position.positionFromTop() + drag.translation.height
+        let positionAbove: CardPosition
+        let positionBelow: CardPosition
+        let closestPosition: CardPosition
+        
+        if cardTopEdgeLocation <= CardPosition.middle.positionFromTop() {
+            positionAbove = .top
+            positionBelow = .middle
+        } else {
+            positionAbove = .middle
+            positionBelow = .bottom
+        }
+        
+        if (cardTopEdgeLocation - positionAbove.positionFromTop()) < (positionBelow.positionFromTop() - cardTopEdgeLocation) {
+            closestPosition = positionAbove
+        } else {
+            closestPosition = positionBelow
+        }
+        
+        if verticalDirection > 0 {
+            self.position = positionBelow
+        } else if verticalDirection < 0 {
+            self.position = positionAbove
+        } else {
+            self.position = closestPosition
         }
     }
 }
-enum DragState {
+
+enum CardPosition {
+    case top, middle, bottom
     
+    func positionFromTop() -> CGFloat {
+        switch self {
+        case .top:
+            return 80
+        case .middle:
+            return UIScreen.main.bounds.height / 1.8
+        case .bottom:
+            return UIScreen.main.bounds.height - 200
+        }
+    }
+}
+
+enum DragState {
     case inactive
     case dragging(translation: CGSize)
     
@@ -42,96 +93,6 @@ enum DragState {
             return true
         }
     }
-}
-
-struct SlidingCard<Content>: View where Content : View {
-    @Binding var defaultPosition: CardPosition
-    var content: () -> Content
-    
-    var body: some View {
-        ModifiedContent(content: content(), modifier: Card(position: self.$defaultPosition))
-    }
-}
-
-struct Card: ViewModifier {
-    @GestureState var dragState: DragState = .inactive
-    @Binding var position : CardPosition
-    @State var offset: CGSize = CGSize.zero
-    
-    var animation: Animation {
-        Animation.interpolatingSpring(stiffness: 300.0, damping: 30.0, initialVelocity: 10.0)
-    }
-    
-    var timer: Timer? {
-        return Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { timer in
-            if self.position == .expanded && self.dragState.translation.height == 0  {
-                self.position = .expanded
-            } else {
-                timer.invalidate()
-            }
-        }
-    }
-    
-    func body(content: Content) -> some View {
-        let drag = DragGesture()
-                    .updating($dragState) { drag, state, transaction in state = .dragging(translation:  drag.translation) }
-                    .onChanged {_ in
-                        self.offset = .zero
-                }
-                .onEnded(onDragEnded)
-        
-        return ZStack(alignment: .top) {
-            ZStack(alignment: .top) {
-                Color(UIColor.systemGray6)
-                Handle()
-                content.padding(.top, 20)
-            }
-            .mask(RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .scaleEffect(x: 1, y: 1, anchor: .center)
-        }
-        .offset(y: max(0, self.position.offsetFromTop() + self.dragState.translation.height))
-        .animation(self.dragState.isDragging ? nil : animation)
-        .gesture(drag)
-    }
-    
-    private func onDragEnded(drag: DragGesture.Value) {
-        // Setting stops
-        let higherStop: CardPosition
-        let lowerStop: CardPosition
-
-        // Nearest position for drawer to snap to.
-        let nearestPosition: CardPosition
-
-        // Determining the direction of the drag gesture and its distance from the top
-        let dragDirection = drag.predictedEndLocation.y - drag.location.y
-        let offsetFromTopOfView = position.offsetFromTop() + drag.translation.height
-
-        // Determining whether drawer is above or below `.partiallyRevealed` threshold for snapping behavior.
-        if offsetFromTopOfView <= CardPosition.dismissed.offsetFromTop() {
-            higherStop = .expanded
-            lowerStop = .dismissed
-        } else {
-           higherStop = .expanded
-           lowerStop = .dismissed
-        }
-
-        // Determining whether drawer is closest to top or bottom
-        if (offsetFromTopOfView - higherStop.offsetFromTop()) < (lowerStop.offsetFromTop() - offsetFromTopOfView) {
-           nearestPosition = higherStop
-        } else {
-           nearestPosition = lowerStop
-        }
-
-        // Determining the drawer's position.
-        if dragDirection > 0 {
-           position = lowerStop
-        } else if dragDirection < 0 {
-           position = higherStop
-        } else {
-           position = nearestPosition
-        }
-        _ = timer
-       }
 }
 
 struct Handle : View {

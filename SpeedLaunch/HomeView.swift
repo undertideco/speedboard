@@ -18,7 +18,7 @@ struct HomeView: View {
     @State var isEditing: Bool = false
     @State private var selectedContact: CNContact? = nil
     
-    @State var cardPosition: CardPosition = .dismissed
+    @State var cardPosition: CardPosition = .bottom
     @State var selectedWidgetSize: WidgetSize = .medium
     @State var selectedActionIndices: [Int] = []
     
@@ -60,11 +60,17 @@ struct HomeView: View {
                         }
                     }
                     
-                    SlidingCard(defaultPosition: $cardPosition) {
-                        WidgetConfigurationView(actions: viewStore.actionsToDisplay,
-                                                selectedPicker: $selectedWidgetSize,
-                                                selectedActionIndices: $selectedActionIndices)
+                    if isEditing {
+                        SlideOverCard(position: cardPosition) {
+                            WidgetConfigurationView(actions: viewStore.actionsToDisplay,
+                                                    selectedPicker: $selectedWidgetSize,
+                                                    selectedActionIndices: $selectedActionIndices)
+                        }
+                        .transition(.move(edge: .bottom))
+                        .animation(.easeInOut)
                     }
+                    
+
                 }
                 .navigationBarTitle(
                     Text(Strings.title.rawValue),
