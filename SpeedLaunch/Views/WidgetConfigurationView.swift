@@ -14,9 +14,7 @@ struct WidgetConfigurationView: View {
     var actions: [Action]
     @Binding var selectedPicker: WidgetSize
     @Binding var selectedIndices: [Int]
-    
-    var onActionCellTapped: (([Int]) -> Void)?
-    
+        
     var body: some View {
         VStack {
             Text("Select Actions To Enable for Widget")
@@ -52,8 +50,6 @@ struct WidgetConfigurationView: View {
         } else {
             selectedIndices.append(actionIndex)
         }
-
-        onActionCellTapped?(selectedIndices)
     }
     
     func isChecked(_ action: Action) -> Bool {

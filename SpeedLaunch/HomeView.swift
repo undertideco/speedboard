@@ -68,9 +68,7 @@ struct HomeView: View {
                                                     selectedIndices: viewStore.binding(
                                                         get: \.widgetActions,
                                                         send: AppAction.updateWidgetActionIndices
-                                                    )) { indices in
-                                viewStore.send(.updateWidgetActionIndices(indices: indices))
-                            }
+                                                    ))
                         }
                         .transition(.move(edge: .bottom))
                         .animation(.easeInOut)
