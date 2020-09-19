@@ -15,16 +15,16 @@ struct Provider: TimelineProvider {
     typealias Entry = SimpleEntry
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment()))
+        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family)))
     }
     
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment()))
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family)))
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment()))
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family)))
         
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)

@@ -13,12 +13,15 @@ import WidgetKit
 struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
         return lhs.actions?.count == rhs.actions?.count &&
+            lhs.configurationWidgetSize == rhs.configurationWidgetSize &&
+            lhs.widgetActions == rhs.widgetActions &&
             lhs.isContactPickerOpen == rhs.isContactPickerOpen
     }
     
     @DocDirectoryBacked<[Int]>(location: .largeWidgetActions) var largeWidgetActions
     @DocDirectoryBacked<[Int]>(location: .mediumWidgetActions) var mediumWidgetActions
     @DocDirectoryBacked<[Action]>(location: .storeLocation) private var _actions
+    
     var actions: [Action]? {
         didSet {
             _actions = actions
@@ -35,6 +38,15 @@ struct AppState: Equatable {
     }
     
     var isContactPickerOpen: Bool = false
+    var configurationWidgetSize: WidgetSize = .medium
+    var widgetActions: [Int] {
+        switch configurationWidgetSize {
+        case .medium:
+            return mediumWidgetActions ?? []
+        case .large:
+            return largeWidgetActions ?? []
+        }
+    }
     
     init() {
         actions = _actions
@@ -55,8 +67,8 @@ enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Int)
     case setPicker(Bool)
-    case addWidgetAction(WidgetSize, Int)
-    case removeWidgetAction(WidgetSize, Int)
+    case setConfigurationWidgetSize(WidgetSize)
+    case updateWidgetActionIndices(indices: [Int])
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
@@ -76,11 +88,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         } else {
             state.actions = [action]
         }
-        
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
-        }
-        
+    
         return .none
     case .deleteAction(let index):
         print("remove action")
@@ -90,29 +98,25 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         state.actions?.remove(at: index)
         state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != index }
         state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != index }
+
+        return .none
+    case .setPicker(let isPresented):
+        state.isContactPickerOpen = isPresented
+        return .none
+    case .updateWidgetActionIndices(let actionIndices):
+        switch state.configurationWidgetSize {
+        case .medium:
+            state.mediumWidgetActions = actionIndices
+        case .large:
+            state.largeWidgetActions = actionIndices
+        }
         
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         }
         return .none
-    case .setPicker(let isPresented):
-        state.isContactPickerOpen = isPresented
-        return .none
-    case .addWidgetAction(let widgetType, let actionIndex):
-        switch widgetType {
-        case .medium:
-            state.mediumWidgetActions!.append(actionIndex)
-        case .large:
-            state.largeWidgetActions!.append(actionIndex)
-        }
-        return .none
-    case .removeWidgetAction(let widgetType, let actionIndex):
-        switch widgetType {
-        case .medium:
-            state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != actionIndex }
-        case .large:
-            state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionIndex }
-        }
+    case .setConfigurationWidgetSize(let size):
+        state.configurationWidgetSize = size
         return .none
     }
     

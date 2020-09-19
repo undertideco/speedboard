@@ -8,11 +8,14 @@
 
 import SwiftUI
 import QGrid
+import ComposableArchitecture
 
 struct WidgetConfigurationView: View {
     var actions: [Action]
     @Binding var selectedPicker: WidgetSize
-    @Binding var selectedActionIndices: [Int]
+    @Binding var selectedIndices: [Int]
+    
+    var onActionCellTapped: (([Int]) -> Void)?
     
     var body: some View {
         VStack {
@@ -45,15 +48,17 @@ struct WidgetConfigurationView: View {
         guard let action = action,
               let actionIndex = actions.firstIndex(of: action) else { return }
         if isChecked(action) {
-            selectedActionIndices = selectedActionIndices.filter { $0 != actionIndex }
+            selectedIndices = selectedIndices.filter { $0 != actionIndex }
         } else {
-            selectedActionIndices.append(actionIndex)
+            selectedIndices.append(actionIndex)
         }
+
+        onActionCellTapped?(selectedIndices)
     }
     
     func isChecked(_ action: Action) -> Bool {
         guard let actionIndex = actions.firstIndex(of: action) else { return false }
-        return selectedActionIndices.contains(actionIndex)
+        return selectedIndices.contains(actionIndex)
     }
 }
 
@@ -62,7 +67,7 @@ struct WidgetConfigurationView_Previews: PreviewProvider {
         WidgetConfigurationView(
             actions: [Action(type: .empty, position: 0, phoneNumber: "96678108", imageUrl: nil)],
             selectedPicker: .constant(.medium),
-            selectedActionIndices: .constant([0])
+            selectedIndices: .constant([0])
         )
     }
 }

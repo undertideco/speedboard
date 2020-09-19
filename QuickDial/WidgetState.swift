@@ -7,7 +7,7 @@
 //
 
 import ComposableArchitecture
-import Foundation
+import WidgetKit
 import Combine
 
 struct WidgetState: Equatable {
@@ -20,18 +20,41 @@ struct WidgetState: Equatable {
 
 enum WidgetAction: Equatable {
     case initialLoad
-    case actionLoadResponse(Result<[Action], FileReadError>)
+    case actionLoadResponse(Result<WidgetConfig, FileReadError>)
+}
+
+struct WidgetConfig : Equatable {
+    let actions: [Action]
+    let selectedActionIndices: [Int]
 }
 
 struct WidgetEnvironment {
-    var fetchActions: () -> Effect<[Action], FileReadError> {
-        let actionsDir: URL = .urlInDocumentsDirectory(with: "actions.json")
+    let family: WidgetFamily
+    
+    var fetchActions: () -> Effect<WidgetConfig, FileReadError> {
+        let actionsDir: URL = .urlInDocumentsDirectory(with: .storeLocation)
+        var selectedIndicesDir: URL
+        
+        switch family {
+        case .systemMedium:
+            selectedIndicesDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
+        case .systemLarge:
+            selectedIndicesDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
+        default:
+            return {
+                Effect(error: FileReadError())
+            }
+        }
         
         do {
-            let data = try Data(contentsOf: actionsDir)
-            let actions = try JSONDecoder().decode([Action].self, from: data)
+            let actionsData = try Data(contentsOf: actionsDir)
+            let selectedIndicesData = try Data(contentsOf: selectedIndicesDir)
+            
+            let actions = try JSONDecoder().decode([Action].self, from: actionsData)
+            let selectedIndices = try JSONDecoder().decode([Int].self, from: selectedIndicesData)
+            
             return {
-                Effect(value: actions)
+                Effect(value: WidgetConfig(actions: actions, selectedActionIndices: selectedIndices))
             }
         } catch {
             return {
@@ -51,8 +74,8 @@ let widgetReducer = Reducer<WidgetState, WidgetAction, WidgetEnvironment> { stat
             .catchToEffect()
             .map(WidgetAction.actionLoadResponse)
             .eraseToEffect()
-    case let .actionLoadResponse(.success(actions)):
-        state.actions = actions
+    case let .actionLoadResponse(.success(config)):
+        state.actions = config.selectedActionIndices.map { config.actions[$0] }
         return .none
     case .actionLoadResponse(.failure(_)):
         state.actions = []
