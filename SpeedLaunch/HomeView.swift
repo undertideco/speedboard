@@ -74,7 +74,11 @@ struct HomeView: View {
                 }
                 .navigationBarTitle(
                     Text(Strings.title.rawValue),
-                    displayMode: .inline
+                    displayMode: .automatic
+                )
+                .navigationBarColor(
+                    backgroundColor: UIColor(named: "primary")!,
+                    tintColor: .white
                 )
                 .navigationBarItems(
                     trailing:
@@ -84,9 +88,11 @@ struct HomeView: View {
                             if self.isEditing {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.largeTitle)
+                                    .foregroundColor(.white)
                             } else {
                                 Image(systemName: "pencil.circle.fill")
                                     .font(.largeTitle)
+                                    .foregroundColor(.white)
                             }
                         }.foregroundColor(self.isEditing ? .green : .blue
                         )
