@@ -58,7 +58,6 @@ enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Int)
     case setPicker(Bool)
-    case updateWidgetActionIndices(indices: [Int])
     case widgetConfiguration(WidgetConfigurationAction)
 }
 
@@ -95,19 +94,7 @@ let testReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     case .setPicker(let isPresented):
         state.isContactPickerOpen = isPresented
         return .none
-    case .updateWidgetActionIndices(let actionIndices):
-        switch state.widgetConfigurationState.size {
-        case .medium:
-            state.mediumWidgetActions = actionIndices
-        case .large:
-            state.largeWidgetActions = actionIndices
-        }
-        
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
-        }
-        return .none
-    case .widgetConfiguration:
+    case .widgetConfiguration(_):
         return .none
     }
     },
