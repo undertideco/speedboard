@@ -116,6 +116,7 @@ let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationA
 
 struct WidgetConfigurationView: View {
     @ObservedObject var viewStore: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>
+    @State var showMaxNumberAlert: Bool = false
     
     init(store: Store<WidgetConfigurationState, WidgetConfigurationAction>) {
         self.viewStore = ViewStore(store)
@@ -151,6 +152,12 @@ struct WidgetConfigurationView: View {
             }
         }.onAppear {
             viewStore.send(.initialLoad)
+        }.alert(isPresented: $showMaxNumberAlert) {
+            Alert(
+                title: Text("Max Number of Configurable Actions Reached"),
+                message: Text("To continue, try unselecting some actions."),
+                dismissButton: .default(Text("Got it!"))
+            )
         }
     }
     
@@ -162,8 +169,13 @@ struct WidgetConfigurationView: View {
             let filteredIndices = viewStore.selectedIndices.filter { $0 != actionIndex }
             viewStore.send(.updateWidgetActionIndices(filteredIndices))
         } else {
-            let newIndices = viewStore.selectedIndices + [actionIndex]
-            viewStore.send(.updateWidgetActionIndices(newIndices))
+            if viewStore.selectedIndices.count == viewStore.size.maxNumberOfActions {
+                showMaxNumberAlert = true
+            } else {
+                let newIndices = viewStore.selectedIndices + [actionIndex]
+                viewStore.send(.updateWidgetActionIndices(newIndices))
+            }
+
         }
     }
 

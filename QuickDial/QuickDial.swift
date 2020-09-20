@@ -64,12 +64,10 @@ struct QuickDialEntryView : View {
     
     var numberOfItems: Int {
         switch family {
-        case .systemSmall:
-            return 4
         case .systemMedium:
-            return 6
+            return WidgetSize.medium.maxNumberOfActions
         case .systemLarge:
-            return 9
+            return WidgetSize.large.maxNumberOfActions
         default:
             return 1
         }
