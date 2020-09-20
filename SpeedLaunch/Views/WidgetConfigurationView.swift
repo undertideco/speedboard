@@ -93,6 +93,8 @@ let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationA
     case .configurationLoadResponse(.failure(_)):
         return .none
     case .updateWidgetActionIndices(let actionIndices):
+        state.selectedIndices = actionIndices
+        
         return env.storeActions(indices: actionIndices, for: state.size)
             .catchToEffect()
             .map(WidgetConfigurationAction.configurationSaveResponse)
@@ -116,7 +118,7 @@ struct WidgetConfigurationView: View {
     @ObservedObject var viewStore: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>
     
     init(store: Store<WidgetConfigurationState, WidgetConfigurationAction>) {
-      self.viewStore = ViewStore(store)
+        self.viewStore = ViewStore(store)
     }
         
     var body: some View {
@@ -151,6 +153,7 @@ struct WidgetConfigurationView: View {
             viewStore.send(.initialLoad)
         }
     }
+    
 
     func handleCellPressed(_ action: Action?) {
         guard let action = action,
@@ -167,16 +170,6 @@ struct WidgetConfigurationView: View {
     func isChecked(_ store: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>, action: Action) -> Bool {
         guard let actionIndex = store.actions.firstIndex(of: action) else { return false }
         
-        return store.selectedIndices.contains(actionIndex)
+        return viewStore.selectedIndices.contains(actionIndex)
     }
 }
-
-//struct WidgetConfigurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WidgetConfigurationView(
-//            actions: [Action(type: .empty, position: 0, phoneNumber: "96678108", imageUrl: nil)],
-//            selectedPicker: .constant(.medium),
-//            selectedIndices: .constant([0])
-//        )
-//    }
-//}
