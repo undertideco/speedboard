@@ -51,8 +51,15 @@ struct QuickDialEntryView : View {
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ]
-        case .systemMedium, .systemLarge:
+        case .systemMedium:
             return [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+            ]
+        case .systemLarge:
+            return [
+                GridItem(.flexible()),
                 GridItem(.flexible()),
                 GridItem(.flexible()),
                 GridItem(.flexible()),
@@ -103,6 +110,13 @@ struct QuickDialEntryView : View {
     }
 }
 
+extension QuickDial {
+    enum Strings: LocalizedStringKey {
+        case displayName = "Widget_DisplayName"
+        case widgetDescription = "Widget_Description"
+    }
+}
+
 @main
 struct QuickDial: Widget {
     let kind: String = "QuickDial"
@@ -118,8 +132,8 @@ struct QuickDial: Widget {
                     }
             }
         })
-        .configurationDisplayName("Quick Actions")
-        .description("Dial without opening the app")
+        .configurationDisplayName(Strings.displayName.rawValue)
+        .description(Strings.widgetDescription.rawValue)
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }

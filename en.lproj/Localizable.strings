@@ -12,3 +12,6 @@
 "Action_Message" = "Message";
 "Action_FaceTime" = "FaceTime";
 "LaunchCell_EmptyTitle" = "Add";
+
+"Widget_DisplayName" = "Quick Actions";
+"Widget_Description" = "Launch your SpeedBoard actions without opening the app.";
