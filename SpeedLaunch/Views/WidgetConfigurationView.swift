@@ -113,47 +113,46 @@ let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationA
 }
 
 struct WidgetConfigurationView: View {
-    let store: Store<WidgetConfigurationState, WidgetConfigurationAction>
+    @ObservedObject var viewStore: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>
+    
+    init(store: Store<WidgetConfigurationState, WidgetConfigurationAction>) {
+      self.viewStore = ViewStore(store)
+    }
         
     var body: some View {
-        WithViewStore(store) { viewStore in
-            VStack {
-                Text("Select Actions To Enable for Widget")
-                    .font(.system(size: 18, weight: .bold, design: .default))
-                Picker("Picker Size",
-                       selection: viewStore.binding(
-                        get: \.size,
-                        send: WidgetConfigurationAction.setConfigurationWidgetSize
-                       )) {
-                    Text("Medium").tag(WidgetSize.medium)
-                    Text("Large").tag(WidgetSize.large)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding([.leading, .trailing], 8)
-                
-                QGrid(viewStore.actions, columns: 4) { action in
-                    Group {
-                        if action.type != .empty {
-                            LaunchCell(deletable: .constant(false),
-                                       action: action,
-                                       style: .small,
-                                       isChecked: isChecked(viewStore, action: action),
-                                       handlePressed: handleCellPressed)
-                                .frame(width: 75, height: 75, alignment: .center)
-                                .padding(5)
-                        }
+        VStack {
+            Text("Select Actions To Enable for Widget")
+                .font(.system(size: 18, weight: .bold, design: .default))
+            Picker("Picker Size",
+                   selection: viewStore.binding(
+                    get: \.size,
+                    send: WidgetConfigurationAction.setConfigurationWidgetSize
+                   )) {
+                Text("Medium").tag(WidgetSize.medium)
+                Text("Large").tag(WidgetSize.large)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding([.leading, .trailing], 8)
+            
+            QGrid(viewStore.actions, columns: 4) { action in
+                Group {
+                    if action.type != .empty {
+                        LaunchCell(deletable: .constant(false),
+                                   action: action,
+                                   style: .small,
+                                   isChecked: isChecked(viewStore, action: action),
+                                   handlePressed: handleCellPressed)
+                            .frame(width: 75, height: 75, alignment: .center)
+                            .padding(5)
                     }
                 }
-            }.onAppear {
-                viewStore.send(.initialLoad)
             }
+        }.onAppear {
+            viewStore.send(.initialLoad)
         }
-
     }
 
     func handleCellPressed(_ action: Action?) {
-        let viewStore = ViewStore(self.store)
-        
         guard let action = action,
               let actionIndex = viewStore.actions.firstIndex(of: action) else { return }
         if isChecked(viewStore, action: action) {

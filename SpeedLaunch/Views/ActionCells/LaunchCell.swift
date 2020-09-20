@@ -75,9 +75,6 @@ struct LaunchCell: View, Launchable {
                     .foregroundColor(.green)
                     .font(.system(size: 24))
                     .offset(x: -5, y: -5)
-                    .onTapGesture {
-                        self.onDelete?(self.action)
-                    }
             }
         }
     }
