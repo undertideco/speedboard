@@ -12,7 +12,6 @@ import ContactsUI
 struct ShortcutImageView: View {
     var type: ActionType
     var image: UIImage
-    var handleTap: (() -> Void)?
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
@@ -20,9 +19,6 @@ struct ShortcutImageView: View {
                 .resizable()
                 .aspectRatio(1, contentMode: .fill)
                 .mask(Circle())
-                .onTapGesture {
-                    self.handleTap?()
-                }
             
                         
             if type == .call {
