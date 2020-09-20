@@ -23,11 +23,6 @@ enum WidgetAction: Equatable {
     case actionLoadResponse(Result<WidgetConfig, FileReadError>)
 }
 
-struct WidgetConfig : Equatable {
-    let actions: [Action]
-    let selectedActionIndices: [Int]
-}
-
 struct WidgetEnvironment {
     let family: WidgetFamily
     
@@ -63,9 +58,6 @@ struct WidgetEnvironment {
         }
     }
 }
-
-struct FileReadError: Error, Equatable {}
-
 
 let widgetReducer = Reducer<WidgetState, WidgetAction, WidgetEnvironment> { state, action , env in
     switch action {

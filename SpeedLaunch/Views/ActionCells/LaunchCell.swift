@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 struct LaunchCell: View, Launchable {
     @Binding var deletable: Bool
     var action: Action

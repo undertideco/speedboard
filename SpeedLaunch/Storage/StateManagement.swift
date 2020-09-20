@@ -13,8 +13,6 @@ import WidgetKit
 struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
         return lhs.actions?.count == rhs.actions?.count &&
-            lhs.configurationWidgetSize == rhs.configurationWidgetSize &&
-            lhs.widgetActions == rhs.widgetActions &&
             lhs.isContactPickerOpen == rhs.isContactPickerOpen
     }
     
@@ -38,15 +36,7 @@ struct AppState: Equatable {
     }
     
     var isContactPickerOpen: Bool = false
-    var configurationWidgetSize: WidgetSize = .medium
-    var widgetActions: [Int] {
-        switch configurationWidgetSize {
-        case .medium:
-            return mediumWidgetActions ?? []
-        case .large:
-            return largeWidgetActions ?? []
-        }
-    }
+    var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState(actions: [], selectedIndices: [])
     
     init() {
         actions = _actions
@@ -58,6 +48,7 @@ struct AppState: Equatable {
         let actionToSet = try! JSONDecoder().decode([Action].self, from: data)
         actions = actionToSet
     }
+    
     #endif
 }
 
@@ -67,11 +58,12 @@ enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Int)
     case setPicker(Bool)
-    case setConfigurationWidgetSize(WidgetSize)
     case updateWidgetActionIndices(indices: [Int])
+    case widgetConfiguration(WidgetConfigurationAction)
 }
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , env in
+let testReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
+    Reducer { state, action , env in
     switch action {
     case .addAction(let type, let name, let position, let number, let imageData):
         let imageURL = URL.urlInDocumentsDirectory(with: "\(UUID()).png")
@@ -88,7 +80,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         } else {
             state.actions = [action]
         }
-    
+
         return .none
     case .deleteAction(let index):
         print("remove action")
@@ -104,7 +96,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
         state.isContactPickerOpen = isPresented
         return .none
     case .updateWidgetActionIndices(let actionIndices):
-        switch state.configurationWidgetSize {
+        switch state.widgetConfigurationState.size {
         case .medium:
             state.mediumWidgetActions = actionIndices
         case .large:
@@ -115,9 +107,13 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action , 
             WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
         }
         return .none
-    case .setConfigurationWidgetSize(let size):
-        state.configurationWidgetSize = size
+    case .widgetConfiguration:
         return .none
     }
-    
-}
+    },
+    widgetConfigReducer.pullback(
+        state: \.widgetConfigurationState,
+        action: /AppAction.widgetConfiguration,
+        environment: { _ in WidgetConfigurationEnvironment() }
+    )
+)

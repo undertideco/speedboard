@@ -58,17 +58,13 @@ struct HomeView: View {
                         }
                     }
                     
-                    if isEditing {
+                    if #available(iOS 14.0, *), isEditing {
                         SlideOverCard(position: cardPosition) {
-                            WidgetConfigurationView(actions: viewStore.actionsToDisplay,
-                                                    selectedPicker: viewStore.binding(
-                                                        get: \.configurationWidgetSize,
-                                                        send: AppAction.setConfigurationWidgetSize
-                                                    ),
-                                                    selectedIndices: viewStore.binding(
-                                                        get: \.widgetActions,
-                                                        send: AppAction.updateWidgetActionIndices
-                                                    ))
+                            WidgetConfigurationView(
+                                store: self.store.scope(
+                                    state: \.widgetConfigurationState,
+                                    action: AppAction.widgetConfiguration
+                                ))
                         }
                         .transition(.move(edge: .bottom))
                         .animation(.easeInOut)
@@ -122,7 +118,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(store:
                         Store(initialState: AppState(),
-                              reducer: appReducer,
+                              reducer: testReducer,
                               environment: AppEnvironment())
         )
     }
