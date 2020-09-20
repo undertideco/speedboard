@@ -58,16 +58,18 @@ struct HomeView: View {
                         }
                     }
                     
-                    if #available(iOS 14.0, *), isEditing {
-                        SlideOverCard(position: cardPosition) {
-                            WidgetConfigurationView(
-                                store: self.store.scope(
-                                    state: \.widgetConfigurationState,
-                                    action: AppAction.widgetConfiguration
-                                ))
+                    if #available(iOS 14.0, *) {
+                        if isEditing {
+                            SlideOverCard(position: cardPosition) {
+                                WidgetConfigurationView(
+                                    store: self.store.scope(
+                                        state: \.widgetConfigurationState,
+                                        action: AppAction.widgetConfiguration
+                                    ))
+                            }
+                            .transition(.move(edge: .bottom))
+                            .animation(.easeInOut)
                         }
-                        .transition(.move(edge: .bottom))
-                        .animation(.easeInOut)
                     }
                 }
                 .navigationBarTitle(
