@@ -12,7 +12,6 @@ import ComposableArchitecture
 import WidgetKit
 
 struct WidgetConfigurationState: Equatable {
-    var actions: [Action] = []
     var selectedIndices: [Int] = []
     var size: WidgetSize = .medium
 }
@@ -86,7 +85,6 @@ let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationA
             .map(WidgetConfigurationAction.configurationLoadResponse)
             .eraseToEffect()
     case let .configurationLoadResponse(.success(config)):
-        state.actions = config.actions
         state.selectedIndices = config.selectedActionIndices
         
         return .none
@@ -116,10 +114,12 @@ let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationA
 
 struct WidgetConfigurationView: View {
     @ObservedObject var viewStore: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>
+    var actions: [Action]
     @State var showMaxNumberAlert: Bool = false
     
-    init(store: Store<WidgetConfigurationState, WidgetConfigurationAction>) {
+    init(store: Store<WidgetConfigurationState, WidgetConfigurationAction>, actions: [Action]) {
         self.viewStore = ViewStore(store)
+        self.actions = actions
     }
         
     var body: some View {
@@ -137,7 +137,7 @@ struct WidgetConfigurationView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding([.leading, .trailing], 8)
             
-            QGrid(viewStore.actions, columns: 4) { action in
+            QGrid(actions, columns: 4) { action in
                 Group {
                     if action.type != .empty {
                         LaunchCell(deletable: .constant(false),
@@ -164,7 +164,7 @@ struct WidgetConfigurationView: View {
 
     func handleCellPressed(_ action: Action?) {
         guard let action = action,
-              let actionIndex = viewStore.actions.firstIndex(of: action) else { return }
+              let actionIndex = actions.firstIndex(of: action) else { return }
         if isChecked(viewStore, action: action) {
             let filteredIndices = viewStore.selectedIndices.filter { $0 != actionIndex }
             viewStore.send(.updateWidgetActionIndices(filteredIndices))
@@ -180,7 +180,7 @@ struct WidgetConfigurationView: View {
     }
 
     func isChecked(_ store: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>, action: Action) -> Bool {
-        guard let actionIndex = store.actions.firstIndex(of: action) else { return false }
+        guard let actionIndex = actions.firstIndex(of: action) else { return false }
         
         return viewStore.selectedIndices.contains(actionIndex)
     }

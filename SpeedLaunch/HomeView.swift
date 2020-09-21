@@ -65,7 +65,9 @@ struct HomeView: View {
                                     store: self.store.scope(
                                         state: \.widgetConfigurationState,
                                         action: AppAction.widgetConfiguration
-                                    ))
+                                    ),
+                                    actions: viewStore.actionsToDisplay
+                                )
                             }
                             .transition(.move(edge: .bottom))
                             .animation(.easeInOut)
@@ -99,7 +101,11 @@ struct HomeView: View {
                 )
             }
             .sheet(item: $selectedContact) { contact in
-                ConfigurationView(store: store, selectedContact: contact, index: viewStore.actionsToDisplay.count - 1) {
+                ConfigurationView(
+                    store: store,
+                    selectedContact: contact,
+                    index: viewStore.actionsToDisplay.count - 1
+                ) {
                     self.selectedContact = nil
                 }
             }

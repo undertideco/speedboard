@@ -36,7 +36,7 @@ struct AppState: Equatable {
     }
     
     var isContactPickerOpen: Bool = false
-    var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState(actions: [], selectedIndices: [])
+    var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState( selectedIndices: [])
     
     init() {
         actions = _actions
