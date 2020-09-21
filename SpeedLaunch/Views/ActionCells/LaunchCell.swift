@@ -53,6 +53,9 @@ struct LaunchCell: View, Launchable {
                 .onTapGesture {
                     self.handlePressed?(self.action)
                 }
+                .accessibility(label: Text(action.accessibilityLabel))
+                .accessibility(addTraits: [.isButton])
+                .accessibility(removeTraits: .isImage)
             }
 
         
@@ -68,6 +71,8 @@ struct LaunchCell: View, Launchable {
                             self.onDelete?(self.action)
                         }
                 })
+                .accessibility(label: Text("Delete"))
+                .accessibility(hint: Text("Delete action to \(action.accessibilityLabel)"))
             }
             
             if isChecked {

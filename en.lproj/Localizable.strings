@@ -15,3 +15,11 @@
 
 "Widget_DisplayName" = "Quick Actions";
 "Widget_Description" = "Launch your SpeedBoard actions without opening the app.";
+
+"Accessibility_HomeView_Grid_Label" = "Actions grid";
+"Accessibility_HomeView_EditButton_Label" = "Edit";
+"Accessibility_HomeView_SaveButton_Label" = "Save";
+"Accessibility_HomeView_EditButton_Hint" = "Add and delete actions and configure them for home screen widgets";
+"Accessibility_HomeView_SaveButton_Hint" = "Saves all your actions";
+"Accessibility_HomeView_ConfigurationCard_Label" = "Widget configurator";
+"Accessibility_HomeView_ConfigurationCard_Hint" = "Mark actions you want to add to your home screen widget";

@@ -43,6 +43,10 @@ struct HomeView: View {
                                 }
                                 .frame(width: 100, height: 100, alignment: .center)
                                 .padding(5)
+                                .accessibility(label: Text("Add Action"))
+                                .accessibility(hint: Text("Adds action to your grid"))
+                                .accessibility(addTraits: [.isButton])
+                                .accessibility(removeTraits: .isImage)
                             } else {
                                 LaunchCell(deletable: self.$isEditing,
                                            action: action,
@@ -56,7 +60,7 @@ struct HomeView: View {
                                     .padding(5)
                             }
                         }
-                    }
+                    }.accessibility(label: Text(Strings.actionsGrid.rawValue))
                     
                     if #available(iOS 14.0, *) {
                         if isEditing {
@@ -71,6 +75,8 @@ struct HomeView: View {
                             }
                             .transition(.move(edge: .bottom))
                             .animation(.easeInOut)
+                            .accessibility(label: Text(Strings.configurationCardLabel.rawValue))
+                            .accessibility(hint: Text(Strings.configurationCardHint.rawValue))
                         }
                     }
                 }
@@ -91,12 +97,16 @@ struct HomeView: View {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.largeTitle)
                                     .foregroundColor(.white)
+                                    .accessibility(label: Text(Strings.saveButton.rawValue))
                             } else {
                                 Image(systemName: "pencil.circle.fill")
                                     .font(.largeTitle)
                                     .foregroundColor(.white)
+                                    .accessibility(label: Text(Strings.editButton.rawValue))
+                                    .accessibility(hint: Text(Strings.editButtonHint.rawValue))
                             }
-                        }.foregroundColor(self.isEditing ? .green : .blue
+                        }.foregroundColor(
+                            self.isEditing ? .green : .blue
                         )
                 )
             }
@@ -125,6 +135,14 @@ extension HomeView {
     enum Strings: LocalizedStringKey {
         case title = "App_Name"
         case emptyCellTitle = "LaunchCell_EmptyTitle"
+        
+        case actionsGrid = "Accessibility_HomeView_Grid_Label"
+        case editButton = "Accessibility_HomeView_EditButton_Label"
+        case saveButton = "Accessibility_HomeView_SaveButton_Label"
+        case editButtonHint = "Accessibility_HomeView_EditButton_Hint"
+        
+        case configurationCardLabel = "Accessibility_HomeView_ConfigurationCard_Label"
+        case configurationCardHint = "Accessibility_HomeView_ConfigurationCard_Hint"
     }
 }
 

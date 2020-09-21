@@ -16,6 +16,19 @@ struct Action: Codable, Equatable {
     let createdTime: Date
     var actionName: String? = nil
     
+    var accessibilityLabel: String {
+        switch type {
+        case .message:
+            return "Text \(actionName!) at \(phoneNumber ?? "")"
+        case .call:
+            return "Call \(actionName!) at \(phoneNumber ?? "")"
+        case .facetime:
+            return "FaceTime \(actionName!) at \(phoneNumber ?? "")"
+        case .empty:
+            return ""
+        }
+    }
+    
     func generateURLLaunchSchemeString() -> URL? {
         let phoneNumberKit = PhoneNumberKit()
         
