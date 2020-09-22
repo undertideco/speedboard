@@ -16,8 +16,8 @@ struct AppState: Equatable {
             lhs.isContactPickerOpen == rhs.isContactPickerOpen
     }
     
-    @DocDirectoryBacked<[Int]>(location: .largeWidgetActions) var largeWidgetActions
-    @DocDirectoryBacked<[Int]>(location: .mediumWidgetActions) var mediumWidgetActions
+    @DocDirectoryBacked<[String]>(location: .largeWidgetActions) var largeWidgetActions
+    @DocDirectoryBacked<[String]>(location: .mediumWidgetActions) var mediumWidgetActions
     @DocDirectoryBacked<[Action]>(location: .storeLocation) private var _actions
     
     var actions: [Action]? {
@@ -27,16 +27,32 @@ struct AppState: Equatable {
     }
     var actionsToDisplay: [Action] {
         if let unwrappedActions = actions {
-            var actionsToReturn = unwrappedActions
-            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil))
+            var actionsToReturn = unwrappedActions.sorted {
+                $0.createdTime < $1.createdTime
+            }
+            actionsToReturn.append(
+                Action(
+                    type: .empty,
+                    phoneNumber: nil,
+                    imageUrl: nil,
+                    createdTime: Date()
+                )
+            )
             return actionsToReturn
         } else {
-            return [Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil)]
+            return [
+                Action(
+                    type: .empty,
+                    phoneNumber: nil,
+                    imageUrl: nil,
+                    createdTime: Date()
+                )
+            ]
         }
     }
     
     var isContactPickerOpen: Bool = false
-    var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState( selectedIndices: [])
+    var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState( selectedIds: [])
     
     init() {
         actions = _actions
@@ -56,7 +72,7 @@ struct AppEnvironment {}
 
 enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
-    case deleteAction(Int)
+    case deleteAction(Action)
     case setPicker(Bool)
     case widgetConfiguration(WidgetConfigurationAction)
 }
@@ -68,11 +84,13 @@ let testReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         let imageURL = URL.urlInDocumentsDirectory(with: "\(UUID()).png")
         try! imageData.write(to: imageURL)
         
-        let action = Action(type: type,
-                            position: position,
-                            phoneNumber: number,
-                            imageUrl: imageURL,
-                            actionName: name)
+        let action = Action(
+            type: type,
+            phoneNumber: number,
+            imageUrl: imageURL,
+            createdTime: Date(),
+            actionName: name
+        )
         
         if let _ = state.actions {
             state.actions!.append(action)
@@ -81,15 +99,16 @@ let testReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         }
 
         return .none
-    case .deleteAction(let index):
-        print("remove action")
-        guard let actionImageURL = state.actions?[index].imageUrl else { return .none }
+    case .deleteAction(let action):
+        let actionId = action.id
+        
+        state.actions = state.actions?.filter { $0.id != actionId }
+        state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != actionId }
+        state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionId }
+
+        guard let actionImageURL = action.imageUrl else { return .none }
         try? FileManager.default.removeItem(at: actionImageURL)
         
-        state.actions?.remove(at: index)
-        state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != index }
-        state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != index }
-
         return .none
     case .setPicker(let isPresented):
         state.isContactPickerOpen = isPresented

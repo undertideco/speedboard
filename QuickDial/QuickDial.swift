@@ -85,7 +85,14 @@ struct QuickDialEntryView : View {
             return actions
         } else {
             var actionsToReturn = actions
-            actionsToReturn.append(Action(type: .empty, position: 999, phoneNumber: nil, imageUrl: nil))
+            actionsToReturn.append(
+                Action(
+                    type: .empty,
+                    phoneNumber: nil,
+                    imageUrl: nil,
+                    createdTime: Date()
+                )
+            )
             return actionsToReturn
         }
     }

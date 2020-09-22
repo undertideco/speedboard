@@ -12,7 +12,7 @@ import ComposableArchitecture
 import WidgetKit
 
 struct WidgetConfigurationState: Equatable {
-    var selectedIndices: [Int] = []
+    var selectedIds: [String] = []
     var size: WidgetSize = .medium
 }
 
@@ -20,7 +20,7 @@ enum WidgetConfigurationAction: Equatable {
     case initialLoad
     case configurationLoadResponse(Result<WidgetConfig, FileReadError>)
     case configurationSaveResponse(Result<Bool, FileWriteError>)
-    case updateWidgetActionIndices([Int])
+    case updateWidgetActionIds([String])
     case setConfigurationWidgetSize(WidgetSize)
 }
 
@@ -28,34 +28,34 @@ struct WidgetConfigurationEnvironment {
     
     func fetchActions(for family: WidgetSize) -> Effect<WidgetConfig, FileReadError> {
         let actionsDir: URL = .urlInDocumentsDirectory(with: .storeLocation)
-        var selectedIndicesDir: URL
+        var selectedIdsDir: URL
         
         switch family {
         case .medium:
-            selectedIndicesDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
+            selectedIdsDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
         case .large:
-            selectedIndicesDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
+            selectedIdsDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
         }
         
         do {
             let actionsData = try Data(contentsOf: actionsDir)
             let actions = try JSONDecoder().decode([Action].self, from: actionsData)
             
-            var selectedIndices: [Int]
-            if FileManager.default.fileExists(atPath: selectedIndicesDir.path) {
-                let selectedIndicesData = try Data(contentsOf: selectedIndicesDir)
-                selectedIndices = try JSONDecoder().decode([Int].self, from: selectedIndicesData)
+            var selectedIds: [String]
+            if FileManager.default.fileExists(atPath: selectedIdsDir.path) {
+                let selectedIndicesData = try Data(contentsOf: selectedIdsDir)
+                selectedIds = try JSONDecoder().decode([String].self, from: selectedIndicesData)
             } else {
-                selectedIndices = [Int]()
+                selectedIds = [String]()
             }
             
-            return Effect(value: WidgetConfig(actions: actions, selectedActionIndices: selectedIndices))
+            return Effect(value: WidgetConfig(actions: actions, selectedActionIds: selectedIds))
         } catch {
             return Effect(error: FileReadError())
         }
     }
     
-    func storeActions(indices: [Int], for size: WidgetSize) -> Effect<Bool, FileWriteError> {
+    func storeActions(indices: [String], for size: WidgetSize) -> Effect<Bool, FileWriteError> {
         var selectedIndicesDir: URL
         
         switch size {
@@ -85,15 +85,15 @@ let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationA
             .map(WidgetConfigurationAction.configurationLoadResponse)
             .eraseToEffect()
     case let .configurationLoadResponse(.success(config)):
-        state.selectedIndices = config.selectedActionIndices
+        state.selectedIds = config.selectedActionIds
         
         return .none
     case .configurationLoadResponse(.failure(_)):
         return .none
-    case .updateWidgetActionIndices(let actionIndices):
-        state.selectedIndices = actionIndices
+    case .updateWidgetActionIds(let actionIds):
+        state.selectedIds = actionIds
         
-        return env.storeActions(indices: actionIndices, for: state.size)
+        return env.storeActions(indices: actionIds, for: state.size)
             .catchToEffect()
             .map(WidgetConfigurationAction.configurationSaveResponse)
             .eraseToEffect()
@@ -163,25 +163,22 @@ struct WidgetConfigurationView: View {
     
 
     func handleCellPressed(_ action: Action?) {
-        guard let action = action,
-              let actionIndex = actions.firstIndex(of: action) else { return }
+        guard let action = action else { return }
         if isChecked(viewStore, action: action) {
-            let filteredIndices = viewStore.selectedIndices.filter { $0 != actionIndex }
-            viewStore.send(.updateWidgetActionIndices(filteredIndices))
+            let filteredIndices = viewStore.selectedIds.filter { $0 != action.id }
+            viewStore.send(.updateWidgetActionIds(filteredIndices))
         } else {
-            if viewStore.selectedIndices.count == viewStore.size.maxNumberOfActions {
+            if viewStore.selectedIds.count == viewStore.size.maxNumberOfActions {
                 showMaxNumberAlert = true
             } else {
-                let newIndices = viewStore.selectedIndices + [actionIndex]
-                viewStore.send(.updateWidgetActionIndices(newIndices))
+                let newIds = viewStore.selectedIds + [action.id]
+                viewStore.send(.updateWidgetActionIds(newIds))
             }
 
         }
     }
 
     func isChecked(_ store: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>, action: Action) -> Bool {
-        guard let actionIndex = actions.firstIndex(of: action) else { return false }
-        
-        return viewStore.selectedIndices.contains(actionIndex)
+        return viewStore.selectedIds.contains(action.id)
     }
 }

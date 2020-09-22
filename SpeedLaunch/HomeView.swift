@@ -18,7 +18,7 @@ struct HomeView: View {
     @State var isEditing: Bool = false
     @State private var selectedContact: CNContact? = nil
     
-    @State var cardPosition: CardPosition = .bottom
+    @State var cardPosition: CardPosition = .middle
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
@@ -49,7 +49,7 @@ struct HomeView: View {
                                            handlePressed: handleCellPressed,
                                            onDelete: { action in
                                                 viewStore.send(
-                                                    .deleteAction(viewStore.actionsToDisplay.firstIndex(of: action)!)
+                                                    .deleteAction(action)
                                                 )
                                            })
                                     .frame(width: 100, height: 100, alignment: .center)

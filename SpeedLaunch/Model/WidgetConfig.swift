@@ -8,5 +8,5 @@
 
 struct WidgetConfig : Equatable {
     let actions: [Action]
-    let selectedActionIndices: [Int]
+    let selectedActionIds: [String]
 }

@@ -28,13 +28,13 @@ struct WidgetEnvironment {
     
     var fetchActions: () -> Effect<WidgetConfig, FileReadError> {
         let actionsDir: URL = .urlInDocumentsDirectory(with: .storeLocation)
-        var selectedIndicesDir: URL
+        var selectedIdsDir: URL
         
         switch family {
         case .systemMedium:
-            selectedIndicesDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
+            selectedIdsDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
         case .systemLarge:
-            selectedIndicesDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
+            selectedIdsDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
         default:
             return {
                 Effect(error: FileReadError())
@@ -43,13 +43,16 @@ struct WidgetEnvironment {
         
         do {
             let actionsData = try Data(contentsOf: actionsDir)
-            let selectedIndicesData = try Data(contentsOf: selectedIndicesDir)
+            let selectedIdsData = try Data(contentsOf: selectedIdsDir)
             
             let actions = try JSONDecoder().decode([Action].self, from: actionsData)
-            let selectedIndices = try JSONDecoder().decode([Int].self, from: selectedIndicesData)
+            let selectedIds = try JSONDecoder().decode([String].self, from: selectedIdsData)
             
             return {
-                Effect(value: WidgetConfig(actions: actions, selectedActionIndices: selectedIndices))
+                Effect(value: WidgetConfig(
+                        actions: actions,
+                        selectedActionIds: selectedIds
+                ))
             }
         } catch {
             return {
@@ -67,7 +70,9 @@ let widgetReducer = Reducer<WidgetState, WidgetAction, WidgetEnvironment> { stat
             .map(WidgetAction.actionLoadResponse)
             .eraseToEffect()
     case let .actionLoadResponse(.success(config)):
-        state.actions = config.selectedActionIndices.map { config.actions[$0] }
+        state.actions = config.actions.filter {
+            config.selectedActionIds.contains($0.id)
+        }
         return .none
     case .actionLoadResponse(.failure(_)):
         state.actions = []

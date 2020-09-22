@@ -11,9 +11,9 @@ import PhoneNumberKit
 
 struct Action: Codable, Equatable {
     let type: ActionType
-    let position: Int
     let phoneNumber: String?
     let imageUrl: URL?
+    let createdTime: Date
     var actionName: String? = nil
     
     func generateURLLaunchSchemeString() -> URL? {
@@ -77,5 +77,5 @@ struct Action: Codable, Equatable {
 extension Action: Hashable {} 
 
 extension Action: Identifiable {
-    public var id: String { "\(self.position) - \(self.phoneNumber ?? "")" }
+    public var id: String { "\(self.createdTime) - \(self.phoneNumber ?? "")" }
 }
