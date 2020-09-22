@@ -14,7 +14,7 @@ import ComposableArchitecture
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let store = Store(initialState: AppState(), reducer: testReducer, environment: AppEnvironment())
+    let store = Store(initialState: AppState(), reducer: appReducer, environment: AppEnvironment())
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.

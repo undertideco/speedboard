@@ -132,7 +132,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(store:
                         Store(initialState: AppState(),
-                              reducer: testReducer,
+                              reducer: appReducer,
                               environment: AppEnvironment())
         )
     }

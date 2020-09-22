@@ -77,7 +77,7 @@ enum AppAction: Equatable {
     case widgetConfiguration(WidgetConfigurationAction)
 }
 
-let testReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
+let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     Reducer { state, action , env in
     switch action {
     case .addAction(let type, let name, let position, let number, let imageData):
