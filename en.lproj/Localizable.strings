@@ -23,3 +23,7 @@
 "Accessibility_HomeView_SaveButton_Hint" = "Saves all your actions";
 "Accessibility_HomeView_ConfigurationCard_Label" = "Widget configurator";
 "Accessibility_HomeView_ConfigurationCard_Hint" = "Mark actions you want to add to your home screen widget";
+
+"Accessibility_LaunchCell_Delete_Label" = "Delete";
+"Accessibility_LaunchCell_Delete_Hint %@" = "Delete action to %@";
+

@@ -53,6 +53,7 @@ struct LaunchCell: View, Launchable {
                 .onTapGesture {
                     self.handlePressed?(self.action)
                 }
+                .accessibilityElement(children: .combine)
                 .accessibility(label: Text(action.accessibilityLabel))
                 .accessibility(addTraits: [.isButton])
                 .accessibility(removeTraits: .isImage)
@@ -71,8 +72,8 @@ struct LaunchCell: View, Launchable {
                             self.onDelete?(self.action)
                         }
                 })
-                .accessibility(label: Text("Delete"))
-                .accessibility(hint: Text("Delete action to \(action.accessibilityLabel)"))
+                .accessibility(label: Text(Strings.deleteLabel.value))
+                .accessibility(hint: Text(Strings.deleteHint(action.accessibilityLabel).value))
             }
             
             if isChecked {
@@ -80,6 +81,25 @@ struct LaunchCell: View, Launchable {
                     .foregroundColor(.green)
                     .font(.system(size: 24))
                     .offset(x: -5, y: -5)
+                    .accessibility(label: Text(action.accessibilityLabel))
+                    .accessibility(addTraits: [.isButton])
+                    .accessibility(removeTraits: .isImage)
+            }
+        }
+    }
+}
+
+extension LaunchCell {
+    enum Strings {
+        case deleteLabel
+        case deleteHint(String)
+        
+        var value: LocalizedStringKey {
+            switch self {
+            case .deleteLabel:
+                return "Accessibility_LaunchCell_Delete_Label"
+            case .deleteHint(let actionString):
+                return "Accessibility_LaunchCell_Delete_Hint \(actionString)"
             }
         }
     }
