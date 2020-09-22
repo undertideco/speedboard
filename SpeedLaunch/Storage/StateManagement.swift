@@ -68,7 +68,14 @@ struct AppState: Equatable {
     #endif
 }
 
-struct AppEnvironment {}
+struct AppEnvironment {
+    func deleteImageWithURL(_ url: URL) {
+        // we move the image to tmpDir and let the OS delete the image instead because `removeItem`
+        // is not a synchronous operation
+        try? FileManager.default.moveItem(at: url, to: URL(fileURLWithPath: NSTemporaryDirectory(),
+                                                           isDirectory: true))
+    }
+}
 
 enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
@@ -107,9 +114,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionId }
 
         guard let actionImageURL = action.imageUrl else { return .none }
-        try? FileManager.default.removeItem(at: actionImageURL)
         
-        return .none
+        return .fireAndForget {
+            env.deleteImageWithURL(actionImageURL)
+        }
     case .setPicker(let isPresented):
         state.isContactPickerOpen = isPresented
         return .none
