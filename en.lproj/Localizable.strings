@@ -27,3 +27,7 @@
 "Accessibility_LaunchCell_Delete_Label" = "Delete";
 "Accessibility_LaunchCell_Delete_Hint %@" = "Delete action to %@";
 
+"ConfigurationView_Form_Label" = "Choose contact method";
+"ConfigurationView_Form_Hint" = "Pick the type of action with the number or email you want associated with it";
+"ConfigurationView_Action_Heading %@" = "%@ Action";
+"LaunchCell_Checked_Label" = "Activated for widget";

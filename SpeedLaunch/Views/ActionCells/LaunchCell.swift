@@ -53,10 +53,9 @@ struct LaunchCell: View, Launchable {
                 .onTapGesture {
                     self.handlePressed?(self.action)
                 }
-                .accessibilityElement(children: .combine)
-                .accessibility(label: Text(action.accessibilityLabel))
                 .accessibility(addTraits: [.isButton])
                 .accessibility(removeTraits: .isImage)
+                .accessibility(sortPriority: 1)
             }
 
         
@@ -72,8 +71,10 @@ struct LaunchCell: View, Launchable {
                             self.onDelete?(self.action)
                         }
                 })
-                .accessibility(label: Text(Strings.deleteLabel.value))
-                .accessibility(hint: Text(Strings.deleteHint(action.accessibilityLabel).value))
+                .accessibilityAction(named: Text(Strings.deleteLabel.value), {
+                    self.onDelete?(self.action)
+                })
+                .accessibility(sortPriority: 2)
             }
             
             if isChecked {
@@ -81,10 +82,14 @@ struct LaunchCell: View, Launchable {
                     .foregroundColor(.green)
                     .font(.system(size: 24))
                     .offset(x: -5, y: -5)
-                    .accessibility(label: Text(action.accessibilityLabel))
-                    .accessibility(addTraits: [.isButton])
-                    .accessibility(removeTraits: .isImage)
+                    .accessibility(label: Text(Strings.checkedForWidgetLabel.value))
+                    .accessibility(sortPriority: 0)
             }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibility(label: Text(action.accessibilityLabel))
+        .accessibilityAction {
+            self.handlePressed?(action)
         }
     }
 }
@@ -93,9 +98,12 @@ extension LaunchCell {
     enum Strings {
         case deleteLabel
         case deleteHint(String)
+        case checkedForWidgetLabel
         
         var value: LocalizedStringKey {
             switch self {
+            case .checkedForWidgetLabel:
+                return "LaunchCell_Checked_Label"
             case .deleteLabel:
                 return "Accessibility_LaunchCell_Delete_Label"
             case .deleteHint(let actionString):
