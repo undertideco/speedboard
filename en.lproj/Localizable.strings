@@ -31,3 +31,6 @@
 "ConfigurationView_Form_Hint" = "Pick the type of action with the number or email you want associated with it";
 "ConfigurationView_Action_Heading %@" = "%@ Action";
 "LaunchCell_Checked_Label" = "Activated for widget";
+
+"EmptyCell_Label" = "Add Action";
+"EmptyCell_Hint" = "Adds action to your grid";

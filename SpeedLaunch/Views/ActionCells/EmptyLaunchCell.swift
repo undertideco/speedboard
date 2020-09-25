@@ -54,8 +54,20 @@ struct EmptyLaunchCell: View, Launchable {
             .onTapGesture {
                 self.handlePressed?(())
             }
+            .accessibility(label: Text(Strings.label.rawValue))
+            .accessibility(hint: Text(Strings.hint.rawValue))
+            .accessibility(addTraits: [.isButton])
+            .accessibility(removeTraits: .isImage)
         }
        
+    }
+}
+
+extension EmptyLaunchCell {
+    enum Strings: LocalizedStringKey {
+        case label = "EmptyCell_Label"
+        case hint = "EmptyCell_Hint"
+        
     }
 }
 

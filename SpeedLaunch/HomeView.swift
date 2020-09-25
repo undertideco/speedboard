@@ -43,10 +43,6 @@ struct HomeView: View {
                                 }
                                 .frame(width: 100, height: 100, alignment: .center)
                                 .padding(5)
-                                .accessibility(label: Text("Add Action"))
-                                .accessibility(hint: Text("Adds action to your grid"))
-                                .accessibility(addTraits: [.isButton])
-                                .accessibility(removeTraits: .isImage)
                             } else {
                                 LaunchCell(deletable: self.$isEditing,
                                            action: action,
