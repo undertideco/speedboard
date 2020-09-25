@@ -75,6 +75,7 @@ struct HomeView: View {
                             }
                             .transition(.move(edge: .bottom))
                             .animation(.easeInOut)
+                            .accessibilityAddTraits([.isHeader])
                             .accessibility(label: Text(Strings.configurationCardLabel.rawValue))
                             .accessibility(hint: Text(Strings.configurationCardHint.rawValue))
                         }
