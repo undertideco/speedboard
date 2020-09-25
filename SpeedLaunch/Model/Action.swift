@@ -30,60 +30,17 @@ struct Action: Codable, Equatable {
     }
     
     func generateURLLaunchSchemeString() -> URL? {
-        let phoneNumberKit = PhoneNumberKit()
+        guard let value = contactValue else { return nil }
         
-        switch type {
-        case .message:
-            guard let phoneNumber = contactValue else { return nil }
-            let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
-            var actionComponents = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
-            actionComponents.scheme = "sms"
+        if value.isEmail {
+            return type.urlLaunchScheme(value)
+        } else {
+            let phoneNumberKit = PhoneNumberKit()
             
-            
-            var wrappedComponents = URLComponents()
-            wrappedComponents.scheme = "speedboard"
-            wrappedComponents.path = "/open"
-            wrappedComponents.queryItems = [
-                URLQueryItem(name: "url", value: "\(actionComponents.url!.absoluteString)")
-            ]
-            
-            return wrappedComponents.url
-        case .call:
-            guard let phoneNumber = contactValue else { return nil }
-            let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
-            var actionComponents = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
-            actionComponents.scheme = "tel"
-            
-            var wrappedComponents = URLComponents()
-            wrappedComponents.scheme = "speedboard"
-            wrappedComponents.path = "/open"
-            wrappedComponents.queryItems = [
-                URLQueryItem(name: "url", value: "\(actionComponents.url!.absoluteString)")
-            ]
-            
-            return wrappedComponents.url
-        case .facetime:
-            guard let phoneNumber = contactValue else { return nil }
-            let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
-            var actionComponents = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
-            actionComponents.scheme = "facetime"
-            
-            
-            var wrappedComponents = URLComponents()
-            wrappedComponents.scheme = "speedboard"
-            wrappedComponents.path = "/open"
-            wrappedComponents.queryItems = [
-                URLQueryItem(name: "url", value: "\(actionComponents.url!.absoluteString)")
-            ]
-            
-            return wrappedComponents.url
-        case .empty:
-            var components = URLComponents()
-            components.scheme = "speedboard"
-            components.host = "new"
-            return components.url!
+            let parsedNumber = try! phoneNumberKit.parse(value,
+                                                         ignoreType: true)
+            return type.urlLaunchScheme(phoneNumberKit.format(parsedNumber, toType: .e164))
         }
-        
     }
 }
 

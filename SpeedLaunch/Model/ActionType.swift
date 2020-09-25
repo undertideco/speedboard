@@ -23,4 +23,30 @@ enum ActionType: String, CaseIterable, Codable {
             return "LaunchCell_EmptyTitle"
         }
     }
+    
+    func urlLaunchScheme(_ value: String) -> URL? {
+        var actionComponents = URLComponents(string: value)!
+        
+        switch self {
+        case .message:
+            actionComponents.scheme = "sms"
+        case .call:
+            actionComponents.scheme = "tel"
+        case .facetime:
+            actionComponents.scheme = "facetime"
+        default:
+            return nil
+        }
+        
+        
+        var wrappedComponents = URLComponents()
+        wrappedComponents.scheme = "speedboard"
+        wrappedComponents.path = "/open"
+        wrappedComponents.queryItems = [
+            URLQueryItem(name: "url",
+                         value: "\(actionComponents.url!.absoluteString)")
+        ]
+        
+        return wrappedComponents.url
+    }
 }
