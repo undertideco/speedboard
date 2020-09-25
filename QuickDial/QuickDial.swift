@@ -88,7 +88,7 @@ struct QuickDialEntryView : View {
             actionsToReturn.append(
                 Action(
                     type: .empty,
-                    phoneNumber: nil,
+                    contactValue: nil,
                     imageUrl: nil,
                     createdTime: Date()
                 )

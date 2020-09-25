@@ -33,7 +33,7 @@ struct AppState: Equatable {
             actionsToReturn.append(
                 Action(
                     type: .empty,
-                    phoneNumber: nil,
+                    contactValue: nil,
                     imageUrl: nil,
                     createdTime: Date()
                 )
@@ -43,7 +43,7 @@ struct AppState: Equatable {
             return [
                 Action(
                     type: .empty,
-                    phoneNumber: nil,
+                    contactValue: nil,
                     imageUrl: nil,
                     createdTime: Date()
                 )
@@ -93,7 +93,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         
         let action = Action(
             type: type,
-            phoneNumber: number,
+            contactValue: number,
             imageUrl: imageURL,
             createdTime: Date(),
             actionName: name

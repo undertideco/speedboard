@@ -11,7 +11,7 @@ import PhoneNumberKit
 
 struct Action: Codable, Equatable {
     let type: ActionType
-    let phoneNumber: String?
+    let contactValue: String?
     let imageUrl: URL?
     let createdTime: Date
     var actionName: String? = nil
@@ -19,11 +19,11 @@ struct Action: Codable, Equatable {
     var accessibilityLabel: String {
         switch type {
         case .message:
-            return "Text \(actionName!) at \(phoneNumber ?? "")"
+            return "Text \(actionName!) at \(contactValue ?? "")"
         case .call:
-            return "Call \(actionName!) at \(phoneNumber ?? "")"
+            return "Call \(actionName!) at \(contactValue ?? "")"
         case .facetime:
-            return "FaceTime \(actionName!) at \(phoneNumber ?? "")"
+            return "FaceTime \(actionName!) at \(contactValue ?? "")"
         case .empty:
             return ""
         }
@@ -34,7 +34,7 @@ struct Action: Codable, Equatable {
         
         switch type {
         case .message:
-            guard let phoneNumber = phoneNumber else { return nil }
+            guard let phoneNumber = contactValue else { return nil }
             let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
             var actionComponents = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
             actionComponents.scheme = "sms"
@@ -49,7 +49,7 @@ struct Action: Codable, Equatable {
             
             return wrappedComponents.url
         case .call:
-            guard let phoneNumber = phoneNumber else { return nil }
+            guard let phoneNumber = contactValue else { return nil }
             let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
             var actionComponents = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
             actionComponents.scheme = "tel"
@@ -63,7 +63,7 @@ struct Action: Codable, Equatable {
             
             return wrappedComponents.url
         case .facetime:
-            guard let phoneNumber = phoneNumber else { return nil }
+            guard let phoneNumber = contactValue else { return nil }
             let parsedNumber = try! phoneNumberKit.parse(phoneNumber, ignoreType: true)
             var actionComponents = URLComponents(string: phoneNumberKit.format(parsedNumber, toType: .e164))!
             actionComponents.scheme = "facetime"
@@ -90,5 +90,5 @@ struct Action: Codable, Equatable {
 extension Action: Hashable {} 
 
 extension Action: Identifiable {
-    public var id: String { "\(self.createdTime) - \(self.phoneNumber ?? "")" }
+    public var id: String { "\(self.createdTime) - \(self.contactValue ?? "")" }
 }
