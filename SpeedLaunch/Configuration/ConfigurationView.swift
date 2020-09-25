@@ -45,11 +45,10 @@ struct ConfigurationView: View {
                             Text(selectedContact.givenName)
                                 .font(.system(size: 31))
                         }
-                        .accessibilityElement()
-                        .accessibility(label: Text("\(selectedContact.givenName)"))
                         .frame(width: geo.size.width, alignment: .center)
                         .fixedSize()
                     }
+                    .accessibility(hidden: true)
                     .listRowBackground(Color(UIColor.secondarySystemBackground))
                     .frame(height: 130)
 
@@ -75,7 +74,10 @@ struct ConfigurationView: View {
                         .accessibility(label: Text(Strings.actionHeadings(actionType).value))
                     }
                 }
-                .navigationBarTitle(Text(Strings.title.value), displayMode: .inline)
+                .navigationBarTitle(
+                    Text(Strings.title.value),
+                    displayMode: .inline
+                )
                 .accessibility(label: Text(Strings.formLabel.value))
                 .accessibility(hint: Text(Strings.formHint.value))
             }
