@@ -124,15 +124,17 @@ struct WidgetConfigurationView: View {
         
     var body: some View {
         VStack {
-            Text("Select Actions To Enable for Widget")
+            Text(Strings.title.rawValue)
                 .font(.system(size: 18, weight: .bold, design: .default))
-            Picker("Picker Size",
+            Picker(Strings.pickerTitle.rawValue,
                    selection: viewStore.binding(
                     get: \.size,
                     send: WidgetConfigurationAction.setConfigurationWidgetSize
                    )) {
-                Text("Medium").tag(WidgetSize.medium)
-                Text("Large").tag(WidgetSize.large)
+                Text("Medium")
+                    .tag(WidgetSize.medium)
+                Text("Large")
+                    .tag(WidgetSize.large)
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding([.leading, .trailing], 8)
@@ -154,9 +156,11 @@ struct WidgetConfigurationView: View {
             viewStore.send(.initialLoad)
         }.alert(isPresented: $showMaxNumberAlert) {
             Alert(
-                title: Text("Max Number of Configurable Actions Reached"),
-                message: Text("To continue, try unselecting some actions."),
-                dismissButton: .default(Text("Got it!"))
+                title: Text(Strings.maxActionsAlertTitle.rawValue),
+                message: Text(Strings.maxActionsAlertMessage.rawValue),
+                dismissButton: .default(
+                    Text(Strings.maxActionsAlertAction.rawValue)
+                )
             )
         }
     }
@@ -180,5 +184,18 @@ struct WidgetConfigurationView: View {
 
     func isChecked(_ store: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>, action: Action) -> Bool {
         return viewStore.selectedIds.contains(action.id)
+    }
+}
+
+extension WidgetConfigurationView {
+    enum Strings: LocalizedStringKey {
+        case title = "SlideoverCard_Title"
+        case pickerTitle = "SlideoverCard_PickerTitle"
+        case widgetSizeMed = "SlideoverCard_Size_Med"
+        case widgetSizeLg = "SlideoverCard_Size_Lg"
+        
+        case maxActionsAlertTitle = "SlideoverCard_MaxActionsTitle"
+        case maxActionsAlertMessage = "SlideoverCard_MaxActionsMessage"
+        case maxActionsAlertAction = "SlideoverCard_DismissAction"
     }
 }

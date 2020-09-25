@@ -34,3 +34,12 @@
 
 "EmptyCell_Label" = "Add Action";
 "EmptyCell_Hint" = "Adds action to your grid";
+
+"SlideoverCard_Title" = "Select Actions To Enable for Widget";
+"SlideoverCard_PickerTitle" = "Widget Size Picker";
+"SlideoverCard_Size_Med" = "Medium";
+"SlideoverCard_Size_Lg" = "Large";
+
+"SlideoverCard_MaxActionsTitle" = "Maximum Number of Configurable Actions Reached";
+"SlideoverCard_MaxActionsMessage" = "To continue, try unselecting some actions.";
+"SlideoverCard_DismissAction" = "Got it!";
