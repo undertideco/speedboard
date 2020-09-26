@@ -7,12 +7,44 @@
 //
 
 import SwiftUI
+import CoreData
 import PhoneNumberKit
 
-struct Action: Codable, Equatable {
+class SavedAction: NSManagedObject {
+    @NSManaged var id: UUID
+    @NSManaged var actionType: String
+    @NSManaged var contactValue: String
+    @NSManaged var createdTime: Date
+    @NSManaged var image: Data?
+    @NSManaged var name: String
+    
+    var action : Action {
+       get {
+            return Action(
+                id: id,
+                type: ActionType(rawValue: actionType)!,
+                contactValue: contactValue,
+                imageData: image,
+                createdTime: createdTime,
+                actionName: name
+            )
+        }
+        set {
+            self.id = newValue.id
+            self.name = newValue.actionName ?? ""
+            self.image = newValue.imageData
+            self.contactValue = newValue.contactValue ?? ""
+            self.actionType = newValue.type.rawValue
+            self.createdTime = newValue.createdTime
+        }
+    }
+}
+
+struct Action: Codable, Equatable, Identifiable {
+    let id: UUID
     let type: ActionType
     let contactValue: String?
-    let imageUrl: URL?
+    let imageData: Data?
     let createdTime: Date
     var actionName: String? = nil
     
@@ -45,7 +77,3 @@ struct Action: Codable, Equatable {
 }
 
 extension Action: Hashable {} 
-
-extension Action: Identifiable {
-    public var id: String { "\(self.createdTime) - \(self.contactValue ?? "")" }
-}

@@ -33,8 +33,8 @@ struct LaunchCell: View, Launchable {
                     ZStack {
                         Circle().inset(by: 15).foregroundColor(Color.white)
                         // FIXME: not an ideal implementation for images
-                        if action.imageUrl != nil {
-                            ShortcutImageView(type: action.type, image: UIImage(contentsOfFile: action.imageUrl!.path)!)
+                        if let imageData = action.imageData {
+                            ShortcutImageView(type: action.type, image: UIImage(data: imageData)!)
                             .aspectRatio(1, contentMode: .fit)
                             .frame(width: geo.size.width * shortcutImageScaleFactor, alignment: .center)
                         } else {

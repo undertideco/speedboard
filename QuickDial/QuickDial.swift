@@ -87,9 +87,10 @@ struct QuickDialEntryView : View {
             var actionsToReturn = actions
             actionsToReturn.append(
                 Action(
+                    id: UUID(),
                     type: .empty,
                     contactValue: nil,
-                    imageUrl: nil,
+                    imageData: nil,
                     createdTime: Date()
                 )
             )

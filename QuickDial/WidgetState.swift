@@ -71,7 +71,7 @@ let widgetReducer = Reducer<WidgetState, WidgetAction, WidgetEnvironment> { stat
             .eraseToEffect()
     case let .actionLoadResponse(.success(config)):
         state.actions = config.actions.filter {
-            config.selectedActionIds.contains($0.id)
+            config.selectedActionIds.contains($0.id.uuidString)
         }
         return .none
     case .actionLoadResponse(.failure(_)):
