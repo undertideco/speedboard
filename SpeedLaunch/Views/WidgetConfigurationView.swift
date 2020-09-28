@@ -169,13 +169,13 @@ struct WidgetConfigurationView: View {
     func handleCellPressed(_ action: Action?) {
         guard let action = action else { return }
         if isChecked(viewStore, action: action) {
-            let filteredIndices = viewStore.selectedIds.filter { $0 != action.id }
+            let filteredIndices = viewStore.selectedIds.filter { $0 != action.id.uuidString }
             viewStore.send(.updateWidgetActionIds(filteredIndices))
         } else {
             if viewStore.selectedIds.count == viewStore.size.maxNumberOfActions {
                 showMaxNumberAlert = true
             } else {
-                let newIds = viewStore.selectedIds + [action.id]
+                let newIds = viewStore.selectedIds + [action.id.uuidString]
                 viewStore.send(.updateWidgetActionIds(newIds))
             }
 
@@ -183,7 +183,7 @@ struct WidgetConfigurationView: View {
     }
 
     func isChecked(_ store: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>, action: Action) -> Bool {
-        return viewStore.selectedIds.contains(action.id)
+        return viewStore.selectedIds.contains(action.id.uuidString)
     }
 }
 

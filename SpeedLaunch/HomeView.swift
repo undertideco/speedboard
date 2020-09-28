@@ -116,6 +116,9 @@ struct HomeView: View {
                     self.selectedContact = nil
                 }
             }
+            .onAppear {
+                viewStore.send(.initialLoad)
+            }
         }
     }
     
@@ -148,7 +151,7 @@ struct ContentView_Previews: PreviewProvider {
         HomeView(store:
                         Store(initialState: AppState(),
                               reducer: appReducer,
-                              environment: AppEnvironment())
+                              environment: AppEnvironment(storageClient: StorageClient.live))
         )
     }
 }

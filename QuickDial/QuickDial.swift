@@ -15,17 +15,17 @@ struct Provider: TimelineProvider {
     typealias Entry = SimpleEntry
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family)))
+        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: .live)))
     }
     
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family)))
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: .live)))
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family)))
-        
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: .live)))
+
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
     }
@@ -87,9 +87,10 @@ struct QuickDialEntryView : View {
             var actionsToReturn = actions
             actionsToReturn.append(
                 Action(
+                    id: UUID(),
                     type: .empty,
                     contactValue: nil,
-                    imageUrl: nil,
+                    imageData: nil,
                     createdTime: Date()
                 )
             )

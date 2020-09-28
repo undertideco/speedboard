@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2807A7E5251E7EBD00E35324 /* ActionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */; };
+		2807A7E6251E7EBD00E35324 /* ActionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */; };
+		2807A7EB251E824E00E35324 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7EA251E824E00E35324 /* CoreDataHelper.swift */; };
+		2807A7EC251E824E00E35324 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7EA251E824E00E35324 /* CoreDataHelper.swift */; };
+		2807A7F1251E826500E35324 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7F0251E826500E35324 /* CoreDataStack.swift */; };
+		2807A7F2251E826500E35324 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2807A7F0251E826500E35324 /* CoreDataStack.swift */; };
 		2808C59D251801CE002DB8EF /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2808C59C251801CE002DB8EF /* NavigationBarColor.swift */; };
 		280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280A0D0C25059BEA00823A35 /* URLSchemeActions.swift */; };
 		280C45B724E628D60098E17A /* SpeedLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45B624E628D60098E17A /* SpeedLaunchTests.swift */; };
@@ -53,6 +59,8 @@
 		2840C64E24490FA600DB6BAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2840C64D24490FA600DB6BAA /* Assets.xcassets */; };
 		2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65024490FA600DB6BAA /* Preview Assets.xcassets */; };
 		2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2840C65224490FA600DB6BAA /* LaunchScreen.storyboard */; };
+		2842E311251EB40100593232 /* StorageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842E310251EB40100593232 /* StorageClient.swift */; };
+		2842E312251EB40100593232 /* StorageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842E310251EB40100593232 /* StorageClient.swift */; };
 		2848675524FDFA530067490D /* ActionWidgetResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */; };
 		284A81B52510744D0057E725 /* WidgetConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284A81B42510744D0057E725 /* WidgetConfigurationView.swift */; };
 		284B72C925166121002969F5 /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72C825166121002969F5 /* WidgetConfig.swift */; };
@@ -119,6 +127,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2807A7E4251E7EBD00E35324 /* ActionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ActionModel.xcdatamodel; sourceTree = "<group>"; };
+		2807A7EA251E824E00E35324 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
+		2807A7F0251E826500E35324 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		2808C59C251801CE002DB8EF /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
 		280A0D0C25059BEA00823A35 /* URLSchemeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeActions.swift; sourceTree = "<group>"; };
 		280C45AD24E628620098E17A /* ActionStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStoreTest.swift; sourceTree = "<group>"; };
@@ -150,6 +161,7 @@
 		2840C65024490FA600DB6BAA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2840C65324490FA600DB6BAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2840C65524490FA600DB6BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2842E310251EB40100593232 /* StorageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageClient.swift; sourceTree = "<group>"; };
 		2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWidgetResizable.swift; sourceTree = "<group>"; };
 		284A81B42510744D0057E725 /* WidgetConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConfigurationView.swift; sourceTree = "<group>"; };
 		284B72C825166121002969F5 /* WidgetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConfig.swift; sourceTree = "<group>"; };
@@ -297,6 +309,10 @@
 		2840C63B24490FA500DB6BAA = {
 			isa = PBXGroup;
 			children = (
+				2842E310251EB40100593232 /* StorageClient.swift */,
+				2807A7F0251E826500E35324 /* CoreDataStack.swift */,
+				2807A7EA251E824E00E35324 /* CoreDataHelper.swift */,
+				2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */,
 				28853BA3250D596800C0D0F7 /* Localizable.strings */,
 				28EB23962509847B00E6C46B /* Colors.xcassets */,
 				28D90C6B24FDD3CB00A5B04B /* QuickDialExtension.entitlements */,
@@ -562,8 +578,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				28D0E58925144339002E1EEC /* WidgetSize.swift in Sources */,
+				2807A7EC251E824E00E35324 /* CoreDataHelper.swift in Sources */,
 				283963A324FDCA1D001AF3F3 /* ActionView.swift in Sources */,
 				283963A624FDCA48001AF3F3 /* WidgetState.swift in Sources */,
+				2842E312251EB40100593232 /* StorageClient.swift in Sources */,
+				2807A7E6251E7EBD00E35324 /* ActionModel.xcdatamodeld in Sources */,
 				2839639824FDC886001AF3F3 /* QuickDial.intentdefinition in Sources */,
 				283963B624FDD03C001AF3F3 /* CellLaunchable.swift in Sources */,
 				283963B724FDD049001AF3F3 /* ShortcutImageView.swift in Sources */,
@@ -574,6 +593,7 @@
 				283963A724FDCA4E001AF3F3 /* DocDirectoryBacked.swift in Sources */,
 				2848675524FDFA530067490D /* ActionWidgetResizable.swift in Sources */,
 				283963B424FDD036001AF3F3 /* EmptyLaunchCell.swift in Sources */,
+				2807A7F2251E826500E35324 /* CoreDataStack.swift in Sources */,
 				284B72D025166157002969F5 /* Errors.swift in Sources */,
 				283963B824FDD051001AF3F3 /* Colors.swift in Sources */,
 				2839639324FDC884001AF3F3 /* QuickDial.swift in Sources */,
@@ -589,10 +609,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2807A7F1251E826500E35324 /* CoreDataStack.swift in Sources */,
 				286376F424496606005AFB9D /* ActionView.swift in Sources */,
 				28B7535D24F5840A0072B949 /* Colors.swift in Sources */,
 				287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */,
 				2814F4C6250AE2E3006F41EE /* UIImage+Resize.swift in Sources */,
+				2807A7EB251E824E00E35324 /* CoreDataHelper.swift in Sources */,
 				2865238624FEFADF00B53714 /* URL.swift in Sources */,
 				28D0E58825144339002E1EEC /* WidgetSize.swift in Sources */,
 				28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */,
@@ -603,11 +625,13 @@
 				283FE5272502E687003CBB8F /* UIImage.swift in Sources */,
 				280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */,
 				284B72CF25166157002969F5 /* Errors.swift in Sources */,
+				2807A7E5251E7EBD00E35324 /* ActionModel.xcdatamodeld in Sources */,
 				28D0E58325143F2D002E1EEC /* View.swift in Sources */,
 				281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */,
 				283963A924FDCA91001AF3F3 /* String.swift in Sources */,
 				283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */,
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
+				2842E311251EB40100593232 /* StorageClient.swift in Sources */,
 				28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */,
 				284B72C925166121002969F5 /* WidgetConfig.swift in Sources */,
 				283FE5242502E66B003CBB8F /* CNContact.swift in Sources */,
@@ -720,7 +744,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
@@ -746,7 +770,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
@@ -887,7 +911,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SpeedLaunch/SpeedLaunch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"SpeedLaunch/Preview Content\"";
 				DEVELOPMENT_TEAM = EZ49532236;
 				ENABLE_PREVIEWS = YES;
@@ -911,7 +935,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SpeedLaunch/SpeedLaunch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"SpeedLaunch/Preview Content\"";
 				DEVELOPMENT_TEAM = EZ49532236;
 				ENABLE_PREVIEWS = YES;
@@ -1046,6 +1070,19 @@
 			productName = LetterAvatarKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2807A7E4251E7EBD00E35324 /* ActionModel.xcdatamodel */,
+			);
+			currentVersion = 2807A7E4251E7EBD00E35324 /* ActionModel.xcdatamodel */;
+			path = ActionModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2840C63C24490FA500DB6BAA /* Project object */;
 }

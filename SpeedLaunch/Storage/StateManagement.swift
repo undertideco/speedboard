@@ -9,32 +9,30 @@
 import Foundation
 import ComposableArchitecture
 import WidgetKit
+import CoreData
 
 struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
-        return lhs.actions?.count == rhs.actions?.count &&
+        return lhs.actions.count == rhs.actions.count &&
             lhs.isContactPickerOpen == rhs.isContactPickerOpen
     }
     
     @DocDirectoryBacked<[String]>(location: .largeWidgetActions) var largeWidgetActions
     @DocDirectoryBacked<[String]>(location: .mediumWidgetActions) var mediumWidgetActions
-    @DocDirectoryBacked<[Action]>(location: .storeLocation) private var _actions
     
-    var actions: [Action]? {
-        didSet {
-            _actions = actions
-        }
-    }
+    var actions: [Action] = []
+    
     var actionsToDisplay: [Action] {
-        if let unwrappedActions = actions {
-            var actionsToReturn = unwrappedActions.sorted {
+        if actions.count != 0 {
+            var actionsToReturn = actions.sorted {
                 $0.createdTime < $1.createdTime
             }
             actionsToReturn.append(
                 Action(
+                    id: UUID(),
                     type: .empty,
                     contactValue: nil,
-                    imageUrl: nil,
+                    imageData: nil,
                     createdTime: Date()
                 )
             )
@@ -42,9 +40,11 @@ struct AppState: Equatable {
         } else {
             return [
                 Action(
+                    id: UUID(),
+                    
                     type: .empty,
                     contactValue: nil,
-                    imageUrl: nil,
+                    imageData: nil,
                     createdTime: Date()
                 )
             ]
@@ -54,74 +54,72 @@ struct AppState: Equatable {
     var isContactPickerOpen: Bool = false
     var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState( selectedIds: [])
     
-    init() {
-        actions = _actions
-    }
-    
-    #if DEBUG
-    init(actionsFromURL: URL) {
-        let data = try! Data(contentsOf: actionsFromURL)
-        let actionToSet = try! JSONDecoder().decode([Action].self, from: data)
-        actions = actionToSet
-    }
-    
-    #endif
 }
 
 struct AppEnvironment {
-    func deleteImageWithURL(_ url: URL) {
-        // we move the image to tmpDir and let the OS delete the image instead because `removeItem`
-        // is not a synchronous operation
-        try? FileManager.default.moveItem(at: url, to: URL(fileURLWithPath: NSTemporaryDirectory(),
-                                                           isDirectory: true))
-    }
+    let helper = CoreDataHelper()
+    
+    var storageClient: StorageClient
 }
 
 enum AppAction: Equatable {
+    case initialLoad
     case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Action)
     case setPicker(Bool)
     case widgetConfiguration(WidgetConfigurationAction)
+    
+    case didWriteActions(Result<Action, PersistenceError>)
+    case didLoadActions(Result<[Action], PersistenceError>)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     Reducer { state, action , env in
     switch action {
-    case .addAction(let type, let name, let position, let number, let imageData):
-        let imageURL = URL.urlInDocumentsDirectory(with: "\(UUID()).png")
-        try! imageData.write(to: imageURL)
+    case .initialLoad:
+        return env.storageClient.getActions()
+            .catchToEffect()
+            .map(AppAction.didLoadActions)
+            .eraseToEffect()
         
+    case .addAction(let type, let name, let position, let number, let imageData):
         let action = Action(
+            id: UUID(),
             type: type,
             contactValue: number,
-            imageUrl: imageURL,
+            imageData: imageData,
             createdTime: Date(),
             actionName: name
         )
         
-        if let _ = state.actions {
-            state.actions!.append(action)
-        } else {
-            state.actions = [action]
-        }
-
-        return .none
+        return env.storageClient.saveAction(action)
+            .catchToEffect()
+            .map(AppAction.didWriteActions)
+            .eraseToEffect()
+        
     case .deleteAction(let action):
         let actionId = action.id
         
-        state.actions = state.actions?.filter { $0.id != actionId }
-        state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != actionId }
-        state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionId }
+        state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != actionId.uuidString }
+        state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionId.uuidString }
 
-        guard let actionImageURL = action.imageUrl else { return .none }
-        
-        return .fireAndForget {
-            env.deleteImageWithURL(actionImageURL)
-        }
+        return env.storageClient.deleteAction(action)
+            .catchToEffect()
+            .map(AppAction.didWriteActions)
+            .eraseToEffect()
     case .setPicker(let isPresented):
         state.isContactPickerOpen = isPresented
         return .none
     case .widgetConfiguration(_):
+        return .none
+    case .didWriteActions(_):
+        return Effect(value: AppAction.initialLoad)
+            .eraseToEffect()
+    case let .didLoadActions(.success(actions)):
+        state.actions = actions
+        
+        return .none
+    case .didLoadActions(.failure(_)):
         return .none
     }
     },
