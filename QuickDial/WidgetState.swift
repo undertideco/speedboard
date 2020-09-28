@@ -20,42 +20,39 @@ struct WidgetState: Equatable {
 
 enum WidgetAction: Equatable {
     case initialLoad
-    case actionLoadResponse(Result<WidgetConfig, FileReadError>)
+    case actionLoadResponse(Result<[Action], PersistenceError>)
+    case configLoadResponse(Result<WidgetConfig, FileReadError>)
 }
 
 struct WidgetEnvironment {
     let family: WidgetFamily
+    let storageClient: StorageClient
     
-    var fetchActions: () -> Effect<WidgetConfig, FileReadError> {
-        let actionsDir: URL = .urlInDocumentsDirectory(with: .storeLocation)
+    var fetchActions: ([Action]) -> Effect<WidgetConfig, FileReadError> {
         var selectedIdsDir: URL
-        
         switch family {
         case .systemMedium:
             selectedIdsDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
         case .systemLarge:
             selectedIdsDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
         default:
-            return {
+            return { _ in
                 Effect(error: FileReadError())
             }
         }
         
         do {
-            let actionsData = try Data(contentsOf: actionsDir)
             let selectedIdsData = try Data(contentsOf: selectedIdsDir)
-            
-            let actions = try JSONDecoder().decode([Action].self, from: actionsData)
             let selectedIds = try JSONDecoder().decode([String].self, from: selectedIdsData)
             
-            return {
+            return { actions in
                 Effect(value: WidgetConfig(
-                        actions: actions,
-                        selectedActionIds: selectedIds
-                ))
+                            actions: actions,
+                            selectedActionIds: selectedIds
+                    ))
             }
         } catch {
-            return {
+            return { _ in
                 Effect(error: FileReadError())
             }
         }
@@ -65,14 +62,20 @@ struct WidgetEnvironment {
 let widgetReducer = Reducer<WidgetState, WidgetAction, WidgetEnvironment> { state, action , env in
     switch action {
     case .initialLoad:
-        return env.fetchActions()
+        return env.storageClient.getActions()
             .catchToEffect()
             .map(WidgetAction.actionLoadResponse)
             .eraseToEffect()
-    case let .actionLoadResponse(.success(config)):
-        state.actions = config.actions.filter {
-            config.selectedActionIds.contains($0.id.uuidString)
-        }
+    case let .actionLoadResponse(.success(actions)):
+        return env.fetchActions(actions)
+            .catchToEffect()
+            .map(WidgetAction.configLoadResponse)
+            .eraseToEffect()
+    case let .configLoadResponse(.success(config)):
+        state.actions = config.actions
+        return .none
+    case .configLoadResponse(.failure(_)):
+        state.actions = []
         return .none
     case .actionLoadResponse(.failure(_)):
         state.actions = []

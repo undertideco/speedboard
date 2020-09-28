@@ -47,15 +47,15 @@ struct CoreDataStack {
         // Add a SQLite store located in the documents folder
         let fm = FileManager.default
         
-        guard let docUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        guard let sharedContainerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard") else {
             print("Unable to reach the documents folder")
             return nil
         }
         
-        self.dbURL = docUrl.appendingPathComponent("model.sqlite")
+        self.dbURL = sharedContainerURL.appendingPathComponent("model.sqlite")
         
         // Options for migration
-        let options = [NSInferMappingModelAutomaticallyOption: true,NSMigratePersistentStoresAutomaticallyOption: true]
+        let options = [NSInferMappingModelAutomaticallyOption: true, NSMigratePersistentStoresAutomaticallyOption: true]
         
         do {
             try addStoreCoordinator(NSSQLiteStoreType, configuration: nil, storeURL: dbURL, options: options as [NSObject : AnyObject]?)

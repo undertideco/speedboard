@@ -62,7 +62,9 @@ struct Action: Codable, Equatable, Identifiable {
     }
     
     func generateURLLaunchSchemeString() -> URL? {
-        guard let value = contactValue else { return nil }
+        guard let value = contactValue else {
+            return URL(string: "speedboard://new")
+        }
         
         if value.isEmail {
             return type.urlLaunchScheme(value)
