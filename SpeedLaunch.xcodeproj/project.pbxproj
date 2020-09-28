@@ -63,7 +63,6 @@
 		2842E312251EB40100593232 /* StorageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842E310251EB40100593232 /* StorageClient.swift */; };
 		2848675524FDFA530067490D /* ActionWidgetResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2848675324FDFA3A0067490D /* ActionWidgetResizable.swift */; };
 		284A81B52510744D0057E725 /* WidgetConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284A81B42510744D0057E725 /* WidgetConfigurationView.swift */; };
-		284B72C925166121002969F5 /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72C825166121002969F5 /* WidgetConfig.swift */; };
 		284B72CA25166121002969F5 /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72C825166121002969F5 /* WidgetConfig.swift */; };
 		284B72CF25166157002969F5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72CE25166157002969F5 /* Errors.swift */; };
 		284B72D025166157002969F5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72CE25166157002969F5 /* Errors.swift */; };
@@ -633,7 +632,6 @@
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
 				2842E311251EB40100593232 /* StorageClient.swift in Sources */,
 				28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */,
-				284B72C925166121002969F5 /* WidgetConfig.swift in Sources */,
 				283FE5242502E66B003CBB8F /* CNContact.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
 				2808C59D251801CE002DB8EF /* NavigationBarColor.swift in Sources */,
@@ -744,7 +742,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
@@ -770,7 +768,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
@@ -911,7 +909,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SpeedLaunch/SpeedLaunch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"SpeedLaunch/Preview Content\"";
 				DEVELOPMENT_TEAM = EZ49532236;
 				ENABLE_PREVIEWS = YES;
@@ -935,7 +933,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SpeedLaunch/SpeedLaunch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"SpeedLaunch/Preview Content\"";
 				DEVELOPMENT_TEAM = EZ49532236;
 				ENABLE_PREVIEWS = YES;

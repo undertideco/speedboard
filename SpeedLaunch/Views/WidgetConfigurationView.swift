@@ -18,16 +18,14 @@ struct WidgetConfigurationState: Equatable {
 
 enum WidgetConfigurationAction: Equatable {
     case initialLoad
-    case configurationLoadResponse(Result<WidgetConfig, FileReadError>)
+    case configurationLoadResponse(Result<[String], FileReadError>)
     case configurationSaveResponse(Result<Bool, FileWriteError>)
     case updateWidgetActionIds([String])
     case setConfigurationWidgetSize(WidgetSize)
 }
 
-struct WidgetConfigurationEnvironment {
-    
-    func fetchActions(for family: WidgetSize) -> Effect<WidgetConfig, FileReadError> {
-        let actionsDir: URL = .urlInDocumentsDirectory(with: .storeLocation)
+struct WidgetConfigurationEnvironment {    
+    func fetchSelectedIds(for family: WidgetSize) -> Effect<[String], FileReadError> {
         var selectedIdsDir: URL
         
         switch family {
@@ -37,10 +35,7 @@ struct WidgetConfigurationEnvironment {
             selectedIdsDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
         }
         
-        do {
-            let actionsData = try Data(contentsOf: actionsDir)
-            let actions = try JSONDecoder().decode([Action].self, from: actionsData)
-            
+        do {            
             var selectedIds: [String]
             if FileManager.default.fileExists(atPath: selectedIdsDir.path) {
                 let selectedIndicesData = try Data(contentsOf: selectedIdsDir)
@@ -49,7 +44,7 @@ struct WidgetConfigurationEnvironment {
                 selectedIds = [String]()
             }
             
-            return Effect(value: WidgetConfig(actions: actions, selectedActionIds: selectedIds))
+            return Effect(value: selectedIds)
         } catch {
             return Effect(error: FileReadError())
         }
@@ -80,12 +75,12 @@ struct WidgetConfigurationEnvironment {
 let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationAction, WidgetConfigurationEnvironment> { state, action, env in
     switch action  {
     case .initialLoad:
-        return env.fetchActions(for: state.size)
+        return env.fetchSelectedIds(for: state.size)
             .catchToEffect()
             .map(WidgetConfigurationAction.configurationLoadResponse)
             .eraseToEffect()
-    case let .configurationLoadResponse(.success(config)):
-        state.selectedIds = config.selectedActionIds
+    case let .configurationLoadResponse(.success(selectedIds)):
+        state.selectedIds = selectedIds
         
         return .none
     case .configurationLoadResponse(.failure(_)):
@@ -104,7 +99,7 @@ let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationA
         return .none
     case .setConfigurationWidgetSize(let size):
         state.size = size
-        return env.fetchActions(for: state.size)
+        return env.fetchSelectedIds(for: size)
             .catchToEffect()
             .map(WidgetConfigurationAction.configurationLoadResponse)
             .eraseToEffect()
