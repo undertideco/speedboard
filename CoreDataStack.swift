@@ -44,15 +44,19 @@ struct CoreDataStack {
         context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = coordinator
         
-        // Add a SQLite store located in the documents folder
-        let fm = FileManager.default
-        
-        guard let sharedContainerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard") else {
+        guard let sharedContainerURL = CoreDataStack.containerModelPath else {
             print("Unable to reach the documents folder")
             return nil
         }
+
+        #if DEBUG
+        if !CommandLine.arguments.contains("--backup-model") && CommandLine.arguments.contains("--load-local") {
+            try? FileManager.default.removeItem(at: sharedContainerURL)
+            try! FileManager.default.copyItem(at: Bundle.main.url(forResource: "model-10", withExtension: "sqlite")!, to: sharedContainerURL)
+        }
+        #endif
         
-        self.dbURL = sharedContainerURL.appendingPathComponent("model.sqlite")
+        self.dbURL = sharedContainerURL
         
         // Options for migration
         let options = [NSInferMappingModelAutomaticallyOption: true, NSMigratePersistentStoresAutomaticallyOption: true]
@@ -109,4 +113,8 @@ extension CoreDataStack {
             }
         }
     }
+}
+
+extension CoreDataStack {
+    static var containerModelPath: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")?.appendingPathComponent("model.sqlite")
 }

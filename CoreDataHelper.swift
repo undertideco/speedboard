@@ -34,3 +34,19 @@ class CoreDataHelper {
         }
     }
 }
+
+
+extension CoreDataHelper {
+    func backupToDocDir() {
+        do {
+            let backupFile = try stack.coordinator.backupPersistentStore(atIndex: 0)
+            print("The backup is at \"\(backupFile.fileURL.path)\"")
+            // Do something with backupFile.fileURL
+            // Move it to a permanent location, send it to the cloud, etc.
+            // ...
+        } catch {
+            print("Error backing up Core Data store: \(error)")
+        }
+    }
+}
+

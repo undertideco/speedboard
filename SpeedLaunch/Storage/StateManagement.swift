@@ -77,6 +77,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     Reducer { state, action , env in
     switch action {
     case .initialLoad:
+        #if DEBUG
+        if CommandLine.arguments.contains("--backup-model") {
+            CoreDataHelper().backupToDocDir()
+        }
+        #endif
+        
         return env.storageClient.getActions()
             .catchToEffect()
             .map(AppAction.didLoadActions)
