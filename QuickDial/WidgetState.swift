@@ -46,10 +46,12 @@ struct WidgetEnvironment {
             let selectedIds = try JSONDecoder().decode([String].self, from: selectedIdsData)
             
             return { actions in
-                Effect(value: WidgetConfig(
-                            actions: actions,
-                            selectedActionIds: selectedIds
-                    ))
+                Effect(
+                    value: WidgetConfig(
+                        actions: actions.filter { selectedIds.contains($0.id.uuidString) },
+                        selectedActionIds: selectedIds
+                    )
+                )
             }
         } catch {
             return { _ in
