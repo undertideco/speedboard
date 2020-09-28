@@ -113,6 +113,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     case .widgetConfiguration(_):
         return .none
     case .didWriteActions(_):
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+        
         return Effect(value: AppAction.initialLoad)
             .eraseToEffect()
     case let .didLoadActions(.success(actions)):
