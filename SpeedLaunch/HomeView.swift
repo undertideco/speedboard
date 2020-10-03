@@ -20,6 +20,22 @@ struct HomeView: View {
     
     @State var cardPosition: CardPosition = .middle
     
+    var actionsPerRow: Int {
+        if UIDevice.current.userInterfaceIdiom == .phone{
+            return 3
+        } else {
+            return 5
+        }
+    }
+    
+    var actionCellDimension: CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .phone{
+            return 100
+        } else {
+            return 150
+        }
+    }
+    
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
@@ -34,14 +50,14 @@ struct HomeView: View {
                     } onCancel: {
                         viewStore.send(.setPicker(false))
                     }
-                    QGrid(viewStore.actionsToDisplay ,columns: 3) { action in
+                    QGrid(viewStore.actionsToDisplay, columns: actionsPerRow) { action in
                         Group {
                             if action.type == .empty {
                                 EmptyLaunchCell(localizedString: Strings.emptyCellTitle.rawValue) {
                                     viewStore.send(.setPicker(!viewStore.isContactPickerOpen))
 
                                 }
-                                .frame(width: 100, height: 100, alignment: .center)
+                                .frame(width: actionCellDimension, height: actionCellDimension, alignment: .center)
                                 .padding(5)
                             } else {
                                 LaunchCell(deletable: self.$isEditing,
@@ -52,7 +68,7 @@ struct HomeView: View {
                                                     .deleteAction(action)
                                                 )
                                            })
-                                    .frame(width: 100, height: 100, alignment: .center)
+                                    .frame(width: actionCellDimension, height: actionCellDimension, alignment: .center)
                                     .padding(5)
                             }
                         }
@@ -107,6 +123,7 @@ struct HomeView: View {
                         )
                 )
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             .sheet(item: $selectedContact) { contact in
                 ConfigurationView(
                     store: store,
