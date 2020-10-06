@@ -71,6 +71,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ViewStore(store).send(.setPicker(true))
         }
         
+        if url.host == "addWidget" {
+            ViewStore(store).send(.setEditing(true))
+        }
+        
         guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
                 let actionPath = components.path,
                 let params = components.queryItems else {
