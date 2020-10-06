@@ -15,7 +15,6 @@ import LetterAvatarKit
 struct HomeView: View {
     let store: Store<AppState, AppAction>
     
-    @State var isEditing: Bool = false
     @State private var selectedContact: CNContact? = nil
     
     @State var cardPosition: CardPosition = .middle
@@ -60,9 +59,18 @@ struct HomeView: View {
                                 .frame(width: actionCellDimension, height: actionCellDimension, alignment: .center)
                                 .padding(5)
                             } else {
-                                LaunchCell(deletable: self.$isEditing,
+                                LaunchCell(deletable: viewStore.binding(
+                                            get: \.isEditing,
+                                            send: AppAction.setEditing
+                                           ),
                                            action: action,
-                                           handlePressed: handleCellPressed,
+                                           handlePressed: { action in
+                                            guard !viewStore.isEditing else { return }
+                                                if let action = action,
+                                                    let urlString = action.generateURLLaunchSchemeString() {
+                                                    UIApplication.shared.open(urlString, options: [:])
+                                                }
+                                           },
                                            onDelete: { action in
                                                 viewStore.send(
                                                     .deleteAction(action)
@@ -75,7 +83,7 @@ struct HomeView: View {
                     }.accessibility(label: Text(Strings.actionsGrid.rawValue))
                     
                     if #available(iOS 14.0, *) {
-                        if isEditing {
+                        if viewStore.isEditing {
                             SlideOverCard(position: cardPosition) {
                                 WidgetConfigurationView(
                                     store: self.store.scope(
@@ -102,25 +110,24 @@ struct HomeView: View {
                     tintColor: .white
                 )
                 .navigationBarItems(
-                    trailing:
-                        Button(action: {
-                            self.isEditing = !self.isEditing
-                        }) {
-                            if self.isEditing {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.white)
-                                    .accessibility(label: Text(Strings.saveButton.rawValue))
-                            } else {
-                                Image(systemName: "pencil.circle.fill")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.white)
-                                    .accessibility(label: Text(Strings.editButton.rawValue))
-                                    .accessibility(hint: Text(Strings.editButtonHint.rawValue))
-                            }
-                        }.foregroundColor(
-                            self.isEditing ? .green : .blue
-                        )
+                    trailing: Button(action: {
+                        viewStore.send(.setEditing(!viewStore.isEditing))
+                    }, label: {
+                        if viewStore.isEditing {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                                .accessibility(label: Text(Strings.saveButton.rawValue))
+                        } else {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                                .accessibility(label: Text(Strings.editButton.rawValue))
+                                .accessibility(hint: Text(Strings.editButtonHint.rawValue))
+                        }
+                    }).foregroundColor(
+                        viewStore.isEditing ? .green : .blue
+                    )
                 )
             }
             .navigationViewStyle(StackNavigationViewStyle())
@@ -136,14 +143,6 @@ struct HomeView: View {
             .onAppear {
                 viewStore.send(.initialLoad)
             }
-        }
-    }
-    
-    func handleCellPressed(_ action: Action?) {
-        guard !isEditing else { return }
-        if let action = action,
-            let urlString = action.generateURLLaunchSchemeString() {
-            UIApplication.shared.open(urlString, options: [:])
         }
     }
 }

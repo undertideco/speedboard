@@ -14,7 +14,8 @@ import CoreData
 struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
         return lhs.actions.count == rhs.actions.count &&
-            lhs.isContactPickerOpen == rhs.isContactPickerOpen
+            lhs.isContactPickerOpen == rhs.isContactPickerOpen &&
+            lhs.isEditing == rhs.isEditing
     }
     
     @DocDirectoryBacked<[String]>(location: .largeWidgetActions) var largeWidgetActions
@@ -52,6 +53,7 @@ struct AppState: Equatable {
     }
     
     var isContactPickerOpen: Bool = false
+    var isEditing: Bool = false
     var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState( selectedIds: [])
     
 }
@@ -67,6 +69,7 @@ enum AppAction: Equatable {
     case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Action)
     case setPicker(Bool)
+    case setEditing(Bool)
     case widgetConfiguration(WidgetConfigurationAction)
     
     case didWriteActions(Result<Action, PersistenceError>)
@@ -130,6 +133,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         
         return .none
     case .didLoadActions(.failure(_)):
+        return .none
+    case .setEditing(let isEditing):
+        state.isEditing = isEditing
         return .none
     }
     },

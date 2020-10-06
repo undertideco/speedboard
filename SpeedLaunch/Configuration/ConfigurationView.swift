@@ -30,7 +30,6 @@ struct ConfigurationView: View {
     var index: Int
     var onDismiss: (() -> Void)?
         
-    
     @State private var activeSheet: ActiveConfigurationSheet = .contacts
 
     var body: some View {
