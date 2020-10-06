@@ -112,6 +112,14 @@ struct WidgetConfigurationView: View {
     var actions: [Action]
     @State var showMaxNumberAlert: Bool = false
     
+    var actionCellDimension: CGFloat {
+        if UIDevice.current.userInterfaceIdiom == .phone{
+            return 75
+        } else {
+            return 112.5
+        }
+    }
+    
     init(store: Store<WidgetConfigurationState, WidgetConfigurationAction>, actions: [Action]) {
         self.viewStore = ViewStore(store)
         self.actions = actions
@@ -142,7 +150,9 @@ struct WidgetConfigurationView: View {
                                    style: .small,
                                    isChecked: isChecked(viewStore, action: action),
                                    handlePressed: handleCellPressed)
-                            .frame(width: 75, height: 75, alignment: .center)
+                            .frame(width: actionCellDimension,
+                                   height: actionCellDimension,
+                                   alignment: .center)
                             .padding(5)
                     }
                 }
