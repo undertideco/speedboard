@@ -74,6 +74,7 @@
 		284B72CA25166121002969F5 /* WidgetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72C825166121002969F5 /* WidgetConfig.swift */; };
 		284B72CF25166157002969F5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72CE25166157002969F5 /* Errors.swift */; };
 		284B72D025166157002969F5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284B72CE25166157002969F5 /* Errors.swift */; };
+		285AA390252B99BC006770BF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 285AA38F252B99BC006770BF /* CloudKit.framework */; };
 		286376F2244965F0005AFB9D /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F1244965F0005AFB9D /* ActionType.swift */; };
 		286376F424496606005AFB9D /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F324496606005AFB9D /* ActionView.swift */; };
 		286376F624496626005AFB9D /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286376F524496626005AFB9D /* LaunchCell.swift */; };
@@ -179,6 +180,7 @@
 		284A81B42510744D0057E725 /* WidgetConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConfigurationView.swift; sourceTree = "<group>"; };
 		284B72C825166121002969F5 /* WidgetConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetConfig.swift; sourceTree = "<group>"; };
 		284B72CE25166157002969F5 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		285AA38F252B99BC006770BF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		286376F1244965F0005AFB9D /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		286376F324496606005AFB9D /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		286376F524496626005AFB9D /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				28388A0924C8F5060008AE7F /* QGrid in Frameworks */,
 				28BF0F8424511D3E004C68D8 /* LetterAvatarKit in Frameworks */,
 				281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */,
+				285AA390252B99BC006770BF /* CloudKit.framework in Frameworks */,
 				2879EB9724526B5F00992E08 /* PhoneNumberKit in Frameworks */,
 				28238B65250AD0BF00E88F7E /* WidgetKit.framework in Frameworks */,
 			);
@@ -273,6 +276,7 @@
 		2839638C24FDC884001AF3F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				285AA38F252B99BC006770BF /* CloudKit.framework */,
 				2839638D24FDC884001AF3F3 /* WidgetKit.framework */,
 				2839638F24FDC884001AF3F3 /* SwiftUI.framework */,
 			);
