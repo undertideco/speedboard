@@ -18,9 +18,6 @@ struct AppState: Equatable {
             lhs.isEditing == rhs.isEditing
     }
     
-    @DocDirectoryBacked<[String]>(location: .largeWidgetActions) var largeWidgetActions
-    @DocDirectoryBacked<[String]>(location: .mediumWidgetActions) var mediumWidgetActions
-    
     var actions: [Action] = []
     
     var actionsToDisplay: [Action] {
@@ -108,9 +105,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         
     case .deleteAction(let action):
         let actionId = action.id
-        
-        state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != actionId.uuidString }
-        state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionId.uuidString }
 
         return env.storageClient.deleteAction(action)
             .catchToEffect()

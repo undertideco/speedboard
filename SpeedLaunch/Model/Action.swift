@@ -17,6 +17,8 @@ class SavedAction: NSManagedObject {
     @NSManaged var createdTime: Date
     @NSManaged var image: Data?
     @NSManaged var name: String
+    @NSManaged var isLargeWidgetDisplayable: Bool
+    @NSManaged var isMediumWidgetDisplayable: Bool
     
     var action : Action {
        get {
