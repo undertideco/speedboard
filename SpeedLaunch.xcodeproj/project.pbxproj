@@ -252,8 +252,10 @@
 		281ADE1D24E853C600421C9B /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				2842E310251EB40100593232 /* StorageClient.swift */,
+				2807A7F0251E826500E35324 /* CoreDataStack.swift */,
+				2807A7EA251E824E00E35324 /* CoreDataHelper.swift */,
 				281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */,
-				281ADE2024E8540D00421C9B /* StateManagement.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -314,9 +316,6 @@
 		2840C63B24490FA500DB6BAA = {
 			isa = PBXGroup;
 			children = (
-				2842E310251EB40100593232 /* StorageClient.swift */,
-				2807A7F0251E826500E35324 /* CoreDataStack.swift */,
-				2807A7EA251E824E00E35324 /* CoreDataHelper.swift */,
 				2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */,
 				281C7A0B2522782C001F1E56 /* model-10.sqlite */,
 				28853BA3250D596800C0D0F7 /* Localizable.strings */,
@@ -346,6 +345,7 @@
 				283963B324FDCD5C001AF3F3 /* SpeedLaunch.entitlements */,
 				2840C64724490FA500DB6BAA /* AppDelegate.swift */,
 				2840C64924490FA500DB6BAA /* SceneDelegate.swift */,
+				281ADE2024E8540D00421C9B /* StateManagement.swift */,
 				281ADE1D24E853C600421C9B /* Storage */,
 				28B7535E24F584120072B949 /* Helpers */,
 				283FE5202502C530003CBB8F /* Configuration */,
