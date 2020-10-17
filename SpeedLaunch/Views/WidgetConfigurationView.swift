@@ -11,105 +11,31 @@ import QGrid
 import ComposableArchitecture
 import WidgetKit
 
-struct WidgetConfigurationState: Equatable {
-    var selectedIds: [String] = []
-    var size: WidgetSize = .medium
-}
-
 enum WidgetConfigurationAction: Equatable {
-    case initialLoad
-    case configurationLoadResponse(Result<[String], FileReadError>)
-    case configurationSaveResponse(Result<Bool, FileWriteError>)
-    case updateWidgetActionIds([String])
-    case setConfigurationWidgetSize(WidgetSize)
+    case updateAction(Action)
+    case didUpdateAction(Result<Action, PersistenceError>)
 }
 
 struct WidgetConfigurationEnvironment {    
-    func fetchSelectedIds(for family: WidgetSize) -> Effect<[String], FileReadError> {
-        var selectedIdsDir: URL
-        
-        switch family {
-        case .medium:
-            selectedIdsDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
-        case .large:
-            selectedIdsDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
-        }
-        
-        do {            
-            var selectedIds: [String]
-            if FileManager.default.fileExists(atPath: selectedIdsDir.path) {
-                let selectedIndicesData = try Data(contentsOf: selectedIdsDir)
-                selectedIds = try JSONDecoder().decode([String].self, from: selectedIndicesData)
-            } else {
-                selectedIds = [String]()
-            }
-            
-            return Effect(value: selectedIds)
-        } catch {
-            return Effect(error: FileReadError())
-        }
-    }
-    
-    func storeActions(indices: [String], for size: WidgetSize) -> Effect<Bool, FileWriteError> {
-        var selectedIndicesDir: URL
-        
-        switch size {
-        case .medium:
-            selectedIndicesDir = .urlInDocumentsDirectory(with: .mediumWidgetActions)
-        case .large:
-            selectedIndicesDir = .urlInDocumentsDirectory(with: .largeWidgetActions)
-        }
-        
-        do {
-            let data = try JSONEncoder().encode(indices)
-            try data.write(to: selectedIndicesDir)
-            
-            return Effect(value: true)
-        } catch {
-            print("Unable to save")
-            return Effect(error: FileWriteError())
-        }
-    }
+    var storageClient: StorageClient
 }
 
-let widgetConfigReducer = Reducer<WidgetConfigurationState, WidgetConfigurationAction, WidgetConfigurationEnvironment> { state, action, env in
+let widgetConfigReducer = Reducer<[Action], WidgetConfigurationAction, WidgetConfigurationEnvironment> { state, action, env in
     switch action  {
-    case .initialLoad:
-        return env.fetchSelectedIds(for: state.size)
+    case .updateAction(let action):
+        return env.storageClient.updateWidgetPreferences(action)
             .catchToEffect()
-            .map(WidgetConfigurationAction.configurationLoadResponse)
+            .map(WidgetConfigurationAction.didUpdateAction)
             .eraseToEffect()
-    case let .configurationLoadResponse(.success(selectedIds)):
-        state.selectedIds = selectedIds
-        
+    case .didUpdateAction(_):
         return .none
-    case .configurationLoadResponse(.failure(_)):
-        return .none
-    case .updateWidgetActionIds(let actionIds):
-        state.selectedIds = actionIds
-        
-        return env.storeActions(indices: actionIds, for: state.size)
-            .catchToEffect()
-            .map(WidgetConfigurationAction.configurationSaveResponse)
-            .eraseToEffect()
-    case .configurationSaveResponse(_):
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: "co.undertide.speedboard")
-        }
-        return .none
-    case .setConfigurationWidgetSize(let size):
-        state.size = size
-        return env.fetchSelectedIds(for: size)
-            .catchToEffect()
-            .map(WidgetConfigurationAction.configurationLoadResponse)
-            .eraseToEffect()
     }
 
 }
 
 struct WidgetConfigurationView: View {
-    @ObservedObject var viewStore: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>
-    var actions: [Action]
+    @ObservedObject var viewStore: ViewStore<[Action], WidgetConfigurationAction>
+    @State var size: WidgetSize = .medium
     @State var showMaxNumberAlert: Bool = false
     
     var actionCellDimension: CGFloat {
@@ -120,9 +46,8 @@ struct WidgetConfigurationView: View {
         }
     }
     
-    init(store: Store<WidgetConfigurationState, WidgetConfigurationAction>, actions: [Action]) {
+    init(store: Store<[Action], WidgetConfigurationAction>, actions: [Action]) {
         self.viewStore = ViewStore(store)
-        self.actions = actions
     }
         
     var body: some View {
@@ -130,10 +55,7 @@ struct WidgetConfigurationView: View {
             Text(Strings.title.rawValue)
                 .font(.system(size: 18, weight: .bold, design: .default))
             Picker(Strings.pickerTitle.rawValue,
-                   selection: viewStore.binding(
-                    get: \.size,
-                    send: WidgetConfigurationAction.setConfigurationWidgetSize
-                   )) {
+                   selection: $size) {
                 Text("Medium")
                     .tag(WidgetSize.medium)
                 Text("Large")
@@ -142,13 +64,13 @@ struct WidgetConfigurationView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding([.leading, .trailing], 8)
             
-            QGrid(actions, columns: 4) { action in
+            QGrid(viewStore.state, columns: 4) { action in
                 Group {
                     if action.type != .empty {
                         LaunchCell(deletable: .constant(false),
                                    action: action,
                                    style: .small,
-                                   isChecked: isChecked(viewStore, action: action),
+                                   isChecked: isChecked(action: action),
                                    handlePressed: handleCellPressed)
                             .frame(width: actionCellDimension,
                                    height: actionCellDimension,
@@ -157,8 +79,6 @@ struct WidgetConfigurationView: View {
                     }
                 }
             }
-        }.onAppear {
-            viewStore.send(.initialLoad)
         }.alert(isPresented: $showMaxNumberAlert) {
             Alert(
                 title: Text(Strings.maxActionsAlertTitle.rawValue),
@@ -172,23 +92,26 @@ struct WidgetConfigurationView: View {
     
 
     func handleCellPressed(_ action: Action?) {
-        guard let action = action else { return }
-        if isChecked(viewStore, action: action) {
-            let filteredIndices = viewStore.selectedIds.filter { $0 != action.id.uuidString }
-            viewStore.send(.updateWidgetActionIds(filteredIndices))
-        } else {
-            if viewStore.selectedIds.count == viewStore.size.maxNumberOfActions {
-                showMaxNumberAlert = true
-            } else {
-                let newIds = viewStore.selectedIds + [action.id.uuidString]
-                viewStore.send(.updateWidgetActionIds(newIds))
-            }
-
+        guard var action = action else { return }
+        
+        switch size {
+        case .medium:
+            action.isMediumWidgetDisplayable.toggle()
+            viewStore.send(.updateAction(action))
+        case .large:
+            action.isLargeWidgetDisplayable.toggle()
+            viewStore.send(.updateAction(action))
         }
+        
     }
 
-    func isChecked(_ store: ViewStore<WidgetConfigurationState, WidgetConfigurationAction>, action: Action) -> Bool {
-        return viewStore.selectedIds.contains(action.id.uuidString)
+    func isChecked(action: Action) -> Bool {
+        switch size {
+        case .medium:
+            return action.isMediumWidgetDisplayable
+        case .large:
+            return action.isLargeWidgetDisplayable
+        }
     }
 }
 

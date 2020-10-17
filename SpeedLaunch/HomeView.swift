@@ -87,7 +87,7 @@ struct HomeView: View {
                             SlideOverCard(position: cardPosition) {
                                 WidgetConfigurationView(
                                     store: self.store.scope(
-                                        state: \.widgetConfigurationState,
+                                        state: \.actions,
                                         action: AppAction.widgetConfiguration
                                     ),
                                     actions: viewStore.actionsToDisplay

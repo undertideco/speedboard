@@ -51,8 +51,6 @@ struct AppState: Equatable {
     
     var isContactPickerOpen: Bool = false
     var isEditing: Bool = false
-    var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState( selectedIds: [])
-    
 }
 
 struct AppEnvironment {
@@ -114,7 +112,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state.isContactPickerOpen = isPresented
         return .none
     case .widgetConfiguration(_):
-        return .none
+        return env.storageClient.getActions()
+            .catchToEffect()
+            .map(AppAction.didLoadActions)
+            .eraseToEffect()
     case .didWriteActions(_):
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadAllTimelines()
@@ -134,8 +135,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     }
     },
     widgetConfigReducer.pullback(
-        state: \.widgetConfigurationState,
+        state: \.actions,
         action: /AppAction.widgetConfiguration,
-        environment: { _ in WidgetConfigurationEnvironment() }
+        environment: { _ in WidgetConfigurationEnvironment(storageClient: .live) }
     )
 )
