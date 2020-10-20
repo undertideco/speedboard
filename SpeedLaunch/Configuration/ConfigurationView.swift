@@ -12,12 +12,47 @@ import Contacts
 import Combine
 import ComposableArchitecture
 
+struct ConfigurationState: Equatable { }
+
+enum ConfigurationAction : Equatable {
+    case addAction(ActionType, String, Int, String, Data)
+    case didAddAction(Result<Action, PersistenceError>)
+}
+
+struct ConfigurationEnvironment {
+    let helper = CoreDataHelper()
+    
+    var storageClient: StorageClient
+}
+
 enum ActiveConfigurationSheet {
     case contacts, photo
 }
 
+let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, ConfigurationEnvironment> { state, action, env in
+    switch action {
+    
+    case let .addAction(type, name, position, number, imageData):
+        let action = Action(
+            id: UUID(),
+            type: type,
+            contactValue: number,
+            imageData: imageData,
+            createdTime: Date(),
+            actionName: name
+        )
+        
+        return env.storageClient.saveAction(action)
+            .catchToEffect()
+            .map(ConfigurationAction.didAddAction)
+            .eraseToEffect()
+    default:
+        return .none
+    }
+}
+
 struct ConfigurationView: View {
-    var store: Store<AppState, AppAction>
+    var store: Store<ConfigurationState, ConfigurationAction>
     let selectedContact: CNContact
     var selectedContactImage: UIImage {
         if let imageData = selectedContact.thumbnailImageData {
@@ -59,7 +94,9 @@ struct ConfigurationView: View {
                                     let compressedImage = UIImage.resize(image: selectedContactImage, targetSize: CGSize(width: 50, height: 50))
                                     let imageData = compressedImage.pngData()!
                                     
-                                    viewStore.send(.addAction(actionType, selectedContact.givenName, index, contact.value, imageData))
+                                    viewStore.send(
+                                        .addAction(actionType, selectedContact.givenName, index, contact.value, imageData)
+                                    )
                                     self.onDismiss?()
                                 }) {
                                     ConfigurationDataCell(actionType: actionType, label: contact.label, value: contact.value)

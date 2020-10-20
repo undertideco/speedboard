@@ -39,7 +39,6 @@ struct AppState: Equatable {
             return [
                 Action(
                     id: UUID(),
-                    
                     type: .empty,
                     contactValue: nil,
                     imageData: nil,
@@ -51,6 +50,8 @@ struct AppState: Equatable {
     
     var isContactPickerOpen: Bool = false
     var isEditing: Bool = false
+    
+    var configurationState = ConfigurationState()
 }
 
 struct AppEnvironment {
@@ -61,7 +62,6 @@ struct AppEnvironment {
 
 enum AppAction: Equatable {
     case initialLoad
-    case addAction(ActionType, String, Int, String, Data)
     case deleteAction(Action)
     case setPicker(Bool)
     case setEditing(Bool)
@@ -69,6 +69,8 @@ enum AppAction: Equatable {
     
     case didWriteActions(Result<Action, PersistenceError>)
     case didLoadActions(Result<[Action], PersistenceError>)
+    
+    case configurationView(ConfigurationAction)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
@@ -85,22 +87,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             .catchToEffect()
             .map(AppAction.didLoadActions)
             .eraseToEffect()
-        
-    case .addAction(let type, let name, let position, let number, let imageData):
-        let action = Action(
-            id: UUID(),
-            type: type,
-            contactValue: number,
-            imageData: imageData,
-            createdTime: Date(),
-            actionName: name
-        )
-        
-        return env.storageClient.saveAction(action)
-            .catchToEffect()
-            .map(AppAction.didWriteActions)
-            .eraseToEffect()
-        
     case .deleteAction(let action):
         let actionId = action.id
 
@@ -127,11 +113,21 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     case .setEditing(let isEditing):
         state.isEditing = isEditing
         return .none
+    case .configurationView(.addAction):
+        return Effect(value: AppAction.initialLoad)
+            .eraseToEffect()
+    default:
+        return .none
     }
     },
     widgetConfigReducer.pullback(
         state: \.actions,
         action: /AppAction.widgetConfiguration,
         environment: { _ in WidgetConfigurationEnvironment(storageClient: .live) }
+    ),
+    configurationReducer.pullback(
+        state: \.configurationState,
+        action: /AppAction.configurationView,
+        environment: { _ in .init(storageClient: .live) }
     )
 )

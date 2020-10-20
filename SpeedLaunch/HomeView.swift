@@ -133,7 +133,10 @@ struct HomeView: View {
             .navigationViewStyle(StackNavigationViewStyle())
             .sheet(item: $selectedContact) { contact in
                 ConfigurationView(
-                    store: store,
+                    store: self.store.scope(
+                        state: { $0.configurationState },
+                        action: AppAction.configurationView
+                    ),
                     selectedContact: contact,
                     index: viewStore.actionsToDisplay.count - 1
                 ) {
