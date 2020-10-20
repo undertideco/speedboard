@@ -28,6 +28,9 @@ let widgetConfigReducer = Reducer<[Action], WidgetConfigurationAction, WidgetCon
             .map(WidgetConfigurationAction.didUpdateAction)
             .eraseToEffect()
     case .didUpdateAction(_):
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
         return .none
     }
 
