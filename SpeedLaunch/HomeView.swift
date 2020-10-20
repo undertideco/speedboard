@@ -144,7 +144,7 @@ struct HomeView: View {
                 }
             }
             .onAppear {
-                viewStore.send(.initialLoad)
+                viewStore.send(.loadActions)
             }
         }
     }

@@ -61,7 +61,7 @@ struct AppEnvironment {
 }
 
 enum AppAction: Equatable {
-    case initialLoad
+    case loadActions
     case deleteAction(Action)
     case setPicker(Bool)
     case setEditing(Bool)
@@ -76,7 +76,7 @@ enum AppAction: Equatable {
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     Reducer { state, action , env in
     switch action {
-    case .initialLoad:
+    case .loadActions:
         #if DEBUG
         if CommandLine.arguments.contains("--backup-model") {
             CoreDataHelper().backupToDocDir()
@@ -103,7 +103,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             .map(AppAction.didLoadActions)
             .eraseToEffect()
     case .didWriteActions(_):
-        return Effect(value: AppAction.initialLoad)
+        return Effect(value: AppAction.loadActions)
             .eraseToEffect()
     case let .didLoadActions(.success(actions)):
         state.actions = actions
@@ -114,7 +114,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state.isEditing = isEditing
         return .none
     case .configurationView(.addAction):
-        return Effect(value: AppAction.initialLoad)
+        return Effect(value: AppAction.loadActions)
             .eraseToEffect()
     default:
         return .none
