@@ -133,7 +133,10 @@ struct HomeView: View {
             .navigationViewStyle(StackNavigationViewStyle())
             .sheet(item: $selectedContact) { contact in
                 ConfigurationView(
-                    store: store,
+                    store: self.store.scope(
+                        state: { $0.configurationState },
+                        action: AppAction.configurationView
+                    ),
                     selectedContact: contact,
                     index: viewStore.actionsToDisplay.count - 1
                 ) {
@@ -141,7 +144,7 @@ struct HomeView: View {
                 }
             }
             .onAppear {
-                viewStore.send(.initialLoad)
+                viewStore.send(.loadActions)
             }
         }
     }
@@ -167,7 +170,7 @@ struct ContentView_Previews: PreviewProvider {
         HomeView(store:
                         Store(initialState: AppState(),
                               reducer: appReducer,
-                              environment: AppEnvironment(storageClient: StorageClient.live))
+                              environment: AppEnvironment(storageClient: .mock))
         )
     }
 }

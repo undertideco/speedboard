@@ -39,7 +39,6 @@ struct AppState: Equatable {
             return [
                 Action(
                     id: UUID(),
-                    
                     type: .empty,
                     contactValue: nil,
                     imageData: nil,
@@ -51,17 +50,16 @@ struct AppState: Equatable {
     
     var isContactPickerOpen: Bool = false
     var isEditing: Bool = false
+    
+    var configurationState = ConfigurationState()
 }
 
 struct AppEnvironment {
-    let helper = CoreDataHelper()
-    
     var storageClient: StorageClient
 }
 
 enum AppAction: Equatable {
-    case initialLoad
-    case addAction(ActionType, String, Int, String, Data)
+    case loadActions
     case deleteAction(Action)
     case setPicker(Bool)
     case setEditing(Bool)
@@ -69,38 +67,18 @@ enum AppAction: Equatable {
     
     case didWriteActions(Result<Action, PersistenceError>)
     case didLoadActions(Result<[Action], PersistenceError>)
+    
+    case configurationView(ConfigurationAction)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     Reducer { state, action , env in
     switch action {
-    case .initialLoad:
-        #if DEBUG
-        if CommandLine.arguments.contains("--backup-model") {
-            CoreDataHelper().backupToDocDir()
-        }
-        #endif
-        
+    case .loadActions:
         return env.storageClient.getActions()
             .catchToEffect()
             .map(AppAction.didLoadActions)
             .eraseToEffect()
-        
-    case .addAction(let type, let name, let position, let number, let imageData):
-        let action = Action(
-            id: UUID(),
-            type: type,
-            contactValue: number,
-            imageData: imageData,
-            createdTime: Date(),
-            actionName: name
-        )
-        
-        return env.storageClient.saveAction(action)
-            .catchToEffect()
-            .map(AppAction.didWriteActions)
-            .eraseToEffect()
-        
     case .deleteAction(let action):
         let actionId = action.id
 
@@ -117,7 +95,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             .map(AppAction.didLoadActions)
             .eraseToEffect()
     case .didWriteActions(_):
-        return Effect(value: AppAction.initialLoad)
+        return Effect(value: AppAction.loadActions)
             .eraseToEffect()
     case let .didLoadActions(.success(actions)):
         state.actions = actions
@@ -127,11 +105,21 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     case .setEditing(let isEditing):
         state.isEditing = isEditing
         return .none
+    case .configurationView(.addAction):
+        return Effect(value: AppAction.loadActions)
+            .eraseToEffect()
+    default:
+        return .none
     }
     },
     widgetConfigReducer.pullback(
         state: \.actions,
         action: /AppAction.widgetConfiguration,
-        environment: { _ in WidgetConfigurationEnvironment(storageClient: .live) }
+        environment: { _ in WidgetConfigurationEnvironment(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live) }
+    ),
+    configurationReducer.pullback(
+        state: \.configurationState,
+        action: /AppAction.configurationView,
+        environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live) }
     )
 )

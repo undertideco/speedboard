@@ -14,17 +14,21 @@ import ComposableArchitecture
 struct Provider: TimelineProvider {
     typealias Entry = SimpleEntry
     
+    var storageClient: StorageClient {
+        return CommandLine.arguments.contains("--load-local") ? .mock : .live
+    }
+    
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: .live)))
+        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: storageClient)))
     }
     
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: .live)))
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: storageClient)))
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: .live)))
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: storageClient)))
 
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
