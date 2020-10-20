@@ -17,6 +17,8 @@ class SavedAction: NSManagedObject {
     @NSManaged var createdTime: Date
     @NSManaged var image: Data?
     @NSManaged var name: String
+    @NSManaged var isLargeWidgetDisplayable: Bool
+    @NSManaged var isMediumWidgetDisplayable: Bool
     
     var action : Action {
        get {
@@ -26,7 +28,9 @@ class SavedAction: NSManagedObject {
                 contactValue: contactValue,
                 imageData: image,
                 createdTime: createdTime,
-                actionName: name
+                actionName: name,
+                isLargeWidgetDisplayable: isLargeWidgetDisplayable,
+                isMediumWidgetDisplayable: isMediumWidgetDisplayable
             )
         }
         set {
@@ -47,6 +51,8 @@ struct Action: Codable, Equatable, Identifiable {
     let imageData: Data?
     let createdTime: Date
     var actionName: String? = nil
+    var isLargeWidgetDisplayable: Bool = false
+    var isMediumWidgetDisplayable: Bool = false
     
     var accessibilityLabel: String {
         switch type {

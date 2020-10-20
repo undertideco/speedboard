@@ -18,9 +18,6 @@ struct AppState: Equatable {
             lhs.isEditing == rhs.isEditing
     }
     
-    @DocDirectoryBacked<[String]>(location: .largeWidgetActions) var largeWidgetActions
-    @DocDirectoryBacked<[String]>(location: .mediumWidgetActions) var mediumWidgetActions
-    
     var actions: [Action] = []
     
     var actionsToDisplay: [Action] {
@@ -54,8 +51,6 @@ struct AppState: Equatable {
     
     var isContactPickerOpen: Bool = false
     var isEditing: Bool = false
-    var widgetConfigurationState: WidgetConfigurationState = WidgetConfigurationState( selectedIds: [])
-    
 }
 
 struct AppEnvironment {
@@ -108,9 +103,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         
     case .deleteAction(let action):
         let actionId = action.id
-        
-        state.mediumWidgetActions = state.mediumWidgetActions?.filter { $0 != actionId.uuidString }
-        state.largeWidgetActions = state.largeWidgetActions?.filter { $0 != actionId.uuidString }
 
         return env.storageClient.deleteAction(action)
             .catchToEffect()
@@ -120,17 +112,15 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state.isContactPickerOpen = isPresented
         return .none
     case .widgetConfiguration(_):
-        return .none
+        return env.storageClient.getActions()
+            .catchToEffect()
+            .map(AppAction.didLoadActions)
+            .eraseToEffect()
     case .didWriteActions(_):
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadAllTimelines()
-        }
-        
         return Effect(value: AppAction.initialLoad)
             .eraseToEffect()
     case let .didLoadActions(.success(actions)):
         state.actions = actions
-        
         return .none
     case .didLoadActions(.failure(_)):
         return .none
@@ -140,8 +130,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     }
     },
     widgetConfigReducer.pullback(
-        state: \.widgetConfigurationState,
+        state: \.actions,
         action: /AppAction.widgetConfiguration,
-        environment: { _ in WidgetConfigurationEnvironment() }
+        environment: { _ in WidgetConfigurationEnvironment(storageClient: .live) }
     )
 )

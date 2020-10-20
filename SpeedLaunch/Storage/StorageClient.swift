@@ -18,6 +18,7 @@ enum PersistenceError: Error {
 struct StorageClient {
     var getActions: () -> Effect<[Action], PersistenceError>
     var saveAction: (Action) -> Effect<Action, PersistenceError>
+    var updateWidgetPreferences: (Action) -> Effect<Action, PersistenceError>
     var deleteAction: (Action) -> Effect<Action, PersistenceError>
 }
 
@@ -55,6 +56,31 @@ extension StorageClient {
                 return Effect(value: action)
             } catch {
                 return Effect(error: PersistenceError.unableToWrite)
+            }
+        },
+        updateWidgetPreferences: { action in
+            let helper = CoreDataHelper()
+            let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "SavedAction")
+            fr.predicate = NSPredicate(format: "%K == %@", "id", action.id as CVarArg)
+            
+            do {
+                if let actions = try helper.context.fetch(fr) as? [SavedAction],
+                   let savedAction = actions.first {
+                    
+                    savedAction.setValue(action.isMediumWidgetDisplayable, forKey: "isMediumWidgetDisplayable")
+                    savedAction.setValue(action.isLargeWidgetDisplayable, forKey: "isLargeWidgetDisplayable")
+                    
+                    do {
+                        try helper.context.save()
+                        return Effect(value: savedAction.action)
+                    } catch {
+                        return Effect(error: PersistenceError.unableToWrite)
+                    }
+                } else {
+                    return Effect(error: PersistenceError.unableToRead)
+                }
+            } catch {
+                return Effect(error: PersistenceError.unableToRead)
             }
         },
         deleteAction: { action in
