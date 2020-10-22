@@ -52,7 +52,7 @@ struct CoreDataStack {
         #if DEBUG
         if !CommandLine.arguments.contains("--backup-model") && CommandLine.arguments.contains("--load-local") {
             try? FileManager.default.removeItem(at: sharedContainerURL)
-            try! FileManager.default.copyItem(at: Bundle.main.url(forResource: "model-10", withExtension: "sqlite")!, to: sharedContainerURL)
+            try! FileManager.default.copyItem(at: Bundle.main.url(forResource: "model-11", withExtension: "sqlite")!, to: sharedContainerURL)
         }
         #endif
         

@@ -28,6 +28,8 @@
 		281C7A0C2522782C001F1E56 /* model-10.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 281C7A0B2522782C001F1E56 /* model-10.sqlite */; };
 		281C7A0D2522782C001F1E56 /* model-10.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 281C7A0B2522782C001F1E56 /* model-10.sqlite */; };
 		28238B65250AD0BF00E88F7E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2839638D24FDC884001AF3F3 /* WidgetKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		28307E48253F9BD300472F17 /* model-11.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 28307E47253F9BD300472F17 /* model-11.sqlite */; };
+		28307E49253F9BD300472F17 /* model-11.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 28307E47253F9BD300472F17 /* model-11.sqlite */; };
 		28388A0924C8F5060008AE7F /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 28388A0824C8F5060008AE7F /* QGrid */; };
 		28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28388A0A24C8F9870008AE7F /* UIImage+Color.swift */; };
 		2839638E24FDC884001AF3F3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2839638D24FDC884001AF3F3 /* WidgetKit.framework */; };
@@ -145,6 +147,7 @@
 		281C79F225227447001F1E56 /* NSPersistentStoreCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPersistentStoreCoordinator.swift; sourceTree = "<group>"; };
 		281C79F725227471001F1E56 /* TemporaryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryFile.swift; sourceTree = "<group>"; };
 		281C7A0B2522782C001F1E56 /* model-10.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "model-10.sqlite"; sourceTree = "<group>"; };
+		28307E47253F9BD300472F17 /* model-11.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "model-11.sqlite"; sourceTree = "<group>"; };
 		28388A0A24C8F9870008AE7F /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		2839638B24FDC884001AF3F3 /* QuickDialExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickDialExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2839638D24FDC884001AF3F3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -318,6 +321,7 @@
 			children = (
 				2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */,
 				281C7A0B2522782C001F1E56 /* model-10.sqlite */,
+				28307E47253F9BD300472F17 /* model-11.sqlite */,
 				28853BA3250D596800C0D0F7 /* Localizable.strings */,
 				28EB23962509847B00E6C46B /* Colors.xcassets */,
 				28D90C6B24FDD3CB00A5B04B /* QuickDialExtension.entitlements */,
@@ -552,6 +556,7 @@
 				28853BA1250D596800C0D0F7 /* Localizable.strings in Resources */,
 				28D90C6C24FDDC2C00A5B04B /* PhoneNumberMetadata.json in Resources */,
 				2839639624FDC886001AF3F3 /* Assets.xcassets in Resources */,
+				28307E49253F9BD300472F17 /* model-11.sqlite in Resources */,
 				281C7A0D2522782C001F1E56 /* model-10.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,6 +569,7 @@
 				2879EB9924526D0800992E08 /* PhoneNumberMetadata.json in Resources */,
 				2840C65424490FA600DB6BAA /* LaunchScreen.storyboard in Resources */,
 				28853BA0250D596800C0D0F7 /* Localizable.strings in Resources */,
+				28307E48253F9BD300472F17 /* model-11.sqlite in Resources */,
 				28EB23972509847B00E6C46B /* Colors.xcassets in Resources */,
 				2840C65124490FA600DB6BAA /* Preview Assets.xcassets in Resources */,
 				2840C64E24490FA600DB6BAA /* Assets.xcassets in Resources */,
@@ -755,7 +761,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
@@ -781,7 +787,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = EZ49532236;
 				INFOPLIST_FILE = QuickDial/Info.plist;
@@ -922,7 +928,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SpeedLaunch/SpeedLaunch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"SpeedLaunch/Preview Content\"";
 				DEVELOPMENT_TEAM = EZ49532236;
 				ENABLE_PREVIEWS = YES;
@@ -946,7 +952,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SpeedLaunch/SpeedLaunch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"SpeedLaunch/Preview Content\"";
 				DEVELOPMENT_TEAM = EZ49532236;
 				ENABLE_PREVIEWS = YES;

@@ -102,7 +102,7 @@ struct QuickDialEntryView : View {
         GeometryReader { geo in
             LazyVGrid(columns: columns) {
                 ForEach(actionsToDisplay, id: \.self) { action  in
-                    Link(destination: action.generateURLLaunchSchemeString()!) {
+                    Link(destination: action.generateURLLaunchSchemeString() ?? URL(string: "speedboard://")!) {
                         if action.type == .empty {
                             EmptyLaunchCell(style: .small)
                                 .actionResizable(geo: geo, rows: numberOfItems/columns.count, cols: columns.count)

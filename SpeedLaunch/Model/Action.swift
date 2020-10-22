@@ -77,9 +77,13 @@ struct Action: Codable, Equatable, Identifiable {
         } else {
             let phoneNumberKit = PhoneNumberKit()
             
-            let parsedNumber = try! phoneNumberKit.parse(value,
-                                                         ignoreType: true)
-            return type.urlLaunchScheme(phoneNumberKit.format(parsedNumber, toType: .e164))
+            do {
+                let parsedNumber = try phoneNumberKit.parse(value,
+                                                             ignoreType: true)
+                return type.urlLaunchScheme(phoneNumberKit.format(parsedNumber, toType: .e164))
+            } catch {
+                return nil
+            }
         }
     }
 }
