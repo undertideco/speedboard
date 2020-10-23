@@ -55,8 +55,6 @@ struct AppState: Equatable {
 }
 
 struct AppEnvironment {
-    let helper = CoreDataHelper()
-    
     var storageClient: StorageClient
 }
 
@@ -77,12 +75,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     Reducer { state, action , env in
     switch action {
     case .loadActions:
-        #if DEBUG
-        if CommandLine.arguments.contains("--backup-model") {
-            CoreDataHelper().backupToDocDir()
-        }
-        #endif
-        
         return env.storageClient.getActions()
             .catchToEffect()
             .map(AppAction.didLoadActions)
@@ -123,11 +115,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     widgetConfigReducer.pullback(
         state: \.actions,
         action: /AppAction.widgetConfiguration,
-        environment: { _ in WidgetConfigurationEnvironment(storageClient: .live) }
+        environment: { _ in WidgetConfigurationEnvironment(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live) }
     ),
     configurationReducer.pullback(
         state: \.configurationState,
         action: /AppAction.configurationView,
-        environment: { _ in .init(storageClient: .live) }
+        environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live) }
     )
 )

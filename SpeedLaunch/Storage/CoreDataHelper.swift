@@ -11,8 +11,8 @@ import CoreData
 
 class CoreDataHelper {
     
-    let stack = CoreDataStack(modelName: "ActionModel")!
-    var context:NSManagedObjectContext
+    let stack: CoreDataStack
+    var context: NSManagedObjectContext
     
     var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>? {
         didSet {
@@ -20,7 +20,8 @@ class CoreDataHelper {
         }
     }
     
-    init() {
+    init(env: CoreDataStackEnvironment) {
+        stack = CoreDataStack(modelName: "ActionModel", environment: env)!
         context = stack.context
     }
     

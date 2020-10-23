@@ -8,20 +8,24 @@
 
 import CoreData
 
+enum CoreDataStackEnvironment {
+    case live, mock
+}
+
 // MARK: - CoreDataStack
 struct CoreDataStack {
     
     // MARK: Properties
-    
     private let model: NSManagedObjectModel
     internal let coordinator: NSPersistentStoreCoordinator
     private let modelURL: URL
     internal let dbURL: URL
     let context: NSManagedObjectContext
+    let environment: CoreDataStackEnvironment = .live
     
     // MARK: Initializers
     
-    init?(modelName: String) {
+    init?(modelName: String, environment: CoreDataStackEnvironment) {
         
         // Assumes the model is in the main bundle
         guard let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd") else {
@@ -44,19 +48,21 @@ struct CoreDataStack {
         context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = coordinator
         
-        guard let sharedContainerURL = CoreDataStack.containerModelPath else {
-            print("Unable to reach the documents folder")
-            return nil
+        switch environment {
+        case .live:
+            guard let sharedContainerURL = CoreDataStack.containerModelPath else {
+                print("Unable to reach the documents folder")
+                return nil
+            }
+            self.dbURL = sharedContainerURL
+        case .mock:
+            guard let mockModelContainerURL = CoreDataStack.mockContainerPath else {
+                print("Unable to research mock container path")
+                return nil
+            }
+            try! FileManager.default.copyItem(at: Bundle.main.url(forResource: "model-11", withExtension: "sqlite")!, to: mockModelContainerURL)
+            self.dbURL = mockModelContainerURL
         }
-
-        #if DEBUG
-        if !CommandLine.arguments.contains("--backup-model") && CommandLine.arguments.contains("--load-local") {
-            try? FileManager.default.removeItem(at: sharedContainerURL)
-            try! FileManager.default.copyItem(at: Bundle.main.url(forResource: "model-11", withExtension: "sqlite")!, to: sharedContainerURL)
-        }
-        #endif
-        
-        self.dbURL = sharedContainerURL
         
         // Options for migration
         let options = [NSInferMappingModelAutomaticallyOption: true, NSMigratePersistentStoresAutomaticallyOption: true]
@@ -117,4 +123,5 @@ extension CoreDataStack {
 
 extension CoreDataStack {
     static var containerModelPath: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")?.appendingPathComponent("model.sqlite")
+    static var mockContainerPath: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")?.appendingPathComponent("mockModel.sqlite")
 }

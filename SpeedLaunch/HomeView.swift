@@ -170,7 +170,7 @@ struct ContentView_Previews: PreviewProvider {
         HomeView(store:
                         Store(initialState: AppState(),
                               reducer: appReducer,
-                              environment: AppEnvironment(storageClient: StorageClient.live))
+                              environment: AppEnvironment(storageClient: .mock))
         )
     }
 }

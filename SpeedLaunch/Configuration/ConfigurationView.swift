@@ -19,9 +19,7 @@ enum ConfigurationAction : Equatable {
     case didAddAction(Result<Action, PersistenceError>)
 }
 
-struct ConfigurationEnvironment {
-    let helper = CoreDataHelper()
-    
+struct ConfigurationEnvironment {    
     var storageClient: StorageClient
 }
 
