@@ -21,6 +21,7 @@ enum ConfigurationAction : Equatable {
 
 struct ConfigurationEnvironment {    
     var storageClient: StorageClient
+    var contactBookClient: ContactBookClient
 }
 
 enum ActiveConfigurationSheet {

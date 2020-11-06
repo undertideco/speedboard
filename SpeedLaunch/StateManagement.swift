@@ -120,6 +120,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     configurationReducer.pullback(
         state: \.configurationState,
         action: /AppAction.configurationView,
-        environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live) }
+        environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live, contactBookClient: ContactBookClient.live) }
     )
 )
