@@ -19,6 +19,7 @@ class SavedAction: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var isLargeWidgetDisplayable: Bool
     @NSManaged var isMediumWidgetDisplayable: Bool
+    @NSManaged var contactBookIdentifier: String
     
     var action : Action {
        get {
@@ -53,6 +54,7 @@ struct Action: Codable, Equatable, Identifiable {
     var actionName: String? = nil
     var isLargeWidgetDisplayable: Bool = false
     var isMediumWidgetDisplayable: Bool = false
+    var contactBookIdentifier: String? = nil
     
     var accessibilityLabel: String {
         switch type {

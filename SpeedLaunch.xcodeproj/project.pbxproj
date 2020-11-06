@@ -194,6 +194,7 @@
 		28853B9C250D58F100C0D0F7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		28853BA2250D596800C0D0F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A72DA4252D478800FE58FE /* ActionModel v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ActionModel v2.xcdatamodel"; sourceTree = "<group>"; };
+		28A95DD8254F63B300927C80 /* ActionModel v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ActionModel v3.xcdatamodel"; sourceTree = "<group>"; };
 		28AC97F024FDC02E003CE354 /* actions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = actions.json; sourceTree = "<group>"; };
 		28B1E615245792F4003BB570 /* ShortcutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutImageView.swift; sourceTree = "<group>"; };
 		28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLaunchCell.swift; sourceTree = "<group>"; };
@@ -1092,10 +1093,11 @@
 		2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				28A95DD8254F63B300927C80 /* ActionModel v3.xcdatamodel */,
 				28A72DA4252D478800FE58FE /* ActionModel v2.xcdatamodel */,
 				2807A7E4251E7EBD00E35324 /* ActionModel.xcdatamodel */,
 			);
-			currentVersion = 28A72DA4252D478800FE58FE /* ActionModel v2.xcdatamodel */;
+			currentVersion = 28A95DD8254F63B300927C80 /* ActionModel v3.xcdatamodel */;
 			path = ActionModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

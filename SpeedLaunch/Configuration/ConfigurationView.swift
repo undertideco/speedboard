@@ -15,7 +15,7 @@ import ComposableArchitecture
 struct ConfigurationState: Equatable { }
 
 enum ConfigurationAction : Equatable {
-    case addAction(ActionType, String, Int, String, Data)
+    case addAction(CNContact, ActionType, Int, String, Data)
     case didAddAction(Result<Action, PersistenceError>)
 }
 
@@ -30,14 +30,15 @@ enum ActiveConfigurationSheet {
 let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, ConfigurationEnvironment> { state, action, env in
     switch action {
     
-    case let .addAction(type, name, position, number, imageData):
+    case let .addAction(contact, type, position, number, imageData):
         let action = Action(
             id: UUID(),
             type: type,
             contactValue: number,
             imageData: imageData,
             createdTime: Date(),
-            actionName: name
+            actionName: contact.givenName,
+            contactBookIdentifier: contact.identifier
         )
         
         return env.storageClient.saveAction(action)
@@ -93,7 +94,7 @@ struct ConfigurationView: View {
                                     let imageData = compressedImage.pngData()!
                                     
                                     viewStore.send(
-                                        .addAction(actionType, selectedContact.givenName, index, contact.value, imageData)
+                                        .addAction(selectedContact, actionType, index, contact.value, imageData)
                                     )
                                     self.onDismiss?()
                                 }) {
