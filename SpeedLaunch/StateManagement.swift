@@ -103,7 +103,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         do {
             let contactPredicate = CNContact.predicateForContacts(withIdentifiers: actions.compactMap{ $0.contactBookIdentifier })
             
-            let keysToFetch = [CNContactImageDataKey, CNContactImageDataAvailableKey, CNContactIdentifierKey] as [CNKeyDescriptor]
+            let keysToFetch = [CNContactThumbnailImageDataKey, CNContactImageDataAvailableKey, CNContactIdentifierKey] as [CNKeyDescriptor]
             contacts = try CNContactStore().unifiedContacts(matching: contactPredicate, keysToFetch: keysToFetch).reduce(into: [String: CNContact]()){
                 $0[$1.identifier] = $1
             }
@@ -115,7 +115,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state.actions = actions.map { action in
             guard let contactBookID = action.contactBookIdentifier else { return action }
             
-            if let contactBookImageData = contacts[contactBookID]!.imageData,
+            if let contactBookImageData = contacts[contactBookID]!.thumbnailImageData,
                 contacts.keys.contains(contactBookID) && action.imageData != contactBookImageData {
                 return Action(action: action, newImageData: contactBookImageData)
             }
