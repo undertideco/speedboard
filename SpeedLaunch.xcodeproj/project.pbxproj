@@ -30,6 +30,7 @@
 		28238B65250AD0BF00E88F7E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2839638D24FDC884001AF3F3 /* WidgetKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		28307E48253F9BD300472F17 /* model-11.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 28307E47253F9BD300472F17 /* model-11.sqlite */; };
 		28307E49253F9BD300472F17 /* model-11.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 28307E47253F9BD300472F17 /* model-11.sqlite */; };
+		28387A84255610AA004A61C7 /* ContactBookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28387A83255610AA004A61C7 /* ContactBookClient.swift */; };
 		28388A0924C8F5060008AE7F /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 28388A0824C8F5060008AE7F /* QGrid */; };
 		28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28388A0A24C8F9870008AE7F /* UIImage+Color.swift */; };
 		2839638E24FDC884001AF3F3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2839638D24FDC884001AF3F3 /* WidgetKit.framework */; };
@@ -85,6 +86,7 @@
 		2882260925103F9300BD01A4 /* SlidingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882260825103F9300BD01A4 /* SlidingCard.swift */; };
 		28853BA0250D596800C0D0F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28853BA3250D596800C0D0F7 /* Localizable.strings */; };
 		28853BA1250D596800C0D0F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28853BA3250D596800C0D0F7 /* Localizable.strings */; };
+		28A95DDD254F69A900927C80 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A95DDC254F69A900927C80 /* AlertView.swift */; };
 		28AC97F124FDC02E003CE354 /* actions.json in Resources */ = {isa = PBXBuildFile; fileRef = 28AC97F024FDC02E003CE354 /* actions.json */; };
 		28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B1E615245792F4003BB570 /* ShortcutImageView.swift */; };
 		28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */; };
@@ -148,6 +150,7 @@
 		281C79F725227471001F1E56 /* TemporaryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryFile.swift; sourceTree = "<group>"; };
 		281C7A0B2522782C001F1E56 /* model-10.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "model-10.sqlite"; sourceTree = "<group>"; };
 		28307E47253F9BD300472F17 /* model-11.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "model-11.sqlite"; sourceTree = "<group>"; };
+		28387A83255610AA004A61C7 /* ContactBookClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBookClient.swift; sourceTree = "<group>"; };
 		28388A0A24C8F9870008AE7F /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		2839638B24FDC884001AF3F3 /* QuickDialExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickDialExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2839638D24FDC884001AF3F3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -194,6 +197,8 @@
 		28853B9C250D58F100C0D0F7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		28853BA2250D596800C0D0F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A72DA4252D478800FE58FE /* ActionModel v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ActionModel v2.xcdatamodel"; sourceTree = "<group>"; };
+		28A95DD8254F63B300927C80 /* ActionModel v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ActionModel v3.xcdatamodel"; sourceTree = "<group>"; };
+		28A95DDC254F69A900927C80 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		28AC97F024FDC02E003CE354 /* actions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = actions.json; sourceTree = "<group>"; };
 		28B1E615245792F4003BB570 /* ShortcutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutImageView.swift; sourceTree = "<group>"; };
 		28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLaunchCell.swift; sourceTree = "<group>"; };
@@ -289,6 +294,7 @@
 			children = (
 				287AD884244E4D9100DA4F46 /* ConfigurationView.swift */,
 				283FE51E2502C0F0003CBB8F /* ConfigurationDataCell.swift */,
+				28387A83255610AA004A61C7 /* ContactBookClient.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -364,6 +370,7 @@
 				2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */,
 				28AC97F024FDC02E003CE354 /* actions.json */,
 				28388A0A24C8F9870008AE7F /* UIImage+Color.swift */,
+				28A95DDC254F69A900927C80 /* AlertView.swift */,
 			);
 			path = SpeedLaunch;
 			sourceTree = "<group>";
@@ -638,11 +645,13 @@
 				28388A0B24C8F9870008AE7F /* UIImage+Color.swift in Sources */,
 				2840C64824490FA500DB6BAA /* AppDelegate.swift in Sources */,
 				28C9177B245A49EE007A9AAA /* ImagePicker.swift in Sources */,
+				28387A84255610AA004A61C7 /* ContactBookClient.swift in Sources */,
 				281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */,
 				281C79F825227471001F1E56 /* TemporaryFile.swift in Sources */,
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
 				283FE5272502E687003CBB8F /* UIImage.swift in Sources */,
 				280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */,
+				28A95DDD254F69A900927C80 /* AlertView.swift in Sources */,
 				284B72CF25166157002969F5 /* Errors.swift in Sources */,
 				2807A7E5251E7EBD00E35324 /* ActionModel.xcdatamodeld in Sources */,
 				28D0E58325143F2D002E1EEC /* View.swift in Sources */,
@@ -1092,10 +1101,11 @@
 		2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				28A95DD8254F63B300927C80 /* ActionModel v3.xcdatamodel */,
 				28A72DA4252D478800FE58FE /* ActionModel v2.xcdatamodel */,
 				2807A7E4251E7EBD00E35324 /* ActionModel.xcdatamodel */,
 			);
-			currentVersion = 28A72DA4252D478800FE58FE /* ActionModel v2.xcdatamodel */;
+			currentVersion = 28A95DD8254F63B300927C80 /* ActionModel v3.xcdatamodel */;
 			path = ActionModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

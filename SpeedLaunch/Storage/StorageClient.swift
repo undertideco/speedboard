@@ -26,7 +26,7 @@ struct StorageClient {
 
 extension StorageClient {
     static let live = StorageClient(
-        containerPath: FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.undertide.speedboard")?.appendingPathComponent("model.sqlite"),
+        containerPath: CoreDataStack.containerModelPath,
         getActions: {
             let helper = CoreDataHelper(env: .live)
             let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "SavedAction")
@@ -113,7 +113,7 @@ extension StorageClient {
     )
     
     static let mock = StorageClient(
-        containerPath: Bundle.main.url(forResource: "model-11", withExtension: "sqlite"),
+        containerPath: CoreDataStack.mockContainerPath,
         getActions: {
             let helper = CoreDataHelper(env: .mock)
 

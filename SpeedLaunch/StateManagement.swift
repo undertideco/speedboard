@@ -10,6 +10,7 @@ import Foundation
 import ComposableArchitecture
 import WidgetKit
 import CoreData
+import Contacts
 
 struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
@@ -98,7 +99,29 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         return Effect(value: AppAction.loadActions)
             .eraseToEffect()
     case let .didLoadActions(.success(actions)):
-        state.actions = actions
+        var contacts: [String: CNContact] = [:]
+        do {
+            let contactPredicate = CNContact.predicateForContacts(withIdentifiers: actions.compactMap{ $0.contactBookIdentifier })
+            
+            let keysToFetch = [CNContactThumbnailImageDataKey, CNContactImageDataAvailableKey, CNContactIdentifierKey] as [CNKeyDescriptor]
+            contacts = try CNContactStore().unifiedContacts(matching: contactPredicate, keysToFetch: keysToFetch).reduce(into: [String: CNContact]()){
+                $0[$1.identifier] = $1
+            }
+        } catch {
+            state.actions = actions
+            return .none
+        }
+        
+        state.actions = actions.map { action in
+            guard let contactBookID = action.contactBookIdentifier else { return action }
+            
+            if let contactBookImageData = contacts[contactBookID]!.thumbnailImageData,
+                contacts.keys.contains(contactBookID) && action.imageData != contactBookImageData {
+                return Action(action: action, newImageData: contactBookImageData)
+            }
+            
+            return action
+        }
         return .none
     case .didLoadActions(.failure(_)):
         return .none
@@ -120,6 +143,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     configurationReducer.pullback(
         state: \.configurationState,
         action: /AppAction.configurationView,
-        environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live) }
+        environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live, contactBookClient: ContactBookClient.live) }
     )
 )
