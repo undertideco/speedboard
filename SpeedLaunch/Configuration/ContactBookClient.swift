@@ -10,8 +10,14 @@ import Foundation
 import ComposableArchitecture
 import Contacts
 
+enum ContactsError: Error {
+    case permissionsError
+    case imageUpdate
+}
+
 struct ContactBookClient {
-    var requestContactBookPermission: () -> Effect<Bool, Error>
+    var requestContactBookPermission: () -> Effect<Bool, ContactsError>
+    var saveNewContactImage: (Data, CNContact) -> Effect<Bool, ContactsError>
 }
 
 extension ContactBookClient {
@@ -21,10 +27,26 @@ extension ContactBookClient {
                 CNContactStore().requestAccess(for: .contacts) { (granted, error) in
                     
                     if let error = error {
-                        return callback(.failure(error))
+                        return callback(.failure(.permissionsError))
                     }
                     
                     return callback(.success(granted))
+                }
+            }
+        },
+        saveNewContactImage: { imageData, contact in
+            .future { callback in
+                guard let mutableContact = contact.mutableCopy() as? CNMutableContact else { return callback(.failure(.imageUpdate)) }
+                
+                mutableContact.imageData = imageData
+                
+                let saveRequest = CNSaveRequest()
+                saveRequest.update(mutableContact)
+                do {
+                    try CNContactStore().execute(saveRequest)
+                    return callback(.success(true))
+                } catch {
+                    return callback(.failure(.imageUpdate))
                 }
             }
         }
