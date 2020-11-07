@@ -128,7 +128,9 @@ struct ConfigurationView: View {
                                     let imageData = compressedImage.pngData()!
                                     
                                     if viewStore.isContactAccessAllowed {
-                                        viewStore.send(.updateContactImage(selectedContact, imageData))
+                                        viewStore.send(
+                                            .updateContactImage(selectedContact, imageData)
+                                        )
                                     }
                                     
                                     viewStore.send(

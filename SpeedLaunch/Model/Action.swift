@@ -19,7 +19,7 @@ class SavedAction: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var isLargeWidgetDisplayable: Bool
     @NSManaged var isMediumWidgetDisplayable: Bool
-    @NSManaged var contactBookIdentifier: String
+    @NSManaged var contactBookIdentifier: String?
     
     var action : Action {
        get {
@@ -31,7 +31,8 @@ class SavedAction: NSManagedObject {
                 createdTime: createdTime,
                 actionName: name,
                 isLargeWidgetDisplayable: isLargeWidgetDisplayable,
-                isMediumWidgetDisplayable: isMediumWidgetDisplayable
+                isMediumWidgetDisplayable: isMediumWidgetDisplayable,
+                contactBookIdentifier: contactBookIdentifier
             )
         }
         set {
@@ -41,6 +42,7 @@ class SavedAction: NSManagedObject {
             self.contactValue = newValue.contactValue ?? ""
             self.actionType = newValue.type.rawValue
             self.createdTime = newValue.createdTime
+            self.contactBookIdentifier = newValue.contactBookIdentifier ?? nil
         }
     }
 }
@@ -55,6 +57,22 @@ struct Action: Codable, Equatable, Identifiable {
     var isLargeWidgetDisplayable: Bool = false
     var isMediumWidgetDisplayable: Bool = false
     var contactBookIdentifier: String? = nil
+    
+    init(id: UUID, type: ActionType, contactValue: String?, imageData: Data?, createdTime: Date, actionName: String? = nil, isLargeWidgetDisplayable: Bool = false, isMediumWidgetDisplayable: Bool = false, contactBookIdentifier: String? = nil) {
+        self.id = id
+        self.type = type
+        self.contactValue = contactValue
+        self.imageData = imageData
+        self.createdTime = createdTime
+        self.actionName = actionName
+        self.isLargeWidgetDisplayable = isLargeWidgetDisplayable
+        self.isMediumWidgetDisplayable = isMediumWidgetDisplayable
+        self.contactBookIdentifier = contactBookIdentifier
+    }
+    
+    init(action: Action, newImageData: Data) {
+        self.init(id: action.id, type: action.type, contactValue: action.contactValue, imageData: newImageData, createdTime: action.createdTime, actionName: action.actionName, isLargeWidgetDisplayable: action.isLargeWidgetDisplayable, isMediumWidgetDisplayable: action.isMediumWidgetDisplayable, contactBookIdentifier: action.contactBookIdentifier)
+    }
     
     var accessibilityLabel: String {
         switch type {
