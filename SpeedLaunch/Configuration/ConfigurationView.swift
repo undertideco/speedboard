@@ -40,10 +40,6 @@ struct ConfigurationEnvironment {
     var contactBookClient: ContactBookClient
 }
 
-enum ActiveConfigurationSheet {
-    case contacts, photo
-}
-
 let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, ConfigurationEnvironment> { state, action, env in
     switch action {
     
@@ -97,34 +93,48 @@ struct ConfigurationView: View {
         return selectedContact.thumbnailImageData != nil
     }
         
-    @State private var activeSheet: ActiveConfigurationSheet = .contacts
+    @State private var shouldShowImagePicker: Bool = false
     @State private var shouldShowPermissionsAlert = false
+    @State private var customSelectedImage: UIImage? = nil
     
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 Form {
-                    GeometryReader { geo in
-                        VStack(alignment: .center) {
-                            ShortcutImageView(type: .empty, image: selectedContactImage)
-                                .frame(width: 80, height: 80)
-                            
-                            Text(selectedContact.givenName)
-                                .font(.system(size: 31))
+                    Section {
+                        GeometryReader { geo in
+                            VStack(alignment: .center, spacing: 4) {
+                                ShortcutImageView(type: .empty, image: customSelectedImage ?? selectedContactImage)
+                                    .frame(width: 80, height: 80)
+                                
+                                Button {
+                                    shouldShowImagePicker = true
+                                } label: {
+                                    Text("Edit")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(.primary)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+
+                                
+                                Text("\(selectedContact.givenName) \(selectedContact.familyName)")
+                                    .font(.system(size: 28))
+                            }
+                            .frame(width: geo.size.width, alignment: .center)
+                            .fixedSize()
                         }
-                        .frame(width: geo.size.width, alignment: .center)
-                        .fixedSize()
+                        .accessibility(hidden: true)
+                        .listRowBackground(Color(UIColor.secondarySystemBackground))
+                        .frame(height: 150)
                     }
-                    .accessibility(hidden: true)
-                    .listRowBackground(Color(UIColor.secondarySystemBackground))
-                    .frame(height: 130)
+
 
                     
                     ForEach(ActionType.allCases.dropLast(), id: \.self) { actionType in
                         Section {
                             ForEach(selectedContact.contactInformationArr, id: \.self) { contact in
                                 Button(action: {
-                                    let compressedImage = UIImage.resize(image: selectedContactImage, targetSize: CGSize(width: 50, height: 50))
+                                    let compressedImage = UIImage.resize(image: customSelectedImage ?? selectedContactImage, targetSize: CGSize(width: 50, height: 50))
                                     let imageData = compressedImage.pngData()!
                                     
                                     if viewStore.isContactAccessAllowed {
@@ -166,6 +176,9 @@ struct ConfigurationView: View {
                      onTap: nil) {
                 
                 createContactPermissionsView(store: viewStore)
+            }
+            .sheet(isPresented: $shouldShowPermissionsAlert) {
+                ImagePicker(image: $customSelectedImage)
             }
         }
     }
