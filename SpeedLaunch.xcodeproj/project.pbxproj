@@ -86,6 +86,7 @@
 		2882260925103F9300BD01A4 /* SlidingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882260825103F9300BD01A4 /* SlidingCard.swift */; };
 		28853BA0250D596800C0D0F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28853BA3250D596800C0D0F7 /* Localizable.strings */; };
 		28853BA1250D596800C0D0F7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28853BA3250D596800C0D0F7 /* Localizable.strings */; };
+		28A95DDD254F69A900927C80 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A95DDC254F69A900927C80 /* AlertView.swift */; };
 		28AC97F124FDC02E003CE354 /* actions.json in Resources */ = {isa = PBXBuildFile; fileRef = 28AC97F024FDC02E003CE354 /* actions.json */; };
 		28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B1E615245792F4003BB570 /* ShortcutImageView.swift */; };
 		28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */; };
@@ -197,6 +198,7 @@
 		28853BA2250D596800C0D0F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28A72DA4252D478800FE58FE /* ActionModel v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ActionModel v2.xcdatamodel"; sourceTree = "<group>"; };
 		28A95DD8254F63B300927C80 /* ActionModel v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ActionModel v3.xcdatamodel"; sourceTree = "<group>"; };
+		28A95DDC254F69A900927C80 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		28AC97F024FDC02E003CE354 /* actions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = actions.json; sourceTree = "<group>"; };
 		28B1E615245792F4003BB570 /* ShortcutImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutImageView.swift; sourceTree = "<group>"; };
 		28B7535A24F5838F0072B949 /* EmptyLaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLaunchCell.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				2879EB9824526D0800992E08 /* PhoneNumberMetadata.json */,
 				28AC97F024FDC02E003CE354 /* actions.json */,
 				28388A0A24C8F9870008AE7F /* UIImage+Color.swift */,
+				28A95DDC254F69A900927C80 /* AlertView.swift */,
 			);
 			path = SpeedLaunch;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				286376F624496626005AFB9D /* LaunchCell.swift in Sources */,
 				283FE5272502E687003CBB8F /* UIImage.swift in Sources */,
 				280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */,
+				28A95DDD254F69A900927C80 /* AlertView.swift in Sources */,
 				284B72CF25166157002969F5 /* Errors.swift in Sources */,
 				2807A7E5251E7EBD00E35324 /* ActionModel.xcdatamodeld in Sources */,
 				28D0E58325143F2D002E1EEC /* View.swift in Sources */,
