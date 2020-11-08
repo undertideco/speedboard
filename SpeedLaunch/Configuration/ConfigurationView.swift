@@ -177,7 +177,7 @@ struct ConfigurationView: View {
                 
                 createContactPermissionsView(store: viewStore)
             }
-            .sheet(isPresented: $shouldShowPermissionsAlert) {
+            .sheet(isPresented: $shouldShowImagePicker) {
                 ImagePicker(image: $customSelectedImage)
             }
         }
