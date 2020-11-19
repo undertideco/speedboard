@@ -100,16 +100,19 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             .eraseToEffect()
     case let .didLoadActions(.success(actions)):
         var contacts: [String: CNContact] = [:]
-        do {
-            let contactPredicate = CNContact.predicateForContacts(withIdentifiers: actions.compactMap{ $0.contactBookIdentifier })
-            
-            let keysToFetch = [CNContactThumbnailImageDataKey, CNContactImageDataAvailableKey, CNContactIdentifierKey] as [CNKeyDescriptor]
-            contacts = try CNContactStore().unifiedContacts(matching: contactPredicate, keysToFetch: keysToFetch).reduce(into: [String: CNContact]()){
-                $0[$1.identifier] = $1
+        
+        if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            do {
+                let contactPredicate = CNContact.predicateForContacts(withIdentifiers: actions.compactMap{ $0.contactBookIdentifier })
+                
+                let keysToFetch = [CNContactThumbnailImageDataKey, CNContactImageDataAvailableKey, CNContactIdentifierKey] as [CNKeyDescriptor]
+                contacts = try CNContactStore().unifiedContacts(matching: contactPredicate, keysToFetch: keysToFetch).reduce(into: [String: CNContact]()){
+                    $0[$1.identifier] = $1
+                }
+            } catch {
+                state.actions = actions
+                return .none
             }
-        } catch {
-            state.actions = actions
-            return .none
         }
         
         state.actions = actions.map { action in
