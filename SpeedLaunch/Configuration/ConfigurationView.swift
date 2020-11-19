@@ -167,6 +167,7 @@ struct ConfigurationView: View {
                 .accessibility(label: Text(Strings.formLabel.value))
                 .accessibility(hint: Text(Strings.formHint.value))
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             .onAppear() {
                 shouldShowPermissionsAlert = !viewStore.isContactAccessAllowed
             }
