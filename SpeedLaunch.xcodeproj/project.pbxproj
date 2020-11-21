@@ -280,6 +280,7 @@
 		2839639124FDC884001AF3F3 /* QuickDial */ = {
 			isa = PBXGroup;
 			children = (
+				28D90C6B24FDD3CB00A5B04B /* QuickDialExtension.entitlements */,
 				283963A424FDCA45001AF3F3 /* WidgetState.swift */,
 				2839639224FDC884001AF3F3 /* QuickDial.swift */,
 				2839639524FDC886001AF3F3 /* Assets.xcassets */,
@@ -326,16 +327,15 @@
 			isa = PBXGroup;
 			children = (
 				2807A7E3251E7EBD00E35324 /* ActionModel.xcdatamodeld */,
+				28853BA3250D596800C0D0F7 /* Localizable.strings */,
 				281C7A0B2522782C001F1E56 /* model-10.sqlite */,
 				28307E47253F9BD300472F17 /* model-11.sqlite */,
-				28853BA3250D596800C0D0F7 /* Localizable.strings */,
-				28EB23962509847B00E6C46B /* Colors.xcassets */,
-				28D90C6B24FDD3CB00A5B04B /* QuickDialExtension.entitlements */,
 				2840C64624490FA500DB6BAA /* SpeedLaunch */,
 				280C45B524E628D60098E17A /* SpeedLaunchTests */,
 				2839639124FDC884001AF3F3 /* QuickDial */,
 				2839638C24FDC884001AF3F3 /* Frameworks */,
 				2840C64524490FA500DB6BAA /* Products */,
+				28EB23962509847B00E6C46B /* Colors.xcassets */,
 			);
 			sourceTree = "<group>";
 		};
@@ -768,7 +768,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = QuickDial/QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
 				DEAD_CODE_STRIPPING = NO;
@@ -794,7 +794,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = QuickDialExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = QuickDial/QuickDialExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
 				DEAD_CODE_STRIPPING = NO;
