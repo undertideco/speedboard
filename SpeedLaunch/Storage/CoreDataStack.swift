@@ -60,7 +60,11 @@ struct CoreDataStack {
                 print("Unable to research mock container path")
                 return nil
             }
-            try! FileManager.default.copyItem(at: Bundle.main.url(forResource: "model-11", withExtension: "sqlite")!, to: mockModelContainerURL)
+            
+            if !FileManager.default.fileExists(atPath: mockModelContainerURL.path) {
+                try! FileManager.default.copyItem(at: Bundle.main.url(forResource: "model-11", withExtension: "sqlite")!, to: mockModelContainerURL)
+            }
+            
             self.dbURL = mockModelContainerURL
         }
         
