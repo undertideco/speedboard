@@ -38,6 +38,11 @@ enum ConfigurationAction : Equatable {
 struct ConfigurationEnvironment {    
     var storageClient: StorageClient
     var contactBookClient: ContactBookClient
+    
+    func incrementSignificantEventCountAndCheck() {
+        ReviewHelper.incrementSignificantUseCount()
+        ReviewHelper.check()
+    }
 }
 
 let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, ConfigurationEnvironment> { state, action, env in
@@ -53,6 +58,8 @@ let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, Conf
             actionName: contact.givenName,
             contactBookIdentifier: contact.identifier
         )
+        
+        env.incrementSignificantEventCountAndCheck()
         
         return env.storageClient.saveAction(action)
             .catchToEffect()

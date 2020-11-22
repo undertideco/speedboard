@@ -36,6 +36,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
         
+        ReviewHelper.significantUsesUntilPrompt = 3
+        
         self.scene(scene, openURLContexts: connectionOptions.urlContexts)
     }
 

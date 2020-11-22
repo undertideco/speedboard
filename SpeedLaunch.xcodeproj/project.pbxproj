@@ -16,6 +16,7 @@
 		280A0D0D25059BEA00823A35 /* URLSchemeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280A0D0C25059BEA00823A35 /* URLSchemeActions.swift */; };
 		280C45B724E628D60098E17A /* SpeedLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45B624E628D60098E17A /* SpeedLaunchTests.swift */; };
 		280C45BE24E628DF0098E17A /* ActionStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45AD24E628620098E17A /* ActionStoreTest.swift */; };
+		28114C70256AEF0200741080 /* ReviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28114C6F256AEF0200741080 /* ReviewHelper.swift */; };
 		2814F4C6250AE2E3006F41EE /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2814F4C5250AE2E3006F41EE /* UIImage+Resize.swift */; };
 		281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 281ADE1B24E84B7900421C9B /* ComposableArchitecture */; };
 		281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */; };
@@ -143,6 +144,7 @@
 		280C45B424E628D60098E17A /* SpeedLaunchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeedLaunchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		280C45B624E628D60098E17A /* SpeedLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedLaunchTests.swift; sourceTree = "<group>"; };
 		280C45B824E628D60098E17A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28114C6F256AEF0200741080 /* ReviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHelper.swift; sourceTree = "<group>"; };
 		2814F4C5250AE2E3006F41EE /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectoryBacked.swift; sourceTree = "<group>"; };
 		281ADE2024E8540D00421C9B /* StateManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManagement.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				2808C59C251801CE002DB8EF /* NavigationBarColor.swift */,
 				281C79F225227447001F1E56 /* NSPersistentStoreCoordinator.swift */,
 				281C79F725227471001F1E56 /* TemporaryFile.swift */,
+				28114C6F256AEF0200741080 /* ReviewHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */,
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
 				2842E311251EB40100593232 /* StorageClient.swift in Sources */,
+				28114C70256AEF0200741080 /* ReviewHelper.swift in Sources */,
 				28B7535B24F5838F0072B949 /* EmptyLaunchCell.swift in Sources */,
 				283FE5242502E66B003CBB8F /* CNContact.swift in Sources */,
 				2840C64A24490FA500DB6BAA /* SceneDelegate.swift in Sources */,
