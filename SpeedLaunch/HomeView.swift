@@ -114,23 +114,22 @@ struct HomeView: View {
                         Image(systemName: "gear")
                             .font(.title)
                             .foregroundColor(.white)
-                        
-                        Image(systemName: "bolt.horizontal.cloud")
-                            font(.title)
-                            .foregroundColor(.white)
+                            .scaleEffect(0.9)
                     },
                     trailing: Button(action: {
                         viewStore.send(.setEditing(!viewStore.isEditing))
                     }, label: {
                         if viewStore.isEditing {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.largeTitle)
+                            Image(systemName: "checkmark")
+                                .font(.title)
                                 .foregroundColor(.white)
+                                .scaleEffect(0.9)
                                 .accessibility(label: Text(Strings.saveButton.rawValue))
                         } else {
-                            Image(systemName: "pencil.circle.fill")
+                            Image(systemName: "pencil")
                                 .font(.largeTitle)
                                 .foregroundColor(.white)
+                                .scaleEffect(0.9)
                                 .accessibility(label: Text(Strings.editButton.rawValue))
                                 .accessibility(hint: Text(Strings.editButtonHint.rawValue))
                         }
