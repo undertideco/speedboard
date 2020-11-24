@@ -43,3 +43,6 @@
 "SlideoverCard_MaxActionsTitle" = "Maximum Number of Configurable Actions Reached";
 "SlideoverCard_MaxActionsMessage" = "To continue, try unselecting some actions.";
 "SlideoverCard_DismissAction" = "Got it!";
+
+
+"Settings_Title" = "Settings";

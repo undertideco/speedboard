@@ -16,6 +16,7 @@ struct HomeView: View {
     let store: Store<AppState, AppAction>
     
     @State private var selectedContact: CNContact? = nil
+    @State private var showSettings: Bool = false
     
     @State var cardPosition: CardPosition = .middle
     
@@ -111,10 +112,14 @@ struct HomeView: View {
                 )
                 .navigationBarItems(
                     leading: HStack {
-                        Image(systemName: "gear")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .scaleEffect(0.9)
+                        Button(action: {
+                            showSettings = true
+                        }, label: {
+                            Image(systemName: "gear")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .scaleEffect(0.9)
+                        })
                     },
                     trailing: Button(action: {
                         viewStore.send(.setEditing(!viewStore.isEditing))
@@ -150,6 +155,9 @@ struct HomeView: View {
                 ) {
                     self.selectedContact = nil
                 }
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
             }
             .onAppear {
                 viewStore.send(.loadActions)

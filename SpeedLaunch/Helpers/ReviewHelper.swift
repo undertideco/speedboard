@@ -26,11 +26,17 @@ struct ReviewHelper {
     }
     
     
-    static func incrementSignificantUseCount() {
+    static func incrementSignificantUseCount(by count: Int = 1) {
         var eventCount = significantUsesCount
-        eventCount += 1
+        eventCount += count
         
         significantUsesCount = eventCount
+    }
+    
+    static func incrementSignificantUseThreshold(by count: Int = 3) {
+        var significantUsesCount = significantUsesUntilPrompt
+        significantUsesCount += count
+        self.significantUsesCount = significantUsesCount
     }
     
     static func check() {

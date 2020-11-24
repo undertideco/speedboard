@@ -18,6 +18,7 @@
 		280C45BE24E628DF0098E17A /* ActionStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280C45AD24E628620098E17A /* ActionStoreTest.swift */; };
 		28114C70256AEF0200741080 /* ReviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28114C6F256AEF0200741080 /* ReviewHelper.swift */; };
 		2814F4C6250AE2E3006F41EE /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2814F4C5250AE2E3006F41EE /* UIImage+Resize.swift */; };
+		28197BE9257187A10002A51C /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28197BE8257187A10002A51C /* MailView.swift */; };
 		281ADE1C24E84B7900421C9B /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 281ADE1B24E84B7900421C9B /* ComposableArchitecture */; };
 		281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */; };
 		281ADE2124E8540D00421C9B /* StateManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281ADE2024E8540D00421C9B /* StateManagement.swift */; };
@@ -29,6 +30,7 @@
 		281C7A0C2522782C001F1E56 /* model-10.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 281C7A0B2522782C001F1E56 /* model-10.sqlite */; };
 		281C7A0D2522782C001F1E56 /* model-10.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 281C7A0B2522782C001F1E56 /* model-10.sqlite */; };
 		28238B65250AD0BF00E88F7E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2839638D24FDC884001AF3F3 /* WidgetKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		28254FFD256D8FC60057AAF6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28254FFC256D8FC60057AAF6 /* SettingsView.swift */; };
 		28307E48253F9BD300472F17 /* model-11.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 28307E47253F9BD300472F17 /* model-11.sqlite */; };
 		28307E49253F9BD300472F17 /* model-11.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 28307E47253F9BD300472F17 /* model-11.sqlite */; };
 		28387A84255610AA004A61C7 /* ContactBookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28387A83255610AA004A61C7 /* ContactBookClient.swift */; };
@@ -146,11 +148,13 @@
 		280C45B824E628D60098E17A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28114C6F256AEF0200741080 /* ReviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewHelper.swift; sourceTree = "<group>"; };
 		2814F4C5250AE2E3006F41EE /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		28197BE8257187A10002A51C /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		281ADE1E24E853D700421C9B /* DocDirectoryBacked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocDirectoryBacked.swift; sourceTree = "<group>"; };
 		281ADE2024E8540D00421C9B /* StateManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManagement.swift; sourceTree = "<group>"; };
 		281C79F225227447001F1E56 /* NSPersistentStoreCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPersistentStoreCoordinator.swift; sourceTree = "<group>"; };
 		281C79F725227471001F1E56 /* TemporaryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryFile.swift; sourceTree = "<group>"; };
 		281C7A0B2522782C001F1E56 /* model-10.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "model-10.sqlite"; sourceTree = "<group>"; };
+		28254FFC256D8FC60057AAF6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		28307E47253F9BD300472F17 /* model-11.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "model-11.sqlite"; sourceTree = "<group>"; };
 		28387A83255610AA004A61C7 /* ContactBookClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBookClient.swift; sourceTree = "<group>"; };
 		28388A0A24C8F9870008AE7F /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
@@ -310,6 +314,7 @@
 				286376F324496606005AFB9D /* ActionView.swift */,
 				2882260825103F9300BD01A4 /* SlidingCard.swift */,
 				284A81B42510744D0057E725 /* WidgetConfigurationView.swift */,
+				28254FFC256D8FC60057AAF6 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 			children = (
 				28C9177A245A49EE007A9AAA /* ImagePicker.swift */,
 				287AD888244E4FF100DA4F46 /* EmbeddedContactPicker.swift */,
+				28197BE8257187A10002A51C /* MailView.swift */,
 			);
 			path = "From UIKit";
 			sourceTree = "<group>";
@@ -638,6 +644,7 @@
 			files = (
 				2807A7F1251E826500E35324 /* CoreDataStack.swift in Sources */,
 				286376F424496606005AFB9D /* ActionView.swift in Sources */,
+				28197BE9257187A10002A51C /* MailView.swift in Sources */,
 				28B7535D24F5840A0072B949 /* Colors.swift in Sources */,
 				287AD885244E4D9100DA4F46 /* ConfigurationView.swift in Sources */,
 				281C79F325227447001F1E56 /* NSPersistentStoreCoordinator.swift in Sources */,
@@ -661,6 +668,7 @@
 				281ADE1F24E853D700421C9B /* DocDirectoryBacked.swift in Sources */,
 				283963A924FDCA91001AF3F3 /* String.swift in Sources */,
 				283FE51F2502C0F0003CBB8F /* ConfigurationDataCell.swift in Sources */,
+				28254FFD256D8FC60057AAF6 /* SettingsView.swift in Sources */,
 				28B1E616245792F4003BB570 /* ShortcutImageView.swift in Sources */,
 				2842E311251EB40100593232 /* StorageClient.swift in Sources */,
 				28114C70256AEF0200741080 /* ReviewHelper.swift in Sources */,
