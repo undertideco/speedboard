@@ -6,7 +6,7 @@
   Copyright © 2020 Undertide LLP. All rights reserved.
 */
 
-"App_Name" = "SpeedBoard";
+"Home_Title" = "Your Actions";
 "Configuration_Title" = "Pick Action";
 "Action_Call" = "Call";
 "Action_Message" = "Message";

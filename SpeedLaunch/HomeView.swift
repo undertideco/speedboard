@@ -103,13 +103,22 @@ struct HomeView: View {
                 }
                 .navigationBarTitle(
                     Text(Strings.title.rawValue),
-                    displayMode: .automatic
+                    displayMode: .inline
                 )
                 .navigationBarColor(
                     backgroundColor: UIColor(named: "primary")!,
                     tintColor: .white
                 )
                 .navigationBarItems(
+                    leading: HStack {
+                        Image(systemName: "gear")
+                            .font(.title)
+                            .foregroundColor(.white)
+                        
+                        Image(systemName: "bolt.horizontal.cloud")
+                            font(.title)
+                            .foregroundColor(.white)
+                    },
                     trailing: Button(action: {
                         viewStore.send(.setEditing(!viewStore.isEditing))
                     }, label: {
@@ -152,7 +161,7 @@ struct HomeView: View {
 
 extension HomeView {
     enum Strings: LocalizedStringKey {
-        case title = "App_Name"
+        case title = "Home_Title"
         case emptyCellTitle = "LaunchCell_EmptyTitle"
         
         case actionsGrid = "Accessibility_HomeView_Grid_Label"
