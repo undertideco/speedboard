@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ComposableArchitecture
 import Contacts
 
@@ -24,13 +25,21 @@ extension ContactBookClient {
     static var live = ContactBookClient(
         requestContactBookPermission: {
             .future { callback in
-                CNContactStore().requestAccess(for: .contacts) { (granted, error) in
-                    
-                    if let error = error {
-                        return callback(.failure(.permissionsError))
+                if CNContactStore.authorizationStatus(for: .contacts) != .notDetermined {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
                     }
-                    
-                    return callback(.success(granted))
+                } else {
+                    CNContactStore().requestAccess(for: .contacts) { (granted, error) in
+                        
+                        if let error = error {
+                            return callback(.failure(.permissionsError))
+                        }
+                        
+                        return callback(.success(granted))
+                    }
                 }
             }
         },
