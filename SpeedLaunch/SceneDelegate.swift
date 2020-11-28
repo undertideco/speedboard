@@ -72,7 +72,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
         if url.host == "new" {
-            ViewStore(store).send(.setPicker(true))
+            ViewStore(store).send(.setContactPickerPresentation(true))
         }
         
         if url.host == "addWidget" {

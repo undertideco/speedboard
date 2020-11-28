@@ -49,10 +49,24 @@ struct AppState: Equatable {
         }
     }
     
-    var isContactPickerOpen: Bool = false
+    enum PresentingSheet {
+        case settings, contacts
+    }
+    
+    private var presenting: PresentingSheet? = nil
     var isEditing: Bool = false
     
     var configurationState = ConfigurationState()
+    
+    var isSettingsOpen: Bool {
+        get { presenting == .settings }
+        set { presenting = newValue ? .settings : nil }
+    }
+
+    var isContactPickerOpen: Bool {
+        get { presenting == .contacts }
+        set { presenting = newValue ? .contacts : nil }
+    }
 }
 
 struct AppEnvironment {
@@ -62,7 +76,8 @@ struct AppEnvironment {
 enum AppAction: Equatable {
     case loadActions
     case deleteAction(Action)
-    case setPicker(Bool)
+    case setContactPickerPresentation(Bool)
+    case setSettingsPresentation(Bool)
     case setEditing(Bool)
     case widgetConfiguration(WidgetConfigurationAction)
     
@@ -87,7 +102,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             .catchToEffect()
             .map(AppAction.didWriteActions)
             .eraseToEffect()
-    case .setPicker(let isPresented):
+    case let .setSettingsPresentation(isPresented):
+        state.isSettingsOpen = isPresented
+        return .none
+    case let .setContactPickerPresentation(isPresented):
         state.isContactPickerOpen = isPresented
         return .none
     case .widgetConfiguration(_):

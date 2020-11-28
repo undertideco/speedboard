@@ -43,19 +43,18 @@ struct HomeView: View {
                     ContactPicker(
                         showPicker: viewStore.binding(
                             get: \.isContactPickerOpen,
-                            send: AppAction.setPicker
+                            send: AppAction.setContactPickerPresentation
                         )
                     ) { contact in
                         self.selectedContact = contact
                     } onCancel: {
-                        viewStore.send(.setPicker(false))
+                        viewStore.send(.setContactPickerPresentation(false))
                     }
                     QGrid(viewStore.actionsToDisplay, columns: actionsPerRow) { action in
                         Group {
                             if action.type == .empty {
                                 EmptyLaunchCell(localizedString: Strings.emptyCellTitle.rawValue) {
-                                    viewStore.send(.setPicker(!viewStore.isContactPickerOpen))
-
+                                    viewStore.send(.setContactPickerPresentation(!viewStore.isContactPickerOpen))
                                 }
                                 .frame(width: actionCellDimension, height: actionCellDimension, alignment: .center)
                                 .padding(5)
