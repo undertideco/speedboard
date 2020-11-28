@@ -58,7 +58,7 @@ struct SettingsView: View {
                         Button(action: {
                             isShowingContactUsScreen.toggle()
                         }, label: {
-                            SettingsRow(image: Image(systemName: "envelope.fill"), settingColor: .settingsMail, glyphColor: .white, settingText: "Contact Us")
+                            SettingsRow(image: Image(systemName: "envelope.fill"), settingColor: .settingsMail, glyphColor: .white, settingText: "Send Feedback")
                         })
 
                     }
