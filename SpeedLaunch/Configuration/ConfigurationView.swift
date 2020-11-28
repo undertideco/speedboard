@@ -44,7 +44,6 @@ struct ConfigurationEnvironment {
     func incrementSignificantEventCountAndCheck() {
         ReviewHelper.incrementSignificantUseCount()
         ReviewHelper.check()
-        ReviewHelper.incrementSignificantUseThreshold()
     }
 }
 

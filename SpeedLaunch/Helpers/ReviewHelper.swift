@@ -36,12 +36,13 @@ struct ReviewHelper {
     static func incrementSignificantUseThreshold(by count: Int = 3) {
         var significantUsesCount = significantUsesUntilPrompt
         significantUsesCount += count
-        self.significantUsesCount = significantUsesCount
+        self.significantUsesUntilPrompt = significantUsesCount
     }
     
     static func check() {
         if significantUsesCount >= significantUsesUntilPrompt {
             SKStoreReviewController.requestReview()
+            ReviewHelper.incrementSignificantUseThreshold()
         }
     }
 }
