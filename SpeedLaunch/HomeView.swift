@@ -14,10 +14,6 @@ import LetterAvatarKit
 
 struct HomeView: View {
     let store: Store<AppState, AppAction>
-    
-    @State private var selectedContact: CNContact? = nil
-    @State private var showSettings: Bool = false
-    
     @State var cardPosition: CardPosition = .middle
     
     var actionsPerRow: Int {
@@ -152,9 +148,7 @@ struct HomeView: View {
                             action: AppAction.configurationView
                         ),
                         index: viewStore.actionsToDisplay.count - 1
-                    ) {
-                        self.selectedContact = nil
-                    }
+                    )
                 case .settings:
                     SettingsView()
                 }

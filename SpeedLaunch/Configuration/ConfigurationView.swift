@@ -89,7 +89,6 @@ let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, Conf
 struct ConfigurationView: View {
     var store: Store<ConfigurationState, ConfigurationAction>
     var index: Int
-    var onDismiss: (() -> Void)?
 
     @State private var shouldShowImagePicker: Bool = false
     @State private var shouldShowPermissionsAlert = false
@@ -147,7 +146,6 @@ struct ConfigurationView: View {
                                             .addAction(selectedContact, actionType, index, contact.value, imageData)
                                         )
                                         
-                                        self.onDismiss?()
                                     }) {
                                         ConfigurationDataCell(actionType: actionType, label: contact.label, value: contact.value)
                                             .frame(height: 50)

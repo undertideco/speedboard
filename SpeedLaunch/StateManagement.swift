@@ -156,6 +156,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state.isEditing = isEditing
         return .none
     case .configurationView(.addAction):
+        state.presenting = nil
+        state.selectedContact = nil
         return Effect(value: AppAction.loadActions)
             .eraseToEffect()
     default:
