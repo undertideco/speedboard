@@ -64,6 +64,7 @@ struct AppState: Equatable {
     var selectedContact: CNContact? = nil
     
     var configurationState = ConfigurationState()
+    var settingsState = SettingsViewState()
 }
 
 struct AppEnvironment {
@@ -84,6 +85,7 @@ enum AppAction: Equatable {
     case didLoadActions(Result<[Action], PersistenceError>)
     
     case configurationView(ConfigurationAction)
+    case settingsView(SettingsViewAction)
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
@@ -173,5 +175,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state: \.configurationState,
         action: /AppAction.configurationView,
         environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live, contactBookClient: ContactBookClient.live) }
-    )
+    ),
+    settingsViewReducer.pullback(
+        state: \.settingsState,
+        action: /AppAction.settingsView,
+        environment: { _ in SettingsViewEnvironment(contactBookClient: .live) })
 )

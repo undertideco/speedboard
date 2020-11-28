@@ -150,7 +150,12 @@ struct HomeView: View {
                         index: viewStore.actionsToDisplay.count - 1
                     )
                 case .settings:
-                    SettingsView()
+                    SettingsView(
+                        store: self.store.scope(
+                            state: \.settingsState,
+                            action: AppAction.settingsView
+                        )
+                    )
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())

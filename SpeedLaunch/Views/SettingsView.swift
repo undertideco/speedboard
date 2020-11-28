@@ -9,71 +9,121 @@
 import SwiftUI
 import Contacts
 import MessageUI
+import ComposableArchitecture
+
+struct SettingsViewState: Equatable {
+    var shouldShowSystemContactPermissionsAlert = false
+    var isContactAccessAllowed: Bool = CNContactStore.authorizationStatus(for: .contacts) == .authorized
+}
+
+enum SettingsViewAction: Equatable {
+    case requestContactBookPermission
+    case didChangeContactBookPermission(Result<Bool, ContactsError>)
+    case showPermissionsAlert(Bool)
+}
+
+struct SettingsViewEnvironment {
+    var contactBookClient: ContactBookClient
+}
+
+let settingsViewReducer = Reducer<SettingsViewState, SettingsViewAction, SettingsViewEnvironment> { state, action, env in
+    switch action {
+    case .requestContactBookPermission:
+        return env.contactBookClient.requestContactBookPermission()
+            .catchToEffect()
+            .map(SettingsViewAction.didChangeContactBookPermission)
+            .eraseToEffect()
+    case let .didChangeContactBookPermission(.success(completion)):
+        state.isContactAccessAllowed = completion
+        return .none
+    case let .showPermissionsAlert(show):
+        state.shouldShowSystemContactPermissionsAlert = show
+        return .none
+    default:
+        return .none
+    }
+}
 
 struct SettingsView: View {
-    @State var isShowingContactUsScreen: Bool = false
-    @State var mailResult: Result<MFMailComposeResult, Error>? = nil {
+    var store: Store<SettingsViewState, SettingsViewAction>
+    @State private var isShowingContactUsScreen: Bool = false
+    @State private var shouldShowPermissionsAlert = false
+
+    @State private var mailResult: Result<MFMailComposeResult, Error>? = nil {
         didSet {
             isShowingContactUsScreen.toggle()
         }
     }
     
-    
-    
     var body: some View {
-        NavigationView {
-            VStack {
-                ZStack {
-                    Image("thanks_bg")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .blur(radius: 3.0)
-                        .overlay(Color.gray.opacity(0.8))
-                    VStack {
-                        Image("banner_appicon")
+        WithViewStore(store) { viewStore in
+            NavigationView {
+                VStack {
+                    ZStack {
+                        Image("thanks_bg")
                             .resizable()
-                            .frame(width: 75, height: 75, alignment: .center)
-                            .cornerRadius(15)
-                        Text("Thank you for supporting SpeedBoard 😍")
-                            .foregroundColor(.white)
-                            .font(.system(size: 24, weight: .bold, design: .rounded))
-                            .multilineTextAlignment(.center)
-                    }
-                }.frame(height: 200, alignment: .center)
-
-
-                Form {
-                    if CNContactStore.authorizationStatus(for: .contacts) != .authorized {
-                        Section {
-                            SettingsRow(image: Image(systemName: "person.crop.circle.fill.badge.checkmark"), settingColor: .gray, glyphColor: .primary, settingText: "Grant Contact Access")
+                            .aspectRatio(contentMode: .fill)
+                            .blur(radius: 3.0)
+                            .overlay(Color.gray.opacity(0.8))
+                        VStack {
+                            Image("banner_appicon")
+                                .resizable()
+                                .frame(width: 75, height: 75, alignment: .center)
+                                .cornerRadius(15)
+                            Text("Thank you for supporting SpeedBoard 😍")
+                                .foregroundColor(.white)
+                                .font(.system(size: 24, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.center)
                         }
-                        
-                    }
-                    Section {
-                        Button(action: {
-                            ReviewHelper.check()
-                        }, label: {
-                            SettingsRow(image: Image(systemName: "star.fill"), settingColor: .settingsAppStore, glyphColor: .white, settingText: "Rate SpeedBoard")
-                        })
-                        Button(action: {
-                            isShowingContactUsScreen.toggle()
-                        }, label: {
-                            SettingsRow(image: Image(systemName: "envelope.fill"), settingColor: .settingsMail, glyphColor: .white, settingText: "Send Feedback")
-                        })
+                    }.frame(height: 200, alignment: .center)
 
+
+                    Form {
+                        if !viewStore.isContactAccessAllowed {
+                            Section {
+                                Button(action: {
+                                    shouldShowPermissionsAlert = true
+                                }, label: {
+                                    SettingsRow(image: Image(systemName: "person.crop.circle.fill.badge.checkmark"), settingColor: .settingsContactsAuth, glyphColor: .white, settingText: "Grant Contact Access")
+                                })
+                            }
+                            
+                        }
+                        Section {
+                            Button(action: {
+                                ReviewHelper.check()
+                            }, label: {
+                                SettingsRow(image: Image(systemName: "star.fill"), settingColor: .settingsAppStore, glyphColor: .white, settingText: "Rate SpeedBoard")
+                            })
+                            Button(action: {
+                                isShowingContactUsScreen.toggle()
+                            }, label: {
+                                SettingsRow(image: Image(systemName: "envelope.fill"), settingColor: .settingsMail, glyphColor: .white, settingText: "Send Feedback")
+                            })
+
+                        }
                     }
                 }
+                .navigationBarTitle(
+                    Text(Strings.title.rawValue),
+                    displayMode: .inline
+                )
+                .present(isPresented: $shouldShowPermissionsAlert,
+                         animation: .spring(response: 0.55, dampingFraction: 0.825, blendDuration: 0.1),
+                         closeOnTap: true,
+                         onTap: nil) {
+                    
+                    ContactPermissionsView(shouldShowPermissionsAlert: viewStore.binding(get: \.shouldShowSystemContactPermissionsAlert, send: SettingsViewAction.showPermissionsAlert)) {
+                        viewStore.send(.requestContactBookPermission)
+                    }
+                    
+                }
+                .sheet(isPresented: $isShowingContactUsScreen, content: {
+                    MailView(isShowing: $isShowingContactUsScreen, result: $mailResult)
+                        .navigationBarColor(backgroundColor: .primary, tintColor: .primary)
+                })
             }
-            .navigationBarTitle(
-                Text(Strings.title.rawValue),
-                displayMode: .inline
-            )
-            .sheet(isPresented: $isShowingContactUsScreen, content: {
-                MailView(isShowing: $isShowingContactUsScreen, result: $mailResult)
-                    .navigationBarColor(backgroundColor: .primary, tintColor: .primary)
-            })
         }
-
     }
 }
 
@@ -128,6 +178,6 @@ extension SettingsView {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(store: Store(initialState: SettingsViewState(), reducer: settingsViewReducer, environment: SettingsViewEnvironment(contactBookClient: .live)))
     }
 }

@@ -13,6 +13,7 @@ extension Color {
     
     static let settingsMail = Color(red: 1.00, green: 0.17, blue: 0.33)
     static let settingsAppStore = Color(red: 0.00, green: 0.48, blue: 0.99)
+    static let settingsContactsAuth = Color(red: 0.36, green: 0.35, blue: 0.91)
 }
 
 extension UIColor {
