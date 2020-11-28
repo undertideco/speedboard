@@ -22,6 +22,8 @@ struct ConfigurationState: Equatable {
         set { _isContactsAccessAllowed = newValue }
     }
     @DocDirectoryBacked<Bool>(location: .storeLocation) var _isContactsAccessAllowed
+    
+    var selectedContact: CNContact?
 }
 
 enum ConfigurationAction : Equatable {
@@ -86,112 +88,103 @@ let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, Conf
 
 struct ConfigurationView: View {
     var store: Store<ConfigurationState, ConfigurationAction>
-    let selectedContact: CNContact
-    var selectedContactImage: UIImage {
-        if let imageData = selectedContact.thumbnailImageData {
-            return  UIImage(data: imageData) ?? UIImage.generateWithName("\(selectedContact.givenName)")
-        } else {
-            return UIImage.generateWithName("\(selectedContact.givenName)")
-        }
-    }
-    
     var index: Int
     var onDismiss: (() -> Void)?
-    var selectedContactHasImage: Bool {
-        return selectedContact.thumbnailImageData != nil
-    }
-        
+
     @State private var shouldShowImagePicker: Bool = false
     @State private var shouldShowPermissionsAlert = false
     @State private var customSelectedImage: UIImage? = nil
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            NavigationView {
-                Form {
-                    Section {
-                        GeometryReader { geo in
-                            VStack(alignment: .center, spacing: 4) {
-                                ShortcutImageView(type: .empty, image: customSelectedImage ?? selectedContactImage)
-                                    .frame(width: 80, height: 80)
-                                
-                                Button {
-                                    shouldShowImagePicker = true
-                                } label: {
-                                    Text("Edit")
-                                        .font(.system(size: 16))
-                                        .foregroundColor(.primary)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-
-                                
-                                Text("\(selectedContact.givenName) \(selectedContact.familyName)")
-                                    .font(.system(size: 28))
-                            }
-                            .frame(width: geo.size.width, alignment: .center)
-                            .fixedSize()
-                        }
-                        .accessibility(hidden: true)
-                        .listRowBackground(Color(UIColor.secondarySystemBackground))
-                        .frame(height: 150)
-                    }
-
-
-                    
-                    ForEach(ActionType.allCases.dropLast(), id: \.self) { actionType in
+            if viewStore.selectedContact != nil {
+                let selectedContact = viewStore.selectedContact!
+                NavigationView {
+                    Form {
                         Section {
-                            ForEach(selectedContact.contactInformationArr, id: \.self) { contact in
-                                Button(action: {
-                                    let compressedImage = UIImage.resize(image: customSelectedImage ?? selectedContactImage, targetSize: CGSize(width: 50, height: 50))
-                                    let imageData = compressedImage.pngData()!
+                            GeometryReader { geo in
+                                VStack(alignment: .center, spacing: 4) {
+                                    ShortcutImageView(type: .empty, image: customSelectedImage ?? selectedContact.speedBoardActionImage)
+                                        .frame(width: 80, height: 80)
                                     
-                                    if viewStore.isContactAccessAllowed {
-                                        viewStore.send(
-                                            .updateContactImage(selectedContact, imageData)
-                                        )
+                                    Button {
+                                        shouldShowImagePicker = true
+                                    } label: {
+                                        Text("Edit")
+                                            .font(.system(size: 16))
+                                            .foregroundColor(.primary)
                                     }
+                                    .buttonStyle(PlainButtonStyle())
+
                                     
-                                    viewStore.send(
-                                        .addAction(selectedContact, actionType, index, contact.value, imageData)
-                                    )
-                                    
-                                    self.onDismiss?()
-                                }) {
-                                    ConfigurationDataCell(actionType: actionType, label: contact.label, value: contact.value)
-                                        .frame(height: 50)
+                                    Text("\(selectedContact.givenName) \(selectedContact.familyName)")
+                                        .font(.system(size: 28))
                                 }
-                                .accessibilityElement()
-                                .accessibility(label: Text("\(contact.value)"))
+                                .frame(width: geo.size.width, alignment: .center)
+                                .fixedSize()
                             }
+                            .accessibility(hidden: true)
+                            .listRowBackground(Color(UIColor.secondarySystemBackground))
+                            .frame(height: 150)
                         }
-                        .accessibilityElement(children: .contain)
-                        .accessibility(label: Text(Strings.actionHeadings(actionType).value))
+
+
+                        
+                        ForEach(ActionType.allCases.dropLast(), id: \.self) { actionType in
+                            Section {
+                                ForEach(selectedContact.contactInformationArr, id: \.self) { contact in
+                                    Button(action: {
+                                        let compressedImage = UIImage.resize(image: customSelectedImage ?? selectedContact.speedBoardActionImage, targetSize: CGSize(width: 50, height: 50))
+                                        let imageData = compressedImage.pngData()!
+                                        
+                                        if viewStore.isContactAccessAllowed {
+                                            viewStore.send(
+                                                .updateContactImage(selectedContact, imageData)
+                                            )
+                                        }
+                                        
+                                        viewStore.send(
+                                            .addAction(selectedContact, actionType, index, contact.value, imageData)
+                                        )
+                                        
+                                        self.onDismiss?()
+                                    }) {
+                                        ConfigurationDataCell(actionType: actionType, label: contact.label, value: contact.value)
+                                            .frame(height: 50)
+                                    }
+                                    .accessibilityElement()
+                                    .accessibility(label: Text("\(contact.value)"))
+                                }
+                            }
+                            .accessibilityElement(children: .contain)
+                            .accessibility(label: Text(Strings.actionHeadings(actionType).value))
+                        }
                     }
+                    .navigationBarTitle(
+                        Text(Strings.title.value),
+                        displayMode: .inline
+                    )
+                    .accessibility(label: Text(Strings.formLabel.value))
+                    .accessibility(hint: Text(Strings.formHint.value))
                 }
-                .navigationBarTitle(
-                    Text(Strings.title.value),
-                    displayMode: .inline
-                )
-                .accessibility(label: Text(Strings.formLabel.value))
-                .accessibility(hint: Text(Strings.formHint.value))
-            }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .onAppear() {
-                shouldShowPermissionsAlert = !viewStore.isContactAccessAllowed
-            }
-            .present(isPresented: $shouldShowPermissionsAlert,
-                     animation: .spring(response: 0.55, dampingFraction: 0.825, blendDuration: 0.1),
-                     closeOnTap: true,
-                     onTap: nil) {
-                
-                createContactPermissionsView(store: viewStore)
-            }
-            .sheet(isPresented: $shouldShowImagePicker) {
-                ImagePicker(image: $customSelectedImage)
+                .navigationViewStyle(StackNavigationViewStyle())
+                .onAppear() {
+                    shouldShowPermissionsAlert = !viewStore.isContactAccessAllowed
+                }
+                .present(isPresented: $shouldShowPermissionsAlert,
+                         animation: .spring(response: 0.55, dampingFraction: 0.825, blendDuration: 0.1),
+                         closeOnTap: true,
+                         onTap: nil) {
+                    
+                    createContactPermissionsView(store: viewStore)
+                }
+                .sheet(isPresented: $shouldShowImagePicker) {
+                    ImagePicker(image: $customSelectedImage)
+                }
             }
         }
     }
-    
+
     func createContactPermissionsView(store: ViewStore<ConfigurationState, ConfigurationAction>) -> some View {
         VStack(spacing: 10) {
             Image(systemName: "book.circle.fill")
@@ -251,6 +244,17 @@ extension ConfigurationView {
             case .formHint:
                 return "ConfigurationView_Form_Hint"
             }
+        }
+    }
+}
+
+
+extension CNContact {
+    var speedBoardActionImage: UIImage {
+        if let imageData = self.thumbnailImageData {
+            return UIImage(data: imageData) ?? UIImage.generateWithName("\(self.givenName)")
+        } else {
+            return UIImage.generateWithName("\(self.givenName)")
         }
     }
 }

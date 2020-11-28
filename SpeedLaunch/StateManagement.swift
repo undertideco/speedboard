@@ -16,7 +16,8 @@ struct AppState: Equatable {
     static func == (lhs: AppState, rhs: AppState) -> Bool {
         return lhs.actions.count == rhs.actions.count &&
             lhs.isContactPickerOpen == rhs.isContactPickerOpen &&
-            lhs.isEditing == rhs.isEditing
+            lhs.isEditing == rhs.isEditing &&
+            lhs.presenting == rhs.presenting
     }
     
     var actions: [Action] = []
@@ -49,24 +50,20 @@ struct AppState: Equatable {
         }
     }
     
-    enum PresentingSheet {
+    enum PresentingSheet: Identifiable {
         case settings, contacts
+        
+        var id: Int {
+            hashValue
+        }
     }
     
-    private var presenting: PresentingSheet? = nil
+    var presenting: PresentingSheet? = nil
     var isEditing: Bool = false
+    var isContactPickerOpen: Bool = false
+    var selectedContact: CNContact? = nil
     
     var configurationState = ConfigurationState()
-    
-    var isSettingsOpen: Bool {
-        get { presenting == .settings }
-        set { presenting = newValue ? .settings : nil }
-    }
-
-    var isContactPickerOpen: Bool {
-        get { presenting == .contacts }
-        set { presenting = newValue ? .contacts : nil }
-    }
 }
 
 struct AppEnvironment {
@@ -76,8 +73,10 @@ struct AppEnvironment {
 enum AppAction: Equatable {
     case loadActions
     case deleteAction(Action)
+    case presentSettingsScreen
+    case presentContactsConfigurator(CNContact)
     case setContactPickerPresentation(Bool)
-    case setSettingsPresentation(Bool)
+    case setPresentingSheet(AppState.PresentingSheet?)
     case setEditing(Bool)
     case widgetConfiguration(WidgetConfigurationAction)
     
@@ -102,8 +101,15 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             .catchToEffect()
             .map(AppAction.didWriteActions)
             .eraseToEffect()
-    case let .setSettingsPresentation(isPresented):
-        state.isSettingsOpen = isPresented
+    case .presentSettingsScreen:
+        state.presenting = .settings
+        return .none
+    case let .presentContactsConfigurator(selectedContact):
+        state.configurationState.selectedContact = selectedContact
+        state.presenting = .contacts
+        return .none
+    case let .setPresentingSheet(sheetType):
+        state.presenting = sheetType
         return .none
     case let .setContactPickerPresentation(isPresented):
         state.isContactPickerOpen = isPresented

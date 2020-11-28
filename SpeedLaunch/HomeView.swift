@@ -46,7 +46,7 @@ struct HomeView: View {
                             send: AppAction.setContactPickerPresentation
                         )
                     ) { contact in
-                        self.selectedContact = contact
+                        viewStore.send(.presentContactsConfigurator(contact))
                     } onCancel: {
                         viewStore.send(.setContactPickerPresentation(false))
                     }
@@ -112,7 +112,7 @@ struct HomeView: View {
                 .navigationBarItems(
                     leading: HStack {
                         Button(action: {
-                            showSettings = true
+                            viewStore.send(.presentSettingsScreen)
                         }, label: {
                             Image(systemName: "gear")
                                 .font(.title)
@@ -139,25 +139,27 @@ struct HomeView: View {
                         }
                     }).foregroundColor(
                         viewStore.isEditing ? .green : .blue
+                        
                     )
                 )
             }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .sheet(item: $selectedContact) { contact in
-                ConfigurationView(
-                    store: self.store.scope(
-                        state: { $0.configurationState },
-                        action: AppAction.configurationView
-                    ),
-                    selectedContact: contact,
-                    index: viewStore.actionsToDisplay.count - 1
-                ) {
-                    self.selectedContact = nil
+            .sheet(item: viewStore.binding( get: \.presenting, send: AppAction.setPresentingSheet)) { item in
+                switch item {
+                case .contacts:
+                    ConfigurationView(
+                        store: self.store.scope(
+                            state: { $0.configurationState },
+                            action: AppAction.configurationView
+                        ),
+                        index: viewStore.actionsToDisplay.count - 1
+                    ) {
+                        self.selectedContact = nil
+                    }
+                case .settings:
+                    SettingsView()
                 }
             }
-            .sheet(isPresented: $showSettings) {
-                SettingsView()
-            }
+            .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
                 viewStore.send(.loadActions)
             }
