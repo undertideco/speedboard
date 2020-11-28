@@ -144,7 +144,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state.actions = actions.map { action in
             guard let contactBookID = action.contactBookIdentifier else { return action }
             
-            if let contactBookImageData = contacts[contactBookID]!.thumbnailImageData,
+            if let contactBookImageData = contacts[contactBookID]?.thumbnailImageData,
                 contacts.keys.contains(contactBookID) && action.imageData != contactBookImageData {
                 return Action(action: action, newImageData: contactBookImageData)
             }
