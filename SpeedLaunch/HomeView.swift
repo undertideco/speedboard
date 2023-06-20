@@ -78,23 +78,21 @@ struct HomeView: View {
                         }
                     }.accessibility(label: Text(Strings.actionsGrid.rawValue))
                     
-                    if #available(iOS 14.0, *) {
-                        if viewStore.isEditing {
-                            SlideOverCard(position: cardPosition) {
-                                WidgetConfigurationView(
-                                    store: self.store.scope(
-                                        state: \.actions,
-                                        action: AppAction.widgetConfiguration
-                                    ),
-                                    actions: viewStore.actionsToDisplay
-                                )
-                            }
-                            .transition(.move(edge: .bottom))
-                            .animation(.easeInOut)
-                            .accessibilityAddTraits([.isHeader])
-                            .accessibility(label: Text(Strings.configurationCardLabel.rawValue))
-                            .accessibility(hint: Text(Strings.configurationCardHint.rawValue))
+                    if viewStore.isEditing {
+                        SlideOverCard(position: cardPosition) {
+                            WidgetConfigurationView(
+                                store: self.store.scope(
+                                    state: \.actions,
+                                    action: AppAction.widgetConfiguration
+                                ),
+                                actions: viewStore.actionsToDisplay
+                            )
                         }
+                        .transition(.move(edge: .bottom))
+                        .animation(.easeInOut)
+                        .accessibilityAddTraits([.isHeader])
+                        .accessibility(label: Text(Strings.configurationCardLabel.rawValue))
+                        .accessibility(hint: Text(Strings.configurationCardHint.rawValue))
                     }
                 }
                 .navigationBarTitle(
@@ -110,8 +108,8 @@ struct HomeView: View {
                         Button(action: {
                             viewStore.send(.presentSettingsScreen)
                         }, label: {
-                            Image(systemName: "gear")
-                                .font(.title)
+                            Image(systemName: "gearshape.fill")
+                                .font(.title2)
                                 .foregroundColor(.white)
                                 .scaleEffect(0.9)
                         })
@@ -120,14 +118,14 @@ struct HomeView: View {
                         viewStore.send(.setEditing(!viewStore.isEditing))
                     }, label: {
                         if viewStore.isEditing {
-                            Image(systemName: "checkmark")
-                                .font(.title)
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.title2)
                                 .foregroundColor(.white)
                                 .scaleEffect(0.9)
                                 .accessibility(label: Text(Strings.saveButton.rawValue))
                         } else {
-                            Image(systemName: "pencil")
-                                .font(.largeTitle)
+                            Image(systemName: "slider.horizontal.3")
+                                .font(.title2)
                                 .foregroundColor(.white)
                                 .scaleEffect(0.9)
                                 .accessibility(label: Text(Strings.editButton.rawValue))
