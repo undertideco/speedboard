@@ -41,8 +41,8 @@ struct EmptyLaunchCell: View, Launchable {
     
     var body: some View {
         GeometryReader { geo in
-            VStack(alignment: .center, spacing: 0) {
-                PlusView(parentFrame: geo.frame(in: .global))
+            VStack {
+                PlusView()
                     .scaleEffect(scaleFactor)
                 if displayString != nil || localizedString != nil {
                     Text(localizedString ?? "\(displayString ?? "")")
@@ -72,15 +72,15 @@ extension EmptyLaunchCell {
 }
 
 struct PlusView: View {
-    var parentFrame: CGRect = .zero
-    
     var body: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(Color("primary"))
-            Image(systemName: "plus")
-                .foregroundColor(.white)
-                .font(.system(size: parentFrame.size.height * 0.45))
+        GeometryReader { geo in
+            ZStack(alignment: .center) {
+                Circle()
+                    .foregroundColor(Color("primary"))
+                Image(systemName: "plus")
+                    .foregroundColor(.white)
+                    .font(.system(size: geo.size.height * 0.45))
+            }
         }
 
     }
