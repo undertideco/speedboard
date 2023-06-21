@@ -62,7 +62,7 @@ public struct ContactPicker: UIViewControllerRepresentable {
         }
     }
     
-    public func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> ContactPickerCoordinator {
         if self.onSelectContacts != nil {
             return MultipleSelectionCoordinator(self)
         } else {
