@@ -7,3 +7,5 @@ I wanted to bring back the simplicity of speed dial for the smartphone era. Spee
 I built it as my first real project in SwiftUI and the Swift Composable Architecture, and it taught me a lot about functional programming and building apps that are both simple and composable. It’s designed to be accessible, intuitive, and focused on one thing only: making it easier to reach the people who matter most.
 
 This app was free, and it will always be free. For as long as it’s reasonable, I’ll keep maintaining it for its users. 
+
+You can read more about its design goals [here](https://github.com/jurvis/landing/blob/old-landing/content/blog/2020-11-20-why-i-made-speedboard/post.md).
