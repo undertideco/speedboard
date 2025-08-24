@@ -9,9 +9,13 @@
 import Foundation
 import Contacts
 
-struct ContactInfo: Hashable {
+struct ContactInfo: Hashable, Identifiable {
     let value: String
     let label: String
+    
+    var id: String {
+        return "\(value):\(label)"
+    }
 }
 
 extension CNContact {
@@ -20,5 +24,3 @@ extension CNContact {
             emailAddresses.map{ ContactInfo(value: String($0.value), label: CNLabeledValue<NSString>.localizedString(forLabel: $0.label ?? "Email")) }
     }
 }
-
-extension CNContact: Identifiable {}

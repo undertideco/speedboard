@@ -95,14 +95,14 @@ struct Action: Codable, Equatable, Identifiable {
         if value.isEmail {
             return type.urlLaunchScheme(value)
         } else {
-            let phoneNumberKit = PhoneNumberKit()
-            
             do {
-                let parsedNumber = try phoneNumberKit.parse(value,
-                                                             ignoreType: true)
-                return type.urlLaunchScheme(phoneNumberKit.format(parsedNumber, toType: .e164))
+                let phoneNumberUtility = PhoneNumberUtility()
+                let phoneNumber = try phoneNumberUtility.parse(value)
+                
+                let e164Number = phoneNumberUtility.format(phoneNumber, toType: .e164)
+                return type.urlLaunchScheme(e164Number)
             } catch {
-                return nil
+                return type.urlLaunchScheme(value)
             }
         }
     }

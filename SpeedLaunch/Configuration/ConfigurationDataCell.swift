@@ -10,19 +10,21 @@ import SwiftUI
 import PhoneNumberKit
 
 struct ConfigurationDataCell: View {
-    let phoneNumberKit = PhoneNumberKit()
     let actionType: ActionType
     let label: String
     let value: String
     
     var dataLabel: String {
-        do {
-            let number = try phoneNumberKit.parse(value)
-            let numberString = phoneNumberKit.format(number, toType: .international)
-            return numberString
-        } catch {
-            return value
+        if !value.isEmail {
+            let phoneNumberUtility = PhoneNumberUtility()
+            do {
+                let phoneNumber = try phoneNumberUtility.parse(value)
+                return phoneNumberUtility.format(phoneNumber, toType: .international)
+            } catch {
+                return value
+            }
         }
+        return value
     }
     
     var body: some View {

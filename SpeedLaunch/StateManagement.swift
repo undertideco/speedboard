@@ -11,15 +11,9 @@ import ComposableArchitecture
 import WidgetKit
 import CoreData
 import Contacts
+import Dependencies
 
 struct AppState: Equatable {
-    static func == (lhs: AppState, rhs: AppState) -> Bool {
-        return lhs.actions.count == rhs.actions.count &&
-            lhs.isContactPickerOpen == rhs.isContactPickerOpen &&
-            lhs.isEditing == rhs.isEditing &&
-            lhs.presenting == rhs.presenting
-    }
-    
     var actions: [Action] = []
     
     var actionsToDisplay: [Action] {
@@ -67,9 +61,6 @@ struct AppState: Equatable {
     var settingsState = SettingsViewState()
 }
 
-struct AppEnvironment {
-    var storageClient: StorageClient
-}
 
 enum AppAction: Equatable {
     case loadActions
@@ -88,96 +79,108 @@ enum AppAction: Equatable {
     case settingsView(SettingsViewAction)
 }
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
-    Reducer { state, action , env in
-    switch action {
-    case .loadActions:
-        return env.storageClient.getActions()
-            .catchToEffect()
-            .map(AppAction.didLoadActions)
-            .eraseToEffect()
-    case .deleteAction(let action):
-        let actionId = action.id
-
-        return env.storageClient.deleteAction(action)
-            .catchToEffect()
-            .map(AppAction.didWriteActions)
-            .eraseToEffect()
-    case .presentSettingsScreen:
-        state.presenting = .settings
-        return .none
-    case let .presentContactsConfigurator(selectedContact):
-        state.configurationState.selectedContact = selectedContact
-        state.presenting = .contacts
-        return .none
-    case let .setPresentingSheet(sheetType):
-        state.presenting = sheetType
-        return .none
-    case let .setContactPickerPresentation(isPresented):
-        state.isContactPickerOpen = isPresented
-        return .none
-    case .widgetConfiguration(_):
-        return env.storageClient.getActions()
-            .catchToEffect()
-            .map(AppAction.didLoadActions)
-            .eraseToEffect()
-    case .didWriteActions(_):
-        return Effect(value: AppAction.loadActions)
-            .eraseToEffect()
-    case let .didLoadActions(.success(actions)):
-        var contacts: [String: CNContact] = [:]
-        
-        if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            do {
-                let contactPredicate = CNContact.predicateForContacts(withIdentifiers: actions.compactMap{ $0.contactBookIdentifier })
+struct AppReducer: Reducer {
+    typealias State = AppState
+    typealias Action = AppAction
+    
+    @Dependency(\.storageClient) var storageClient
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+        switch action {
+        case .loadActions:
+            return storageClient.getActions()
+                .map { actions in AppAction.didLoadActions(.success(actions)) }
                 
-                let keysToFetch = [CNContactThumbnailImageDataKey, CNContactImageDataAvailableKey, CNContactIdentifierKey] as [CNKeyDescriptor]
-                contacts = try CNContactStore().unifiedContacts(matching: contactPredicate, keysToFetch: keysToFetch).reduce(into: [String: CNContact]()){
-                    $0[$1.identifier] = $1
+        case .deleteAction(let action):
+            return storageClient.deleteAction(action)
+                .map { deletedAction in AppAction.didWriteActions(.success(deletedAction)) }
+                
+        case .presentSettingsScreen:
+            state.presenting = .settings
+            return .none
+            
+        case let .presentContactsConfigurator(selectedContact):
+            state.configurationState.selectedContact = selectedContact
+            state.presenting = .contacts
+            return .none
+            
+        case let .setPresentingSheet(sheetType):
+            state.presenting = sheetType
+            return .none
+            
+        case let .setContactPickerPresentation(isPresented):
+            state.isContactPickerOpen = isPresented
+            return .none
+            
+                
+        case .didWriteActions(_):
+            return .send(.loadActions)
+                
+        case let .didLoadActions(.success(actions)):
+            var contacts: [String: CNContact] = [:]
+            
+            if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+                do {
+                    let contactPredicate = CNContact.predicateForContacts(withIdentifiers: actions.compactMap{ $0.contactBookIdentifier })
+                    
+                    let keysToFetch = [CNContactThumbnailImageDataKey, CNContactImageDataAvailableKey, CNContactIdentifierKey] as [CNKeyDescriptor]
+                    contacts = try CNContactStore().unifiedContacts(matching: contactPredicate, keysToFetch: keysToFetch).reduce(into: [String: CNContact]()){
+                        $0[$1.identifier] = $1
+                    }
+                } catch {
+                    state.actions = actions
+                    return .none
                 }
-            } catch {
-                state.actions = actions
-                return .none
             }
+            
+            state.actions = actions.map { action in
+                guard let contactBookID = action.contactBookIdentifier else { return action }
+                
+                if let contactBookImageData = contacts[contactBookID]?.thumbnailImageData,
+                    contacts.keys.contains(contactBookID) && action.imageData != contactBookImageData {
+                    return SpeedLaunch.Action(action: action, newImageData: contactBookImageData)
+                }
+                
+                return action
+            }
+            return .none
+            
+        case .didLoadActions(.failure(_)):
+            return .none
+            
+        case .setEditing(let isEditing):
+            state.isEditing = isEditing
+            return .none
+            
+        case .configurationView(.didAddAction(.success(_))):
+            state.presenting = nil
+            state.selectedContact = nil
+            return .send(.loadActions)
+            
+        case .configurationView(_):
+            return .none
+            
+        case .settingsView(_):
+            return .none
+            
+        case .widgetConfiguration(.didUpdateAction(.success(_))):
+            return .send(.loadActions)
+            
+        case .widgetConfiguration(_):
+            return .none
+        }
         }
         
-        state.actions = actions.map { action in
-            guard let contactBookID = action.contactBookIdentifier else { return action }
-            
-            if let contactBookImageData = contacts[contactBookID]?.thumbnailImageData,
-                contacts.keys.contains(contactBookID) && action.imageData != contactBookImageData {
-                return Action(action: action, newImageData: contactBookImageData)
-            }
-            
-            return action
+        
+        Scope(state: \.configurationState, action: /AppAction.configurationView) {
+            ConfigurationReducer()
         }
-        return .none
-    case .didLoadActions(.failure(_)):
-        return .none
-    case .setEditing(let isEditing):
-        state.isEditing = isEditing
-        return .none
-    case .configurationView(.addAction):
-        state.presenting = nil
-        state.selectedContact = nil
-        return Effect(value: AppAction.loadActions)
-            .eraseToEffect()
-    default:
-        return .none
+        Scope(state: \.settingsState, action: /AppAction.settingsView) {
+            SettingsViewReducer()
+        }
+        Scope(state: \.actions, action: /AppAction.widgetConfiguration) {
+            WidgetConfigReducer()
+        }
     }
-    },
-    widgetConfigReducer.pullback(
-        state: \.actions,
-        action: /AppAction.widgetConfiguration,
-        environment: { _ in WidgetConfigurationEnvironment(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live) }
-    ),
-    configurationReducer.pullback(
-        state: \.configurationState,
-        action: /AppAction.configurationView,
-        environment: { _ in .init(storageClient: CommandLine.arguments.contains("--load-local") ? .mock : .live, contactBookClient: ContactBookClient.live) }
-    ),
-    settingsViewReducer.pullback(
-        state: \.settingsState,
-        action: /AppAction.settingsView,
-        environment: { _ in SettingsViewEnvironment(contactBookClient: .live) })
-)
+}

@@ -11,6 +11,7 @@ import LetterAvatarKit
 import Contacts
 import Combine
 import ComposableArchitecture
+import Dependencies
 
 struct ConfigurationState: Equatable {
     static func == (lhs: ConfigurationState, rhs: ConfigurationState) -> Bool {
@@ -37,51 +38,48 @@ enum ConfigurationAction : Equatable {
     case didChangeContactBookPermission(Result<Bool, ContactsError>)
 }
 
-struct ConfigurationEnvironment {    
-    var storageClient: StorageClient
-    var contactBookClient: ContactBookClient
-    
-    func incrementSignificantEventCountAndCheck() {
-        ReviewHelper.incrementSignificantUseCount()
-        ReviewHelper.check()
-    }
-}
 
-let configurationReducer = Reducer<ConfigurationState, ConfigurationAction, ConfigurationEnvironment> { state, action, env in
+struct ConfigurationReducer: Reducer {
+    typealias State = ConfigurationState
+    typealias Action = ConfigurationAction
+    
+    @Dependency(\.storageClient) var storageClient
+    @Dependency(\.contactBookClient) var contactBookClient
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
     switch action {
     
     case let .addAction(contact, type, position, number, imageData):
-        let action = Action(
+        let newAction = SpeedLaunch.Action(
             id: UUID(),
             type: type,
             contactValue: number,
             imageData: imageData,
             createdTime: Date(),
-            actionName: contact.givenName,
+            actionName: contact.givenName + " " + contact.familyName,
             contactBookIdentifier: contact.identifier
         )
         
-        env.incrementSignificantEventCountAndCheck()
+        // Increment review helper
+        ReviewHelper.incrementSignificantUseCount()
+        ReviewHelper.check()
         
-        return env.storageClient.saveAction(action)
-            .catchToEffect()
-            .map(ConfigurationAction.didAddAction)
-            .eraseToEffect()
+        return storageClient.saveAction(newAction)
+            .map { savedAction in ConfigurationAction.didAddAction(.success(savedAction)) }
     case let .updateContactImage(contact, imageData):
-        return env.contactBookClient.saveNewContactImage(imageData, contact)
-            .catchToEffect()
-            .map(ConfigurationAction.didUpdateContactImage)
-            .eraseToEffect()
+        return contactBookClient.saveNewContactImage(imageData, contact)
+            .map { success in ConfigurationAction.didUpdateContactImage(.success(success)) }
     case .requestContactBookPermission:
-        return env.contactBookClient.requestContactBookPermission()
-            .catchToEffect()
-            .map(ConfigurationAction.didChangeContactBookPermission)
-            .eraseToEffect()
+        return contactBookClient.requestContactBookPermission()
+            .map { success in ConfigurationAction.didChangeContactBookPermission(.success(success)) }
     case let .didChangeContactBookPermission(.success(completion)):
         state.isContactAccessAllowed = completion
         return .none
     default:
         return .none
+    }
+        }
     }
 }
 
@@ -94,7 +92,7 @@ struct ConfigurationView: View {
     @State private var customSelectedImage: UIImage? = nil
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             if viewStore.selectedContact != nil {
                 let selectedContact = viewStore.selectedContact!
                 NavigationView {

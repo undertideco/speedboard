@@ -9,6 +9,7 @@
 import ComposableArchitecture
 import Foundation
 import CoreData
+import Dependencies
 
 enum PersistenceError: Error {
     case unableToRead
@@ -18,10 +19,10 @@ enum PersistenceError: Error {
 struct StorageClient {
     let containerPath: URL?
     
-    var getActions: () -> Effect<[Action], PersistenceError>
-    var saveAction: (Action) -> Effect<Action, PersistenceError>
-    var updateWidgetPreferences: (Action) -> Effect<Action, PersistenceError>
-    var deleteAction: (Action) -> Effect<Action, PersistenceError>
+    var getActions: () -> Effect<[Action]>
+    var saveAction: (Action) -> Effect<Action>
+    var updateWidgetPreferences: (Action) -> Effect<Action>
+    var deleteAction: (Action) -> Effect<Action>
 }
 
 extension StorageClient {
@@ -39,13 +40,13 @@ extension StorageClient {
                     }
                     #endif
                     
-                    return Effect(value: contactList.map { $0.action })
+                    return .send(contactList.map { $0.action })
                 } else {
-                    return Effect(error: PersistenceError.unableToRead)
+                    return .send([])
                 }
             } catch {
                 print("Could not read contact fetcher")
-                return Effect(error: PersistenceError.unableToRead)
+                return .send([])
             }
 
         },
@@ -55,16 +56,16 @@ extension StorageClient {
             guard let newAction = NSEntityDescription.insertNewObject(
                         forEntityName: "SavedAction",
                         into: helper.context) as? SavedAction else {
-                return Effect(error: PersistenceError.unableToWrite)
+                return .send(action)
             }
             
             newAction.action = action
             
             do {
                 try helper.context.save()
-                return Effect(value: action)
+                return .send(action)
             } catch {
-                return Effect(error: PersistenceError.unableToWrite)
+                return .send(action)
             }
         },
         updateWidgetPreferences: { action in
@@ -82,15 +83,17 @@ extension StorageClient {
                     
                     do {
                         try helper.context.save()
-                        return Effect(value: savedAction.action)
+                        return .send(savedAction.action)
                     } catch {
-                        return Effect(error: PersistenceError.unableToWrite)
+                        return .run { send in
+                    throw PersistenceError.unableToWrite
+                }
                     }
                 } else {
-                    return Effect(error: PersistenceError.unableToRead)
+                    return .send(action)
                 }
             } catch {
-                return Effect(error: PersistenceError.unableToRead)
+                return .send(action)
             }
         },
         deleteAction: { action in
@@ -105,9 +108,9 @@ extension StorageClient {
                     helper.context.delete(action)
                     try helper.context.save()
                 }
-                return Effect(value: action)
+                return .send(action)
             } catch {
-                return Effect(error: PersistenceError.unableToWrite)
+                return .send(action)
             }
         }
     )
@@ -121,13 +124,13 @@ extension StorageClient {
             
             do {
                 if let contactList = try helper.context.fetch(fr) as? [SavedAction] {
-                    return Effect(value: contactList.map { $0.action })
+                    return .send(contactList.map { $0.action })
                 } else {
-                    return Effect(error: PersistenceError.unableToRead)
+                    return .send([])
                 }
             } catch {
                 print("Could not read contact fetcher")
-                return Effect(error: PersistenceError.unableToRead)
+                return .send([])
             }
 
         },
@@ -137,16 +140,16 @@ extension StorageClient {
             guard let newAction = NSEntityDescription.insertNewObject(
                         forEntityName: "SavedAction",
                         into: helper.context) as? SavedAction else {
-                return Effect(error: PersistenceError.unableToWrite)
+                return .send(action)
             }
             
             newAction.action = action
             
             do {
                 try helper.context.save()
-                return Effect(value: action)
+                return .send(action)
             } catch {
-                return Effect(error: PersistenceError.unableToWrite)
+                return .send(action)
             }
         },
         updateWidgetPreferences: { action in
@@ -164,15 +167,17 @@ extension StorageClient {
                     
                     do {
                         try helper.context.save()
-                        return Effect(value: savedAction.action)
+                        return .send(savedAction.action)
                     } catch {
-                        return Effect(error: PersistenceError.unableToWrite)
+                        return .run { send in
+                    throw PersistenceError.unableToWrite
+                }
                     }
                 } else {
-                    return Effect(error: PersistenceError.unableToRead)
+                    return .send(action)
                 }
             } catch {
-                return Effect(error: PersistenceError.unableToRead)
+                return .send(action)
             }
         },
         deleteAction: { action in
@@ -187,10 +192,24 @@ extension StorageClient {
                     helper.context.delete(action)
                     try helper.context.save()
                 }
-                return Effect(value: action)
+                return .send(action)
             } catch {
-                return Effect(error: PersistenceError.unableToWrite)
+                return .send(action)
             }
         }
     )
+}
+
+// MARK: - Dependency Key
+private enum StorageClientKey: DependencyKey {
+    static let liveValue = StorageClient.live
+    static let testValue = StorageClient.mock
+    static let previewValue = StorageClient.mock
+}
+
+extension DependencyValues {
+    var storageClient: StorageClient {
+        get { self[StorageClientKey.self] }
+        set { self[StorageClientKey.self] = newValue }
+    }
 }
