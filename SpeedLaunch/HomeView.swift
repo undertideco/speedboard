@@ -33,7 +33,7 @@ struct HomeView: View {
     }
     
     var body: some View {
-        WithViewStore(self.store) { viewStore in
+        WithViewStore(self.store, observe: { $0 }) { viewStore in
             NavigationView {
                 ZStack {
                     ContactPicker(
@@ -43,8 +43,6 @@ struct HomeView: View {
                         )
                     ) { contact in
                         viewStore.send(.presentContactsConfigurator(contact))
-                    } onCancel: {
-                        viewStore.send(.setContactPickerPresentation(false))
                     }
                     QGrid(viewStore.actionsToDisplay, columns: actionsPerRow) { action in
                         Group {
@@ -137,7 +135,10 @@ struct HomeView: View {
                     )
                 )
             }
-            .sheet(item: viewStore.binding( get: \.presenting, send: AppAction.setPresentingSheet)) { item in
+            .sheet(item: viewStore.binding(
+                get: \.presenting,
+                send: AppAction.setPresentingSheet
+            )) { item in
                 switch item {
                 case .contacts:
                     ConfigurationView(
@@ -181,10 +182,6 @@ extension HomeView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(store:
-                        Store(initialState: AppState(),
-                              reducer: appReducer,
-                              environment: AppEnvironment(storageClient: .mock))
-        )
+        HomeView(store: Store(initialState: AppState()) { AppReducer() })
     }
 }

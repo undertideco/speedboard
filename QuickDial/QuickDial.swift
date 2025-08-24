@@ -19,16 +19,16 @@ struct Provider: TimelineProvider {
     }
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: storageClient)))
+        SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState()) { WidgetReducer() })
     }
     
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: storageClient)))
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState()) { WidgetReducer() })
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState(), reducer: widgetReducer, environment: WidgetEnvironment(family: context.family, storageClient: storageClient)))
+        let entry = SimpleEntry(date: Date(), actionsStore: Store(initialState: WidgetState()) { WidgetReducer() })
 
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
@@ -134,8 +134,8 @@ struct QuickDial: Widget {
     let kind: String = "QuickDial"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "co.undertide.speedboard", provider: Provider(), content: { entry in
-            WithViewStore(entry.actionsStore) { viewStore in
+        StaticConfiguration(kind: "co.undertide.speedboard", provider: Provider()) { entry in
+            WithViewStore(entry.actionsStore, observe: { $0 }) { viewStore in
                 QuickDialEntryView(entry: entry, actions: viewStore.actions ?? [])
                     .padding([.bottom, .leading, .trailing], 16)
                     .padding([.top], 8)
@@ -143,7 +143,7 @@ struct QuickDial: Widget {
                         viewStore.send(.initialLoad)
                     }
             }
-        })
+        }
         .configurationDisplayName(Strings.displayName.rawValue)
         .description(Strings.widgetDescription.rawValue)
         .supportedFamilies([.systemMedium, .systemLarge])

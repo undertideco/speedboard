@@ -10,6 +10,7 @@ import SwiftUI
 import Contacts
 import MessageUI
 import ComposableArchitecture
+import Dependencies
 
 struct SettingsViewState: Equatable {
     var shouldShowSystemContactPermissionsAlert = false
@@ -22,17 +23,19 @@ enum SettingsViewAction: Equatable {
     case showPermissionsAlert(Bool)
 }
 
-struct SettingsViewEnvironment {
-    var contactBookClient: ContactBookClient
-}
 
-let settingsViewReducer = Reducer<SettingsViewState, SettingsViewAction, SettingsViewEnvironment> { state, action, env in
+struct SettingsViewReducer: Reducer {
+    typealias State = SettingsViewState
+    typealias Action = SettingsViewAction
+    
+    @Dependency(\.contactBookClient) var contactBookClient
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
     switch action {
     case .requestContactBookPermission:
-        return env.contactBookClient.requestContactBookPermission()
-            .catchToEffect()
-            .map(SettingsViewAction.didChangeContactBookPermission)
-            .eraseToEffect()
+        return contactBookClient.requestContactBookPermission()
+            .map { success in SettingsViewAction.didChangeContactBookPermission(.success(success)) }
     case let .didChangeContactBookPermission(.success(completion)):
         state.isContactAccessAllowed = completion
         return .none
@@ -41,6 +44,8 @@ let settingsViewReducer = Reducer<SettingsViewState, SettingsViewAction, Setting
         return .none
     default:
         return .none
+    }
+        }
     }
 }
 
@@ -56,7 +61,7 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationView {
                 VStack {
                     ZStack {
@@ -178,6 +183,6 @@ extension SettingsView {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(store: Store(initialState: SettingsViewState(), reducer: settingsViewReducer, environment: SettingsViewEnvironment(contactBookClient: .live)))
+        SettingsView(store: Store(initialState: SettingsViewState()) { SettingsViewReducer() })
     }
 }

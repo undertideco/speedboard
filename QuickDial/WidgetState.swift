@@ -9,6 +9,7 @@
 import ComposableArchitecture
 import WidgetKit
 import Combine
+import Dependencies
 
 struct WidgetState: Equatable {
     static func == (lhs: WidgetState, rhs: WidgetState) -> Bool {
@@ -23,31 +24,26 @@ enum WidgetAction: Equatable {
     case actionLoadResponse(Result<[Action], PersistenceError>)
 }
 
-struct WidgetEnvironment {
-    let family: WidgetFamily
-    let storageClient: StorageClient
-}
 
-let widgetReducer = Reducer<WidgetState, WidgetAction, WidgetEnvironment> { state, action , env in
-    switch action {
-    case .initialLoad:
-        return env.storageClient.getActions()
-            .catchToEffect()
-            .map(WidgetAction.actionLoadResponse)
-            .eraseToEffect()
-    case let .actionLoadResponse(.success(actions)):
-        switch env.family {
-        case .systemMedium:
-            state.actions = actions.filter { $0.isMediumWidgetDisplayable }
-        case .systemLarge:
-            state.actions = actions.filter { $0.isLargeWidgetDisplayable }
-        default:
-            break
+struct WidgetReducer: Reducer {
+    typealias State = WidgetState
+    typealias Action = WidgetAction
+    
+    @Dependency(\.storageClient) var storageClient
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .initialLoad:
+                return storageClient.getActions()
+                    .map { actions in WidgetAction.actionLoadResponse(.success(actions)) }
+            case let .actionLoadResponse(.success(actions)):
+                state.actions = actions
+                return .none
+            case .actionLoadResponse(.failure(_)):
+                state.actions = []
+                return .none
+            }
         }
-        return .none
-    case .actionLoadResponse(.failure(_)):
-        state.actions = []
-        return .none
     }
 }
-

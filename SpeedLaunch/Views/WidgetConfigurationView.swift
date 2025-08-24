@@ -10,30 +10,34 @@ import SwiftUI
 import QGrid
 import ComposableArchitecture
 import WidgetKit
+import Dependencies
 
 enum WidgetConfigurationAction: Equatable {
-    case updateAction(Action)
-    case didUpdateAction(Result<Action, PersistenceError>)
+    case updateAction(SpeedLaunch.Action)
+    case didUpdateAction(Result<SpeedLaunch.Action, PersistenceError>)
 }
 
-struct WidgetConfigurationEnvironment {    
-    var storageClient: StorageClient
-}
 
-let widgetConfigReducer = Reducer<[Action], WidgetConfigurationAction, WidgetConfigurationEnvironment> { state, action, env in
+struct WidgetConfigReducer: Reducer {
+    typealias State = [SpeedLaunch.Action]
+    typealias Action = WidgetConfigurationAction
+    
+    @Dependency(\.storageClient) var storageClient
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
     switch action  {
     case .updateAction(let action):
-        return env.storageClient.updateWidgetPreferences(action)
-            .catchToEffect()
-            .map(WidgetConfigurationAction.didUpdateAction)
-            .eraseToEffect()
+        return storageClient.updateWidgetPreferences(action)
+            .map { updatedAction in WidgetConfigurationAction.didUpdateAction(.success(updatedAction)) }
     case .didUpdateAction(_):
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadAllTimelines()
         }
         return .none
     }
-
+        }
+    }
 }
 
 struct WidgetConfigurationView: View {
@@ -50,7 +54,7 @@ struct WidgetConfigurationView: View {
     }
     
     init(store: Store<[Action], WidgetConfigurationAction>, actions: [Action]) {
-        self.viewStore = ViewStore(store)
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
         
     var body: some View {
